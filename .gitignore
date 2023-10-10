@@ -1,0 +1,6 @@
+*.sfc
+*.lnk
+*.jar
+*.zip
+test/*
+bin/*
