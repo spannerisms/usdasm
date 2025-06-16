@@ -210,7 +210,7 @@ NULL_1BB1E0:
 
 ;===================================================================================================
 
-pool Overworld_GetPitDestination
+pool GetPitEntranceDestination
 
 .map16
 #_1BB800: dw $0CE0 ; Skull Woods big chest
@@ -280,7 +280,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Overworld_GetPitDestination:
+GetPitEntranceDestination:
 #_1BB860: PHB
 #_1BB861: PHK
 #_1BB862: PLB
@@ -389,7 +389,7 @@ ValidDoorTypes_high:
 
 ;---------------------------------------------------------------------------------------------------
 
-Overworld_EntranceScreens:
+OverworldEntranceScreens:
 #_1BB96F: dw $002C ; 0x00 - OW 2C  - Link's house
 #_1BB971: dw $0013 ; 0x01 - OW 13  - Sanctuary
 #_1BB973: dw $001B ; 0x02 - OW 1B  - Castle west wing
@@ -522,7 +522,7 @@ Overworld_EntranceScreens:
 
 ;---------------------------------------------------------------------------------------------------
 
-Overworld_EntranceTileIndex:
+OverworldEntranceTileIndex:
 #_1BBA71: dw $0796 ; 0x00 - Link's house
 #_1BBA73: dw $01AA ; 0x01 - Sanctuary
 #_1BBA75: dw $0124 ; 0x02 - Castle west wing
@@ -655,7 +655,7 @@ Overworld_EntranceTileIndex:
 
 ;---------------------------------------------------------------------------------------------------
 
-Overworld_Entrance_ID:
+OverworldEntranceID:
 #_1BBB73: db $01 ; 0x00 - ENTRANCE 01 - Link's house
 #_1BBB74: db $02 ; 0x01 - ENTRANCE 02 - Sanctuary
 #_1BBB75: db $03 ; 0x02 - ENTRANCE 03 - Castle west wing
@@ -788,7 +788,7 @@ Overworld_Entrance_ID:
 
 ;===================================================================================================
 
-Overworld_UseEntrance:
+UseOverworldEntrance:
 #_1BBBF4: REP #$31
 
 #_1BBBF6: LDA.b $20
@@ -866,13 +866,13 @@ Overworld_UseEntrance:
 #_1BBC63: TYX
 
 #_1BBC64: LDA.w #$0DA4
-#_1BBC67: JSL Overworld_DrawMap16_Persist
+#_1BBC67: JSL DrawPersistentMap16
 
 #_1BBC6B: LDA.w #$0DA6
 #_1BBC6E: STA.l $7E2002,X
 
 #_1BBC72: LDY.w #$0002
-#_1BBC75: JSL Overworld_DrawMap16_Anywhere
+#_1BBC75: JSL DrawMap16Anywhere
 
 #_1BBC79: SEP #$30
 
@@ -965,7 +965,7 @@ Overworld_UseEntrance:
 
 ;---------------------------------------------------------------------------------------------------
 
-#Overworld_ForbidEntry:
+#ForbidEntry:
 #_1BBCF0: LDA.w $04B8
 #_1BBCF3: BNE .message_received
 
@@ -976,7 +976,7 @@ Overworld_UseEntrance:
 
 #_1BBCFE: SEP #$30
 
-#_1BBD00: JML Interface_PrepAndDisplayMessage
+#_1BBD00: JML PrepAndDisplayMessage
 
 ;===================================================================================================
 
@@ -994,11 +994,11 @@ FindEntrance:
 #_1BBD0D: DEX
 #_1BBD0E: BMI .no_entrance_found
 
-#_1BBD10: CMP.l Overworld_EntranceTileIndex,X
+#_1BBD10: CMP.l OverworldEntranceTileIndex,X
 #_1BBD14: BNE .tile_fail
 
 #_1BBD16: LDA.w $040A
-#_1BBD19: CMP.l Overworld_EntranceScreens,X
+#_1BBD19: CMP.l OverworldEntranceScreens,X
 #_1BBD1D: BNE .next_check
 
 #_1BBD1F: LDA.l $7EF3D3
@@ -1008,7 +1008,7 @@ FindEntrance:
 #_1BBD28: LDA.w $02DA
 #_1BBD2B: AND.w #$00FF
 #_1BBD2E: CMP.w #$0001
-#_1BBD31: BEQ Overworld_ForbidEntry
+#_1BBD31: BEQ ForbidEntry
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -1030,11 +1030,11 @@ FindEntrance:
 
 #_1BBD50: CMP.w #$08 ; FOLLOWER 08
 
-#_1BBD53: BNE Overworld_ForbidEntry
+#_1BBD53: BNE ForbidEntry
 
 .check_single_entrance
 #_1BBD55: CPX.w #$0076
-#_1BBD58: BCC Overworld_ForbidEntry
+#_1BBD58: BCC ForbidEntry
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -1045,7 +1045,7 @@ FindEntrance:
 
 #_1BBD5D: SEP #$20
 
-#_1BBD5F: LDA.l Overworld_Entrance_ID,X
+#_1BBD5F: LDA.l OverworldEntranceID,X
 #_1BBD63: STA.w $010E
 
 #_1BBD66: STZ.b $4D
@@ -1067,15 +1067,15 @@ FindEntrance:
 
 ;===================================================================================================
 
-HandleItemTileAction_Overworld:
+HandleItemTileAction:
 #_1BBD7A: LDA.b $1B
-#_1BBD7C: BEQ .continue
+#_1BBD7C: BEQ HandleItemTileAction_Overworld
 
 #_1BBD7E: JML HandleItemTileAction_Underworld
 
-;---------------------------------------------------------------------------------------------------
+;===================================================================================================
 
-.continue
+HandleItemTileAction_Overworld:
 #_1BBD82: REP #$30
 
 #_1BBD84: STZ.w $04B2
@@ -1141,10 +1141,10 @@ HandleItemTileAction_Overworld:
 #_1BBDE6: JMP.w OverworldTileAction_Bush_no_secret
 
 .not_peg
-#_1BBDE9: JSR Overworld_PickHammerSFX
+#_1BBDE9: JSR PickHammerSFX
 
 .not_bush
-#_1BBDEC: JMP.w OverworldTileAction_Exit
+#_1BBDEC: JMP.w EXIT_1BBF1A
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -1194,7 +1194,7 @@ HandleItemTileAction_Overworld:
 #_1BBE39: BEQ OverworldTileAction_Bush
 
 .not_digging
-#_1BBE3B: JMP.w OverworldTileAction_Exit
+#_1BBE3B: JMP.w EXIT_1BBF1A
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -1223,7 +1223,7 @@ HandleItemTileAction_Overworld:
 #_1BBE63: CMP.w #$0001
 #_1BBE66: BNE .not_digging_carry_on
 
-#_1BBE68: JMP.w OverworldTileAction_Exit
+#_1BBE68: JMP.w EXIT_1BBF1A
 
 .not_digging_carry_on
 #_1BBE6B: LDA.b $02
@@ -1287,7 +1287,7 @@ OverworldTileAction_Bush:
 #OverworldTileAction_RevealSecret:
 #_1BBEBA: STY.b $0E
 
-#_1BBEBC: JSR Overworld_RevealSecret
+#_1BBEBC: JSR RevealOverworldSecret
 #_1BBEBF: BCS .no_secret
 
 #_1BBEC1: LDA.b $0E
@@ -1295,8 +1295,8 @@ OverworldTileAction_Bush:
 .no_secret
 #_1BBEC3: STA.l $7E2000,X
 
-#_1BBEC7: JSL Overworld_MemorizeMap16Change
-#_1BBECB: JSL Overworld_DrawMap16
+#_1BBEC7: JSL MemorizeMap16Change
+#_1BBECB: JSL DrawMap16
 
 #_1BBECF: SEP #$20
 
@@ -1350,7 +1350,7 @@ OverworldTileAction_Bush:
 #_1BBF0C: LDA.b $76
 #_1BBF0E: BEQ .no_poof
 
-#_1BBF10: JSL Sprite_SpawnImmediatelySmashedTerrain
+#_1BBF10: JSL SpawnImmediatelySmashedTerrain
 #_1BBF14: JSL AncillaAdd_BushPoof
 
 .no_poof
@@ -1358,7 +1358,7 @@ OverworldTileAction_Bush:
 
 ;---------------------------------------------------------------------------------------------------
 
-#OverworldTileAction_Exit:
+#EXIT_1BBF1A:
 #_1BBF1A: PLA
 
 #_1BBF1B: SEP #$30
@@ -1367,7 +1367,7 @@ OverworldTileAction_Bush:
 
 ;===================================================================================================
 
-Overworld_PickHammerSFX:
+PickHammerSFX:
 #_1BBF1E: ASL A
 #_1BBF1F: ASL A
 #_1BBF20: ASL A
@@ -1427,7 +1427,7 @@ RockSmashReplaceOffset:
 
 ;===================================================================================================
 
-Overworld_GetLinkMap16Coords:
+GetLinkMap16Coords:
 #_1BBF64: LDA.b $2F
 #_1BBF66: AND.w #$00FF
 #_1BBF69: TAX
@@ -1467,10 +1467,10 @@ Overworld_GetLinkMap16Coords:
 
 ;===================================================================================================
 
-Overworld_HandleLiftableTiles:
+HandleOverworldLiftables:
 #_1BBF9D: REP #$30
 
-#_1BBF9F: JSR Overworld_GetLinkMap16Coords
+#_1BBF9F: JSR GetLinkMap16Coords
 
 #_1BBFA2: LDA.b $00
 #_1BBFA4: PHA
@@ -1544,7 +1544,7 @@ Overworld_HandleLiftableTiles:
 
 #_1BC00A: PHA
 
-#_1BC00B: JSR Overworld_RevealSecret
+#_1BC00B: JSR RevealOverworldSecret
 #_1BC00E: BCS .no_secret
 
 #_1BC010: LDA.b $0E
@@ -1552,8 +1552,8 @@ Overworld_HandleLiftableTiles:
 .no_secret
 #_1BC012: STA.l $7E2000,X
 
-#_1BC016: JSL Overworld_MemorizeMap16Change
-#_1BC01A: JSL Overworld_DrawMap16
+#_1BC016: JSL MemorizeMap16Change
+#_1BC01A: JSL DrawMap16
 
 #_1BC01E: SEP #$20
 
@@ -1608,7 +1608,7 @@ Overworld_HandleLiftableTiles:
 
 ;---------------------------------------------------------------------------------------------------
 
-#Overworld_SmashRockPile:
+#SmashRockPile:
 #_1BC055: LDY.w #$0DC7
 #_1BC058: CMP.w #$0036
 #_1BC05B: BEQ .small_object
@@ -1623,7 +1623,7 @@ Overworld_HandleLiftableTiles:
 
 ;===================================================================================================
 
-Overworld_SmashRockPileFromAbove:
+SmashRockPileFromAbove:
 #_1BC063: REP #$30
 
 #_1BC065: LDA.b $20
@@ -1633,7 +1633,7 @@ Overworld_SmashRockPileFromAbove:
 #_1BC069: ADC.w #$0008
 #_1BC06C: STA.b $20
 
-#_1BC06E: JSR Overworld_GetLinkMap16Coords
+#_1BC06E: JSR GetLinkMap16Coords
 
 #_1BC071: PLA
 #_1BC072: STA.b $20
@@ -1642,10 +1642,10 @@ Overworld_SmashRockPileFromAbove:
 
 ;===================================================================================================
 
-#Overworld_SmashRockPileFromHere:
+#SmashRockPileFromHere:
 #_1BC076: REP #$30
 
-#_1BC078: JSR Overworld_GetLinkMap16Coords
+#_1BC078: JSR GetLinkMap16Coords
 
 .continue
 #_1BC07B: LDA.b $00
@@ -1668,7 +1668,7 @@ Overworld_SmashRockPileFromAbove:
 #_1BC097: BEQ .rock_pile
 
 #_1BC099: CMP.w #$0229
-#_1BC09C: BNE Overworld_SmashRockPile
+#_1BC09C: BNE SmashRockPile
 
 #_1BC09E: INY
 
@@ -1697,7 +1697,7 @@ Overworld_SmashRockPileFromAbove:
 
 #_1BC0B6: STZ.b $0E
 
-#_1BC0B8: JSR Overworld_RevealSecret
+#_1BC0B8: JSR RevealOverworldSecret
 
 #_1BC0BB: LDA.b $0E
 #_1BC0BD: CMP.w #$FFFF
@@ -1736,13 +1736,13 @@ Overworld_SmashRockPileFromAbove:
 #_1BC0EB: ADC.l RockSmashReplaceOffset_tile3,X
 #_1BC0EF: STA.b $02
 
-#_1BC0F1: JSL Overworld_DoMapUpdate32x32_long
+#_1BC0F1: JSL DoMap32Update_long
 
 #_1BC0F5: JMP.w Overworld_GetLiftableTileType
 
 ;===================================================================================================
 
-Overworld_BombTiles32x32:
+FindBombableOverworldThings:
 #_1BC0F8: REP #$30
 
 #_1BC0FA: STZ.b $0E
@@ -1776,17 +1776,17 @@ Overworld_BombTiles32x32:
 #_1BC128: STA.b $CA
 
 #_1BC12A: LDA.w $0486
-#_1BC12D: JSR Overworld_BombTile
+#_1BC12D: JSR BombOverworldTiles
 
 #_1BC130: LDA.w $0486
 #_1BC133: CLC
 #_1BC134: ADC.w #$0010
-#_1BC137: JSR Overworld_BombTile
+#_1BC137: JSR BombOverworldTiles
 
 #_1BC13A: LDA.w $0486
 #_1BC13D: CLC
 #_1BC13E: ADC.w #$0020
-#_1BC141: JSR Overworld_BombTile
+#_1BC141: JSR BombOverworldTiles
 
 #_1BC144: LDA.w $0488
 #_1BC147: CLC
@@ -1804,7 +1804,7 @@ Overworld_BombTiles32x32:
 
 ;===================================================================================================
 
-Overworld_BombTile:
+BombOverworldTiles:
 #_1BC155: PHA
 
 #_1BC156: LSR A
@@ -1852,7 +1852,7 @@ Overworld_BombTile:
 
 #_1BC19B: LDX.b $04
 
-#_1BC19D: JSR Overworld_RevealSecret
+#_1BC19D: JSR RevealOverworldSecret
 #_1BC1A0: BCS .no_secret
 
 #_1BC1A2: LDA.b $0E
@@ -1861,10 +1861,10 @@ Overworld_BombTile:
 
 .no_secret
 #_1BC1A4: STA.l $7E2000,X
-#_1BC1A8: JSL Overworld_MemorizeMap16Change
+#_1BC1A8: JSL MemorizeMap16Change
 
 #_1BC1AC: LDY.w #$0000
-#_1BC1AF: JSL Overworld_DrawMap16_Anywhere
+#_1BC1AF: JSL DrawMap16Anywhere
 
 #_1BC1B3: PLA
 #_1BC1B4: AND.w #$FFF8
@@ -1880,7 +1880,7 @@ Overworld_BombTile:
 #_1BC1C4: SEP #$30
 
 #_1BC1C6: LDA.b $0A
-#_1BC1C8: JSL Sprite_SpawnImmediatelySmashedTerrain
+#_1BC1C8: JSL SpawnImmediatelySmashedTerrain
 
 #_1BC1CC: LDA.b #$01
 #_1BC1CE: STA.b $14
@@ -1896,7 +1896,7 @@ Overworld_BombTile:
 
 .check_for_cave
 #_1BC1D6: LDX.b $04
-#_1BC1D8: JSR Overworld_RevealSecret
+#_1BC1D8: JSR RevealOverworldSecret
 
 #_1BC1DB: LDA.b $0E
 #_1BC1DD: CMP.w #$0DB4
@@ -1910,17 +1910,17 @@ Overworld_BombTile:
 
 .bomb_the_cave
 #_1BC1E4: STA.l $7E2000,X
-#_1BC1E8: JSL Overworld_MemorizeMap16Change
+#_1BC1E8: JSL MemorizeMap16Change
 
 #_1BC1EC: LDY.w #$0000
-#_1BC1EF: JSL Overworld_DrawMap16_Anywhere
+#_1BC1EF: JSL DrawMap16Anywhere
 
 #_1BC1F3: LDA.w #$0DB5
 #_1BC1F6: STA.l $7E2002,X
-#_1BC1FA: JSL Overworld_MemorizeMap16Change
+#_1BC1FA: JSL MemorizeMap16Change
 
 #_1BC1FE: LDY.w #$0002
-#_1BC201: JSL Overworld_DrawMap16_Anywhere
+#_1BC201: JSL DrawMap16Anywhere
 
 #_1BC205: STZ.b $0E
 
@@ -1943,7 +1943,7 @@ Overworld_BombTile:
 
 ;===================================================================================================
 
-Overworld_AlterWeathervane:
+AlterWeathervane:
 #_1BC21D: REP #$30
 
 #_1BC21F: LDA.w #$0068
@@ -1952,7 +1952,7 @@ Overworld_AlterWeathervane:
 #_1BC225: LDA.w #$0C3E
 #_1BC228: STA.w $0698
 
-#_1BC22B: JSL Overworld_DoMapUpdate32x32_long
+#_1BC22B: JSL DoMap32Update_long
 
 #_1BC22F: REP #$30
 
@@ -1961,14 +1961,14 @@ Overworld_AlterWeathervane:
 #_1BC237: STA.l $7E2000,X
 
 #_1BC23B: LDY.w #$0000
-#_1BC23E: JSL Overworld_DrawMap16_Anywhere
+#_1BC23E: JSL DrawMap16Anywhere
 
 #_1BC242: LDX.w #$0CC0
 #_1BC245: LDA.w #$0E25
 #_1BC248: STA.l $7E2002,X
 
 #_1BC24C: LDY.w #$0002
-#_1BC24F: JSL Overworld_DrawMap16_Anywhere
+#_1BC24F: JSL DrawMap16Anywhere
 
 #_1BC253: SEP #$30
 
@@ -1988,19 +1988,19 @@ OpenGargoylesDomain:
 
 #_1BC266: LDX.w #$0D3E
 #_1BC269: LDA.w #$0E1B
-#_1BC26C: JSL Overworld_DrawMap16_Persist
+#_1BC26C: JSL DrawPersistentMap16
 
 #_1BC270: LDX.w #$0D40
 #_1BC273: LDA.w #$0E1C
-#_1BC276: JSR Overworld_AlterTileHardcore
+#_1BC276: JSR AlterMap16Hardcore
 
 #_1BC279: LDX.w #$0DBE
-#_1BC27C: JSR Overworld_AlterTileHardcore
-#_1BC27F: JSR Overworld_AlterTileHardcore
+#_1BC27C: JSR AlterMap16Hardcore
+#_1BC27F: JSR AlterMap16Hardcore
 
 #_1BC282: LDX.w #$0E3E
-#_1BC285: JSR Overworld_AlterTileHardcore
-#_1BC288: JSR Overworld_AlterTileHardcore
+#_1BC285: JSR AlterMap16Hardcore
+#_1BC288: JSR AlterMap16Hardcore
 
 #_1BC28B: LDA.w #$FFFF
 #_1BC28E: STA.w $1012,Y
@@ -2026,22 +2026,22 @@ CreatePyramidHole:
 
 #_1BC2A9: LDX.w #$03BC
 #_1BC2AC: LDA.w #$0E3F
-#_1BC2AF: JSL Overworld_DrawMap16_Persist
+#_1BC2AF: JSL DrawPersistentMap16
 
 #_1BC2B3: LDX.w #$03BE
 #_1BC2B6: LDA.w #$0E40
-#_1BC2B9: JSR Overworld_AlterTileHardcore
-#_1BC2BC: JSR Overworld_AlterTileHardcore
+#_1BC2B9: JSR AlterMap16Hardcore
+#_1BC2BC: JSR AlterMap16Hardcore
 
 #_1BC2BF: LDX.w #$043C
-#_1BC2C2: JSR Overworld_AlterTileHardcore
-#_1BC2C5: JSR Overworld_AlterTileHardcore
-#_1BC2C8: JSR Overworld_AlterTileHardcore
+#_1BC2C2: JSR AlterMap16Hardcore
+#_1BC2C5: JSR AlterMap16Hardcore
+#_1BC2C8: JSR AlterMap16Hardcore
 
 #_1BC2CB: LDX.w #$04BC
-#_1BC2CE: JSR Overworld_AlterTileHardcore
-#_1BC2D1: JSR Overworld_AlterTileHardcore
-#_1BC2D4: JSR Overworld_AlterTileHardcore
+#_1BC2CE: JSR AlterMap16Hardcore
+#_1BC2D1: JSR AlterMap16Hardcore
+#_1BC2D4: JSR AlterMap16Hardcore
 
 #_1BC2D7: LDA.w #$FFFF
 #_1BC2DA: STA.w $1012,Y
@@ -2179,8 +2179,8 @@ OverworldData_HiddenItems:
 #_1BC3C9: dw OverworldData_HiddenItems_Screen_68 ; 0x68 - Digging Game
 #_1BC3CB: dw OverworldData_HiddenItems_Screen_69 ; 0x69 - South of Outcasts
 #_1BC3CD: dw OverworldData_HiddenItems_Screen_6A ; 0x6A - Stumpy Grove
-#_1BC3CF: dw OverworldData_HiddenItems_Screen_6B ; 0x6B - West of Bomb Shoppe
-#_1BC3D1: dw OverworldData_HiddenItems_Screen_6C ; 0x6C - Bomb Shoppe
+#_1BC3CF: dw OverworldData_HiddenItems_Screen_6B ; 0x6B - West of Bomb Shop
+#_1BC3D1: dw OverworldData_HiddenItems_Screen_6C ; 0x6C - Bomb Shop
 #_1BC3D3: dw OverworldData_HiddenItems_Screen_6D ; 0x6D - Hammer Bridge
 #_1BC3D5: dw OverworldData_HiddenItems_Screen_6E ; 0x6E - Dark Lake Hylia River Bend
 #_1BC3D7: dw OverworldData_HiddenItems_Screen_6F ; 0x6F - East Dark World Portalway
@@ -2927,7 +2927,7 @@ OverworldData_HiddenItems_Screen_7F:
 
 ;===================================================================================================
 
-Overworld_SecretTileType:
+SecretObjectTypes:
 #_1BC89C: dw $0DCC ; hole
 #_1BC89E: dw $0212 ; portal
 #_1BC8A0: dw $FFFF ; garbage
@@ -2935,7 +2935,7 @@ Overworld_SecretTileType:
 
 ;===================================================================================================
 
-Overworld_RevealSecret:
+RevealOverworldSecret:
 #_1BC8A4: STX.b $04
 
 #_1BC8A6: LDA.w $0B9C
@@ -3025,7 +3025,7 @@ Overworld_RevealSecret:
 #_1BC929: AND.w #$000F
 #_1BC92C: TAX
 
-#_1BC92D: LDA.l Overworld_SecretTileType,X
+#_1BC92D: LDA.l SecretObjectTypes,X
 #_1BC931: STA.b $0E
 
 .fail
@@ -3060,18 +3060,18 @@ AdjustSecretForPowder:
 
 ;===================================================================================================
 
-Overworld_DrawWoodenDoor:
+DrawWoodenDoor:
 #_1BC952: BCS .closed
 
 #_1BC954: LDA.w #$0DA4
-#_1BC957: JSL Overworld_DrawMap16_Persist
+#_1BC957: JSL DrawPersistentMap16
 
 #_1BC95B: LDA.w #$0DA6
 #_1BC95E: BRA .right_side
 
 .closed
 #_1BC960: LDA.w #$0DA5
-#_1BC963: JSL Overworld_DrawMap16_Persist
+#_1BC963: JSL DrawPersistentMap16
 
 #_1BC967: LDA.w #$0DA7
 
@@ -3079,7 +3079,7 @@ Overworld_DrawWoodenDoor:
 #_1BC96A: STA.l $7E2002,X
 
 #_1BC96E: LDY.w #$0002
-#_1BC971: JSL Overworld_DrawMap16_Anywhere
+#_1BC971: JSL DrawMap16Anywhere
 
 #_1BC975: SEP #$30
 
@@ -3090,17 +3090,17 @@ Overworld_DrawWoodenDoor:
 
 ;===================================================================================================
 
-Overworld_DrawMap16_Persist:
+DrawPersistentMap16:
 #_1BC97C: STA.l $7E2000,X
 
 ;---------------------------------------------------------------------------------------------------
 
-Overworld_DrawMap16:
+DrawMap16:
 #_1BC980: LDY.w #$0000
 
 ;---------------------------------------------------------------------------------------------------
 
-Overworld_DrawMap16_Anywhere:
+DrawMap16Anywhere:
 #_1BC983: PHX
 
 #_1BC984: ASL A
@@ -3115,7 +3115,7 @@ Overworld_DrawMap16_Anywhere:
 #_1BC98D: ADC.b $00
 #_1BC98F: STA.b $00
 
-#_1BC991: JSR Overworld_FindMap16VRAMAddress
+#_1BC991: JSR FindMap16VRAMAddress
 
 #_1BC994: LDY.w $1000
 
@@ -3161,7 +3161,7 @@ Overworld_DrawMap16_Anywhere:
 
 ;===================================================================================================
 
-Overworld_AlterTileHardcore:
+AlterMap16Hardcore:
 #_1BC9DE: PHA
 
 #_1BC9DF: STA.l $7E2000,X
@@ -3256,7 +3256,7 @@ Overworld_AlterTileHardcore:
 
 ;===================================================================================================
 
-Overworld_FindMap16VRAMAddress:
+FindMap16VRAMAddress:
 #_1BCA69: STZ.b $02
 
 #_1BCA6B: LDA.b $00
@@ -3293,15 +3293,15 @@ Overworld_FindMap16VRAMAddress:
 
 ;===================================================================================================
 
-Overworld_CreateTRPortal:
+CreateTurtleRockPortal:
 #_1BCA9F: REP #$30
 
 #_1BCAA1: LDA.w #$0212
 #_1BCAA4: LDX.w #$0720
 #_1BCAA7: STA.l $7E2000,X
 
-#_1BCAAB: JSL Overworld_MemorizeMap16Change
-#_1BCAAF: JSL Overworld_DrawMap16
+#_1BCAAB: JSL MemorizeMap16Change
+#_1BCAAF: JSL DrawMap16
 
 #_1BCAB3: SEP #$30
 
@@ -3312,20 +3312,20 @@ Overworld_CreateTRPortal:
 
 ;===================================================================================================
 
-pool Overworld_AnimateEntrance
+pool EntranceCutscene
 
 .vectors
-#_1BCABA: dw Overworld_AnimateEntrance_PoD
-#_1BCABC: dw Overworld_AnimateEntrance_Skull
-#_1BCABE: dw Overworld_AnimateEntrance_Mire
-#_1BCAC0: dw Overworld_AnimateEntrance_TurtleRock
-#_1BCAC2: dw Overworld_AnimateEntrance_GanonsTower
+#_1BCABA: dw EntranceCutscene_PoD
+#_1BCABC: dw EntranceCutscene_Skull
+#_1BCABE: dw EntranceCutscene_Mire
+#_1BCAC0: dw EntranceCutscene_TurtleRock
+#_1BCAC2: dw EntranceCutscene_GanonsTower
 
 pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Overworld_AnimateEntrance:
+EntranceCutscene:
 #_1BCAC4: STA.w $02E4
 #_1BCAC7: STA.w $0FC1
 #_1BCACA: STA.w $0710
@@ -3340,7 +3340,7 @@ Overworld_AnimateEntrance:
 
 ;===================================================================================================
 
-pool Overworld_AnimateEntrance_PoD
+pool EntranceCutscene_PoD
 
 .vectors
 #_1BCAD4: dw AnimateEntrance_PoD_step1
@@ -3353,7 +3353,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Overworld_AnimateEntrance_PoD:
+EntranceCutscene_PoD:
 #_1BCADE: LDA.b $B0
 #_1BCAE0: ASL A
 #_1BCAE1: TAX
@@ -3379,21 +3379,21 @@ Overworld_AnimateEntrance_PoD:
 
 #_1BCAFC: LDX.w #$01E6
 #_1BCAFF: LDA.w #$0E31
-#_1BCB02: JSL Overworld_DrawMap16_Persist
+#_1BCB02: JSL DrawPersistentMap16
 
 #_1BCB06: LDX.w #$02EA
 #_1BCB09: LDA.w #$0E30
-#_1BCB0C: JSR Overworld_AlterTileHardcore
+#_1BCB0C: JSR AlterMap16Hardcore
 
 #_1BCB0F: LDX.w #$026A
 #_1BCB12: LDA.w #$0E26
-#_1BCB15: JSR Overworld_AlterTileHardcore
+#_1BCB15: JSR AlterMap16Hardcore
 
 .modify_bottom_stair_part
 #_1BCB18: LDX.w #$02EA
 
 .modify_specific_stair_part
-#_1BCB1B: JSR Overworld_AlterTileHardcore
+#_1BCB1B: JSR AlterMap16Hardcore
 
 #_1BCB1E: LDA.w #$FFFF
 #_1BCB21: STA.w $1012,Y
@@ -3421,7 +3421,7 @@ Overworld_AnimateEntrance_PoD:
 
 #_1BCB38: LDX.w #$026A
 #_1BCB3B: LDA.w #$0E28
-#_1BCB3E: JSL Overworld_DrawMap16_Persist
+#_1BCB3E: JSL DrawPersistentMap16
 
 #_1BCB42: LDA.w #$0E29
 #_1BCB45: BRA .modify_bottom_stair_part
@@ -3441,11 +3441,11 @@ Overworld_AnimateEntrance_PoD:
 
 #_1BCB54: LDX.w #$026A
 #_1BCB57: LDA.w #$0E2A
-#_1BCB5A: JSL Overworld_DrawMap16_Persist
+#_1BCB5A: JSL DrawPersistentMap16
 
 #_1BCB5E: LDX.w #$02EA
 #_1BCB61: LDA.w #$0E2B
-#_1BCB64: JSR Overworld_AlterTileHardcore
+#_1BCB64: JSR AlterMap16Hardcore
 
 #_1BCB67: LDX.w #$036A
 #_1BCB6A: BRA .modify_specific_stair_part
@@ -3466,11 +3466,11 @@ Overworld_AnimateEntrance_PoD:
 #_1BCB79: LDX.w #$026A
 #_1BCB7C: LDA.w #$0E2D
 
-#_1BCB7F: JSL Overworld_DrawMap16_Persist
+#_1BCB7F: JSL DrawPersistentMap16
 
 #_1BCB83: LDX.w #$02EA
 #_1BCB86: LDA.w #$0E2E
-#_1BCB89: JSR Overworld_AlterTileHardcore
+#_1BCB89: JSR AlterMap16Hardcore
 
 #_1BCB8C: LDX.w #$036A
 #_1BCB8F: BRA .modify_specific_stair_part
@@ -3488,7 +3488,7 @@ Overworld_AnimateEntrance_PoD:
 
 ;===================================================================================================
 
-pool Overworld_AnimateEntrance_Skull
+pool EntranceCutscene_Skull
 
 .vectors
 #_1BCB9C: dw AnimateEntrance_Skull_step1
@@ -3501,7 +3501,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Overworld_AnimateEntrance_Skull:
+EntranceCutscene_Skull:
 #_1BCBA6: LDA.b $B0
 #_1BCBA8: ASL A
 #_1BCBA9: TAX
@@ -3525,11 +3525,11 @@ Overworld_AnimateEntrance_Skull:
 
 #_1BCBBB: LDX.w #$0812
 #_1BCBBE: LDA.w #$0E06
-#_1BCBC1: JSL Overworld_DrawMap16_Persist
+#_1BCBC1: JSL DrawPersistentMap16
 
 #_1BCBC5: LDX.w #$0814
 #_1BCBC8: LDA.w #$0E06
-#_1BCBCB: JSR Overworld_AlterTileHardcore
+#_1BCBCB: JSR AlterMap16Hardcore
 
 #_1BCBCE: LDA.w #$FFFF
 #_1BCBD1: STA.w $1012,Y
@@ -3572,17 +3572,17 @@ Overworld_AnimateEntrance_Skull:
 
 #_1BCBFC: LDX.w #$0790
 #_1BCBFF: LDA.w #$0E07
-#_1BCC02: JSL Overworld_DrawMap16_Persist
+#_1BCC02: JSL DrawPersistentMap16
 
 #_1BCC06: LDX.w #$0792
 #_1BCC09: LDA.w #$0E08
-#_1BCC0C: JSR Overworld_AlterTileHardcore
-#_1BCC0F: JSR Overworld_AlterTileHardcore
+#_1BCC0C: JSR AlterMap16Hardcore
+#_1BCC0F: JSR AlterMap16Hardcore
 
 ;===================================================================================================
 
-#OverworldEntrance_AdvanceAndThud:
-#_1BCC12: JSR Overworld_AlterTileHardcore
+#OverworldEntrance_FinishAndThud:
+#_1BCC12: JSR AlterMap16Hardcore
 
 #_1BCC15: LDA.w #$FFFF
 #_1BCC18: STA.w $1012,Y
@@ -3615,14 +3615,14 @@ Overworld_AnimateEntrance_Skull:
 
 #_1BCC35: LDX.w #$0710
 #_1BCC38: LDA.w #$0E07
-#_1BCC3B: JSL Overworld_DrawMap16_Persist
+#_1BCC3B: JSL DrawPersistentMap16
 
 #_1BCC3F: LDX.w #$0712
 #_1BCC42: LDA.w #$0E08
-#_1BCC45: JSR Overworld_AlterTileHardcore
-#_1BCC48: JSR Overworld_AlterTileHardcore
+#_1BCC45: JSR AlterMap16Hardcore
+#_1BCC48: JSR AlterMap16Hardcore
 
-#_1BCC4B: BRA OverworldEntrance_AdvanceAndThud
+#_1BCC4B: BRA OverworldEntrance_FinishAndThud
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -3641,24 +3641,24 @@ Overworld_AnimateEntrance_Skull:
 
 #_1BCC5B: LDX.w #$0590
 #_1BCC5E: LDA.w #$0E11
-#_1BCC61: JSL Overworld_DrawMap16_Persist
+#_1BCC61: JSL DrawPersistentMap16
 
 #_1BCC65: LDX.w #$0596
 #_1BCC68: LDA.w #$0E12
-#_1BCC6B: JSR Overworld_AlterTileHardcore
+#_1BCC6B: JSR AlterMap16Hardcore
 
 #_1BCC6E: LDX.w #$0610
 #_1BCC71: LDA.w #$0E0D
-#_1BCC74: JSR Overworld_AlterTileHardcore
-#_1BCC77: JSR Overworld_AlterTileHardcore
-#_1BCC7A: JSR Overworld_AlterTileHardcore
-#_1BCC7D: JSR Overworld_AlterTileHardcore
+#_1BCC74: JSR AlterMap16Hardcore
+#_1BCC77: JSR AlterMap16Hardcore
+#_1BCC7A: JSR AlterMap16Hardcore
+#_1BCC7D: JSR AlterMap16Hardcore
 
 #_1BCC80: LDX.w #$0692
 #_1BCC83: LDA.w #$0E0B
-#_1BCC86: JSR Overworld_AlterTileHardcore
+#_1BCC86: JSR AlterMap16Hardcore
 
-#_1BCC89: JMP.w OverworldEntrance_AdvanceAndThud
+#_1BCC89: JMP.w OverworldEntrance_FinishAndThud
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -3677,27 +3677,27 @@ Overworld_AnimateEntrance_Skull:
 
 #_1BCC9A: LDX.w #$0590
 #_1BCC9D: LDA.w #$0E13
-#_1BCCA0: JSL Overworld_DrawMap16_Persist
+#_1BCCA0: JSL DrawPersistentMap16
 
 #_1BCCA4: LDX.w #$0596
 #_1BCCA7: LDA.w #$0E14
-#_1BCCAA: JSR Overworld_AlterTileHardcore
+#_1BCCAA: JSR AlterMap16Hardcore
 
 #_1BCCAD: LDX.w #$0610
-#_1BCCB0: JSR Overworld_AlterTileHardcore
-#_1BCCB3: JSR Overworld_AlterTileHardcore
-#_1BCCB6: JSR Overworld_AlterTileHardcore
-#_1BCCB9: JSR Overworld_AlterTileHardcore
+#_1BCCB0: JSR AlterMap16Hardcore
+#_1BCCB3: JSR AlterMap16Hardcore
+#_1BCCB6: JSR AlterMap16Hardcore
+#_1BCCB9: JSR AlterMap16Hardcore
 
 #_1BCCBC: LDX.w #$0692
-#_1BCCBF: JSR Overworld_AlterTileHardcore
-#_1BCCC2: JSR OverworldEntrance_AdvanceAndThud
+#_1BCCBF: JSR AlterMap16Hardcore
+#_1BCCC2: JSR OverworldEntrance_FinishAndThud
 
 #_1BCCC5: JMP.w OverworldEntrance_PlayJingle
 
 ;===================================================================================================
 
-pool Overworld_AnimateEntrance_Mire
+pool EntranceCutscene_Mire
 
 .vectors
 #_1BCCC8: dw AnimateEntrance_Mire_step1
@@ -3711,7 +3711,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Overworld_AnimateEntrance_Mire:
+EntranceCutscene_Mire:
 #_1BCCD4: LDA.b $B0
 #_1BCCD6: CMP.b #$02
 #_1BCCD8: BCC .no_shake
@@ -3723,10 +3723,10 @@ Overworld_AnimateEntrance_Mire:
 #_1BCCE1: ASL A
 #_1BCCE2: TAX
 
-#_1BCCE3: LDA.l OverworldShake_Offsets_Y,X
+#_1BCCE3: LDA.l CutsceneShake_Y,X
 #_1BCCE7: STA.w $011A
 
-#_1BCCEA: LDA.l OverworldShake_Offsets_X,X
+#_1BCCEA: LDA.l CutsceneShake_X,X
 #_1BCCEE: STA.w $011C
 
 #_1BCCF1: SEP #$20
@@ -3782,7 +3782,7 @@ AnimateEntrance_Mire_step1:
 #_1BCD31: LSR A
 #_1BCD32: TAX
 
-#_1BCD33: LDA.w DungeonMask+1,Y
+#_1BCD33: LDA.w BitMasks+1,Y
 
 #_1BCD36: STZ.b $1D
 
@@ -3824,27 +3824,27 @@ AnimateEntrance_Mire_step1:
 
 #_1BCD65: LDX.w #$0622
 #_1BCD68: LDA.w #$0E48
-#_1BCD6B: JSL Overworld_DrawMap16_Persist
+#_1BCD6B: JSL DrawPersistentMap16
 
 #_1BCD6F: LDX.w #$0624
 #_1BCD72: LDA.w #$0E49
 
 .continue_many_replacements
-#_1BCD75: JSR Overworld_AlterTileHardcore
-#_1BCD78: JSR Overworld_AlterTileHardcore
-#_1BCD7B: JSR Overworld_AlterTileHardcore
+#_1BCD75: JSR AlterMap16Hardcore
+#_1BCD78: JSR AlterMap16Hardcore
+#_1BCD7B: JSR AlterMap16Hardcore
 
 #_1BCD7E: LDX.w #$06A2
-#_1BCD81: JSR Overworld_AlterTileHardcore
-#_1BCD84: JSR Overworld_AlterTileHardcore
-#_1BCD87: JSR Overworld_AlterTileHardcore
-#_1BCD8A: JSR Overworld_AlterTileHardcore
+#_1BCD81: JSR AlterMap16Hardcore
+#_1BCD84: JSR AlterMap16Hardcore
+#_1BCD87: JSR AlterMap16Hardcore
+#_1BCD8A: JSR AlterMap16Hardcore
 
 #_1BCD8D: LDX.w #$0722
-#_1BCD90: JSR Overworld_AlterTileHardcore
-#_1BCD93: JSR Overworld_AlterTileHardcore
-#_1BCD96: JSR Overworld_AlterTileHardcore
-#_1BCD99: JSR Overworld_AlterTileHardcore
+#_1BCD90: JSR AlterMap16Hardcore
+#_1BCD93: JSR AlterMap16Hardcore
+#_1BCD96: JSR AlterMap16Hardcore
+#_1BCD99: JSR AlterMap16Hardcore
 
 #_1BCD9C: LDA.w #$FFFF
 #_1BCD9F: STA.w $1012,Y
@@ -3872,18 +3872,18 @@ AnimateEntrance_Mire_step1:
 
 #_1BCDB6: LDX.w #$05A2
 #_1BCDB9: LDA.w #$0E54
-#_1BCDBC: JSL Overworld_DrawMap16_Persist
+#_1BCDBC: JSL DrawPersistentMap16
 
 #_1BCDC0: LDX.w #$05A4
 #_1BCDC3: LDA.w #$0E55
 
 .continue_many_many_replacements
-#_1BCDC6: JSR Overworld_AlterTileHardcore
-#_1BCDC9: JSR Overworld_AlterTileHardcore
-#_1BCDCC: JSR Overworld_AlterTileHardcore
+#_1BCDC6: JSR AlterMap16Hardcore
+#_1BCDC9: JSR AlterMap16Hardcore
+#_1BCDCC: JSR AlterMap16Hardcore
 
 #_1BCDCF: LDX.w #$0622
-#_1BCDD2: JSR Overworld_AlterTileHardcore
+#_1BCDD2: JSR AlterMap16Hardcore
 #_1BCDD5: BRA .continue_many_replacements
 
 ;---------------------------------------------------------------------------------------------------
@@ -3901,16 +3901,16 @@ AnimateEntrance_Mire_step1:
 
 #_1BCDE4: LDX.w #$0522
 #_1BCDE7: LDA.w #$0E64
-#_1BCDEA: JSL Overworld_DrawMap16_Persist
+#_1BCDEA: JSL DrawPersistentMap16
 
 #_1BCDEE: LDX.w #$0524
 #_1BCDF1: LDA.w #$0E65
-#_1BCDF4: JSR Overworld_AlterTileHardcore
-#_1BCDF7: JSR Overworld_AlterTileHardcore
-#_1BCDFA: JSR Overworld_AlterTileHardcore
+#_1BCDF4: JSR AlterMap16Hardcore
+#_1BCDF7: JSR AlterMap16Hardcore
+#_1BCDFA: JSR AlterMap16Hardcore
 
 #_1BCDFD: LDX.w #$05A2
-#_1BCE00: JSR Overworld_AlterTileHardcore
+#_1BCE00: JSR AlterMap16Hardcore
 
 #_1BCE03: BRA .continue_many_many_replacements
 
@@ -3933,7 +3933,7 @@ AnimateEntrance_Mire_step1:
 
 ;===================================================================================================
 
-pool Overworld_AnimateEntrance_TurtleRock
+pool EntranceCutscene_TurtleRock
 
 .vectors
 #_1BCE16: dw AnimateEntrance_TurtleRock_step1
@@ -3950,7 +3950,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Overworld_AnimateEntrance_TurtleRock:
+EntranceCutscene_TurtleRock:
 #_1BCE28: REP #$20
 
 #_1BCE2A: LDA.b $1A
@@ -3958,10 +3958,10 @@ Overworld_AnimateEntrance_TurtleRock:
 #_1BCE2F: ASL A
 #_1BCE30: TAX
 
-#_1BCE31: LDA.l OverworldShake_Offsets_Y,X
+#_1BCE31: LDA.l CutsceneShake_Y,X
 #_1BCE35: STA.w $011A
 
-#_1BCE38: LDA.l OverworldShake_Offsets_X,X
+#_1BCE38: LDA.l CutsceneShake_X,X
 #_1BCE3C: STA.w $011C
 
 #_1BCE3F: SEP #$20
@@ -4128,7 +4128,7 @@ Overworld_AnimateEntrance_TurtleRock:
 #_1BCEFF: AND.b #$07
 #_1BCF01: BNE .skip_sfx7
 
-#_1BCF03: JSL PaletteFilter_Restore
+#_1BCF03: JSL PaletteFilter_RestoreTRock
 
 #_1BCF07: LDA.b #$02 ; SFX3.02
 #_1BCF09: STA.w $012F
@@ -4209,31 +4209,31 @@ OverworldEntrance_DrawManyTR:
 
 #_1BCF62: LDX.w #$099E
 #_1BCF65: LDA.w #$0E78
-#_1BCF68: JSL Overworld_DrawMap16_Persist
+#_1BCF68: JSL DrawPersistentMap16
 
 #_1BCF6C: LDX.w #$09A0
 #_1BCF6F: LDA.w #$0E79
-#_1BCF72: JSR Overworld_AlterTileHardcore
-#_1BCF75: JSR Overworld_AlterTileHardcore
-#_1BCF78: JSR Overworld_AlterTileHardcore
+#_1BCF72: JSR AlterMap16Hardcore
+#_1BCF75: JSR AlterMap16Hardcore
+#_1BCF78: JSR AlterMap16Hardcore
 
 #_1BCF7B: LDX.w #$0A1E
-#_1BCF7E: JSR Overworld_AlterTileHardcore
-#_1BCF81: JSR Overworld_AlterTileHardcore
-#_1BCF84: JSR Overworld_AlterTileHardcore
-#_1BCF87: JSR Overworld_AlterTileHardcore
+#_1BCF7E: JSR AlterMap16Hardcore
+#_1BCF81: JSR AlterMap16Hardcore
+#_1BCF84: JSR AlterMap16Hardcore
+#_1BCF87: JSR AlterMap16Hardcore
 
 #_1BCF8A: LDX.w #$0A9E
-#_1BCF8D: JSR Overworld_AlterTileHardcore
-#_1BCF90: JSR Overworld_AlterTileHardcore
-#_1BCF93: JSR Overworld_AlterTileHardcore
-#_1BCF96: JSR Overworld_AlterTileHardcore
+#_1BCF8D: JSR AlterMap16Hardcore
+#_1BCF90: JSR AlterMap16Hardcore
+#_1BCF93: JSR AlterMap16Hardcore
+#_1BCF96: JSR AlterMap16Hardcore
 
 #_1BCF99: LDX.w #$0B1E
-#_1BCF9C: JSR Overworld_AlterTileHardcore
-#_1BCF9F: JSR Overworld_AlterTileHardcore
-#_1BCFA2: JSR Overworld_AlterTileHardcore
-#_1BCFA5: JSR Overworld_AlterTileHardcore
+#_1BCF9C: JSR AlterMap16Hardcore
+#_1BCF9F: JSR AlterMap16Hardcore
+#_1BCFA2: JSR AlterMap16Hardcore
+#_1BCFA5: JSR AlterMap16Hardcore
 
 #_1BCFA8: LDA.w #$FFFF
 #_1BCFAB: STA.w $1012,Y
@@ -4253,7 +4253,7 @@ OverworldEntrance_DrawManyTR:
 
 ;===================================================================================================
 
-pool Overworld_AnimateEntrance_GanonsTower
+pool EntranceCutscene_GanonsTower
 
 .vectors
 #_1BCFBF: dw AnimateEntrance_GanonsTower_step01
@@ -4274,7 +4274,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Overworld_AnimateEntrance_GanonsTower:
+EntranceCutscene_GanonsTower:
 #_1BCFD9: LDA.b $B0
 #_1BCFDB: ASL A
 #_1BCFDC: TAX
@@ -4290,14 +4290,14 @@ AnimateEntrance_GanonsTower_step01:
 #_1BCFE6: ORA.b #$20
 #_1BCFE8: STA.l $7EF280,X
 
-#_1BCFEC: JSL GanonsTower_FlashAfterCrystals
+#_1BCFEC: JSL FlashTowerAfterCrystals
 
 #_1BCFF0: RTS
 
 ;---------------------------------------------------------------------------------------------------
 
 AnimateEntrance_GanonsTower_step02:
-#_1BCFF1: JSL GanonsTower_FlashAfterCrystals
+#_1BCFF1: JSL FlashTowerAfterCrystals
 
 #_1BCFF5: LDA.b $1D
 #_1BCFF7: BNE .exit
@@ -4353,16 +4353,16 @@ AnimateEntrance_GanonsTower_step03:
 
 #_1BD02A: LDX.w #$045E
 #_1BD02D: LDA.w #$0E88
-#_1BD030: JSL Overworld_DrawMap16_Persist
+#_1BD030: JSL DrawPersistentMap16
 
 #_1BD034: LDX.w #$0460
 #_1BD037: LDA.w #$0E89
-#_1BD03A: JSR Overworld_AlterTileHardcore
+#_1BD03A: JSR AlterMap16Hardcore
 
 #_1BD03D: LDX.w #$04DE
 #_1BD040: LDA.w #$0EA2
-#_1BD043: JSR Overworld_AlterTileHardcore
-#_1BD046: JSR Overworld_AlterTileHardcore
+#_1BD043: JSR AlterMap16Hardcore
+#_1BD046: JSR AlterMap16Hardcore
 
 #_1BD049: LDA.w #$0E8A
 
@@ -4370,10 +4370,10 @@ AnimateEntrance_GanonsTower_step03:
 #_1BD04C: LDX.w #$055E
 
 .draw2_advance
-#_1BD04F: JSR Overworld_AlterTileHardcore
+#_1BD04F: JSR AlterMap16Hardcore
 
 .draw1_advance
-#_1BD052: JSR Overworld_AlterTileHardcore
+#_1BD052: JSR AlterMap16Hardcore
 
 #_1BD055: LDA.w #$FFFF
 #_1BD058: STA.w $1012,Y
@@ -4400,16 +4400,16 @@ AnimateEntrance_GanonsTower_step03:
 
 #_1BD06F: LDX.w #$045E
 #_1BD072: LDA.w #$0E8C
-#_1BD075: JSL Overworld_DrawMap16_Persist
+#_1BD075: JSL DrawPersistentMap16
 
 #_1BD079: LDX.w #$0460
 #_1BD07C: LDA.w #$0E8D
-#_1BD07F: JSR Overworld_AlterTileHardcore
+#_1BD07F: JSR AlterMap16Hardcore
 
 #_1BD082: LDX.w #$04DE
 #_1BD085: LDA.w #$0E8E
-#_1BD088: JSR Overworld_AlterTileHardcore
-#_1BD08B: JSR Overworld_AlterTileHardcore
+#_1BD088: JSR AlterMap16Hardcore
+#_1BD08B: JSR AlterMap16Hardcore
 
 #_1BD08E: LDA.w #$0E90
 #_1BD091: BRA .draw_at_055E
@@ -4429,25 +4429,25 @@ AnimateEntrance_GanonsTower_step03:
 
 #_1BD0A0: LDX.w #$045E
 #_1BD0A3: LDA.w #$0E92
-#_1BD0A6: JSL Overworld_DrawMap16_Persist
+#_1BD0A6: JSL DrawPersistentMap16
 
 #_1BD0AA: LDX.w #$0460
 #_1BD0AD: LDA.w #$0E93
-#_1BD0B0: JSR Overworld_AlterTileHardcore
+#_1BD0B0: JSR AlterMap16Hardcore
 
 #_1BD0B3: LDX.w #$04DE
 #_1BD0B6: LDA.w #$0E94
-#_1BD0B9: JSR Overworld_AlterTileHardcore
+#_1BD0B9: JSR AlterMap16Hardcore
 
 #_1BD0BC: LDA.w #$0E94
-#_1BD0BF: JSR Overworld_AlterTileHardcore
+#_1BD0BF: JSR AlterMap16Hardcore
 
 #_1BD0C2: LDX.w #$055E
 #_1BD0C5: LDA.w #$0E95
-#_1BD0C8: JSR Overworld_AlterTileHardcore
+#_1BD0C8: JSR AlterMap16Hardcore
 
 #_1BD0CB: LDA.w #$0E95
-#_1BD0CE: JSR Overworld_AlterTileHardcore
+#_1BD0CE: JSR AlterMap16Hardcore
 
 #_1BD0D1: LDA.w #$FFFF
 #_1BD0D4: STA.w $1012,Y
@@ -4475,11 +4475,11 @@ AnimateEntrance_GanonsTower_step03:
 
 #_1BD0EB: LDX.w #$045E
 #_1BD0EE: LDA.w #$0E96
-#_1BD0F1: JSL Overworld_DrawMap16_Persist
+#_1BD0F1: JSL DrawPersistentMap16
 
 #_1BD0F5: LDX.w #$0460
 #_1BD0F8: LDA.w #$0E97
-#_1BD0FB: JSR Overworld_AlterTileHardcore
+#_1BD0FB: JSR AlterMap16Hardcore
 
 #_1BD0FE: LDX.w #$04DE
 #_1BD101: LDA.w #$0E98
@@ -4500,7 +4500,7 @@ AnimateEntrance_GanonsTower_step03:
 
 #_1BD114: LDX.w #$04DE
 #_1BD117: LDA.w #$0E9A
-#_1BD11A: JSL Overworld_DrawMap16_Persist
+#_1BD11A: JSL DrawPersistentMap16
 
 #_1BD11E: LDX.w #$04E0
 #_1BD121: LDA.w #$0E9B
@@ -4521,11 +4521,11 @@ AnimateEntrance_GanonsTower_step03:
 
 #_1BD134: LDX.w #$04DE
 #_1BD137: LDA.w #$0E9C
-#_1BD13A: JSL Overworld_DrawMap16_Persist
+#_1BD13A: JSL DrawPersistentMap16
 
 #_1BD13E: LDX.w #$04E0
 #_1BD141: LDA.w #$0E9D
-#_1BD144: JSR Overworld_AlterTileHardcore
+#_1BD144: JSR AlterMap16Hardcore
 
 #_1BD147: LDA.w #$0E9E
 #_1BD14A: JMP.w .draw_at_055E
@@ -4545,7 +4545,7 @@ AnimateEntrance_GanonsTower_step03:
 
 #_1BD15A: LDX.w #$055E
 #_1BD15D: LDA.w #$0E9A
-#_1BD160: JSL Overworld_DrawMap16_Persist
+#_1BD160: JSL DrawPersistentMap16
 
 #_1BD164: LDX.w #$0560
 #_1BD167: LDA.w #$0E9B
@@ -4566,15 +4566,15 @@ AnimateEntrance_GanonsTower_step03:
 
 #_1BD17A: LDX.w #$055E
 #_1BD17D: LDA.w #$0E9C
-#_1BD180: JSL Overworld_DrawMap16_Persist
+#_1BD180: JSL DrawPersistentMap16
 
 #_1BD184: LDX.w #$0560
 #_1BD187: LDA.w #$0E9D
-#_1BD18A: JSR Overworld_AlterTileHardcore
+#_1BD18A: JSR AlterMap16Hardcore
 
 #_1BD18D: LDX.w #$05DE
 #_1BD190: LDA.w #$0EA0
-#_1BD193: JSR Overworld_AlterTileHardcore
+#_1BD193: JSR AlterMap16Hardcore
 
 #_1BD196: LDA.w #$0EA1
 
@@ -4601,7 +4601,7 @@ AnimateEntrance_GanonsTower_step03:
 
 #_1BD1B1: LDX.w #$05DE
 #_1BD1B4: LDA.w #$0E9A
-#_1BD1B7: JSL Overworld_DrawMap16_Persist
+#_1BD1B7: JSL DrawPersistentMap16
 
 #_1BD1BB: LDA.w #$0E9B
 #_1BD1BE: BRA .draw1_at_05E0_advance
@@ -6036,7 +6036,7 @@ PaletteWorldIDtoOffset:
 ;===================================================================================================
 
 
-Palettes_Load_SpritePal0Left:
+PaletteLoad_SpritePal0Left:
 #_1BEC77: REP #$21
 
 #_1BEC79: LDX.w $0AAC
@@ -6056,7 +6056,7 @@ Palettes_Load_SpritePal0Left:
 
 .no_translucency
 #_1BEC95: LDX.w #$0006
-#_1BEC98: JSR Palettes_LoadSingle
+#_1BEC98: JSR PaletteLoadSingle
 
 #_1BEC9B: SEP #$30
 
@@ -6064,7 +6064,7 @@ Palettes_Load_SpritePal0Left:
 
 ;===================================================================================================
 
-Palettes_Load_SpriteMain:
+PaletteLoad_SpriteMain:
 #_1BEC9E: REP #$21
 
 #_1BECA0: LDX.b #$00
@@ -6086,7 +6086,7 @@ Palettes_Load_SpriteMain:
 #_1BECB6: LDA.w #$0122
 #_1BECB9: LDX.w #$000E
 #_1BECBC: LDY.w #$0003
-#_1BECBF: JSR Palettes_LoadMultiple
+#_1BECBF: JSR PaletteLoadMultiple
 
 #_1BECC2: SEP #$30
 
@@ -6094,7 +6094,7 @@ Palettes_Load_SpriteMain:
 
 ;===================================================================================================
 
-Palettes_Load_SpriteAux1:
+PaletteLoad_SpriteAux1:
 #_1BECC5: REP #$31
 
 #_1BECC7: LDA.w $0AAD
@@ -6108,7 +6108,7 @@ Palettes_Load_SpriteAux1:
 
 #_1BECD8: LDA.w #$01A2
 #_1BECDB: LDX.w #$0006
-#_1BECDE: JSR Palettes_LoadSingle
+#_1BECDE: JSR PaletteLoadSingle
 
 #_1BECE1: SEP #$30
 
@@ -6116,7 +6116,7 @@ Palettes_Load_SpriteAux1:
 
 ;===================================================================================================
 
-Palettes_Load_SpriteAux2:
+PaletteLoad_SpriteAux2:
 #_1BECE4: REP #$31
 
 #_1BECE6: LDA.w $0AAE
@@ -6130,7 +6130,7 @@ Palettes_Load_SpriteAux2:
 
 #_1BECF7: LDA.w #$01C2
 #_1BECFA: LDX.w #$0006
-#_1BECFD: JSR Palettes_LoadSingle
+#_1BECFD: JSR PaletteLoadSingle
 
 #_1BED00: SEP #$30
 
@@ -6138,7 +6138,7 @@ Palettes_Load_SpriteAux2:
 
 ;===================================================================================================
 
-Palettes_Load_Sword:
+PaletteLoad_Sword:
 #_1BED03: REP #$21
 
 #_1BED05: LDA.l $7EF359
@@ -6154,7 +6154,7 @@ Palettes_Load_Sword:
 
 #_1BED1B: LDA.w #$01B2
 #_1BED1E: LDX.w #$0002
-#_1BED21: JSR Palettes_LoadMultiple_Arbitrary
+#_1BED21: JSR PaletteLoadMultiple_Arbitrary
 
 #_1BED24: SEP #$30
 
@@ -6164,7 +6164,7 @@ Palettes_Load_Sword:
 
 ;===================================================================================================
 
-Palettes_Load_Shield:
+PaletteLoad_Shield:
 #_1BED29: REP #$21
 
 #_1BED2B: LDA.l $7EF35A
@@ -6180,7 +6180,7 @@ Palettes_Load_Shield:
 
 #_1BED41: LDA.w #$01B8
 #_1BED44: LDX.w #$0003
-#_1BED47: JSR Palettes_LoadMultiple_Arbitrary
+#_1BED47: JSR PaletteLoadMultiple_Arbitrary
 
 #_1BED4A: SEP #$30
 
@@ -6204,7 +6204,7 @@ UNREACHABLE_1BED4F:
 
 #_1BED62: LDA.w #$01C2
 #_1BED65: LDX.w #$0006
-#_1BED68: JSR Palettes_LoadSingle
+#_1BED68: JSR PaletteLoadSingle
 
 #_1BED6B: SEP #$30
 
@@ -6212,11 +6212,11 @@ UNREACHABLE_1BED4F:
 
 ;===================================================================================================
 
-Palettes_Load_SpriteEnvironment:
+PaletteLoad_SpriteEnvironment:
 #_1BED6E: LDA.b $1B
 #_1BED70: BEQ .outdoors
 
-#Palettes_Load_SpriteEnvironment_Underworld:
+#PaletteLoad_SpriteEnvironment_Underworld:
 #_1BED72: REP #$21
 
 #_1BED74: LDX.w $0AB1
@@ -6230,7 +6230,7 @@ Palettes_Load_SpriteEnvironment:
 
 #_1BED85: LDA.w #$01D2
 #_1BED88: LDX.w #$0006
-#_1BED8B: JSR Palettes_LoadSingle
+#_1BED8B: JSR PaletteLoadSingle
 
 #_1BED8E: SEP #$30
 
@@ -6270,7 +6270,7 @@ Palettes_Load_SpriteEnvironment:
 .not_trans
 #_1BEDB8: LDX.w #$0006
 
-#_1BEDBB: JSR Palettes_LoadSingle
+#_1BEDBB: JSR PaletteLoadSingle
 
 #_1BEDBE: SEP #$10
 
@@ -6287,7 +6287,7 @@ Palettes_Load_SpriteEnvironment:
 
 #_1BEDD1: LDA.w #$01D2
 #_1BEDD4: LDX.w #$0006
-#_1BEDD7: JSR Palettes_LoadSingle
+#_1BEDD7: JSR PaletteLoadSingle
 
 #_1BEDDA: SEP #$30
 
@@ -6295,7 +6295,7 @@ Palettes_Load_SpriteEnvironment:
 
 ;===================================================================================================
 
-Palettes_Load_DungeonMapSprite:
+PaletteLoad_DungeonMapSprite:
 #_1BEDDD: REP #$21
 
 #_1BEDDF: LDA.w #PaletteData_dungeonmap_sprites_00
@@ -6306,7 +6306,7 @@ Palettes_Load_DungeonMapSprite:
 #_1BEDE6: LDA.w #$0182
 #_1BEDE9: LDX.w #$0006
 #_1BEDEC: LDY.w #$0002
-#_1BEDEF: JSR Palettes_LoadMultiple
+#_1BEDEF: JSR PaletteLoadMultiple
 
 #_1BEDF2: SEP #$30
 
@@ -6319,7 +6319,7 @@ Palettes_LinkGloveColors:
 
 ;---------------------------------------------------------------------------------------------------
 
-Palettes_Load_LinkArmorAndGloves:
+PaletteLoad_LinkArmorAndGloves:
 #_1BEDF9: REP #$21
 
 #_1BEDFB: LDA.l $7EF35B
@@ -6336,11 +6336,11 @@ Palettes_Load_LinkArmorAndGloves:
 
 #_1BEE12: LDA.w #$01E2
 #_1BEE15: LDX.w #$000E
-#_1BEE18: JSR Palettes_LoadMultiple_Arbitrary
+#_1BEE18: JSR PaletteLoadMultiple_Arbitrary
 
 ;===================================================================================================
 
-Palettes_Load_LinkGloves:
+PaletteLoad_LinkGloves:
 #_1BEE1B: REP #$30
 
 #_1BEE1D: LDA.l $7EF354
@@ -6364,7 +6364,7 @@ Palettes_Load_LinkGloves:
 
 ;===================================================================================================
 
-Palettes_Load_DungeonMapBG:
+PaletteLoad_DungeonMapBG:
 #_1BEE3A: REP #$21
 
 #_1BEE3C: LDA.w #PaletteData_dungeonmap_bg_00
@@ -6375,7 +6375,7 @@ Palettes_Load_DungeonMapBG:
 #_1BEE43: LDA.w #$0040
 #_1BEE46: LDX.w #$000F
 #_1BEE49: LDY.w #$0005
-#_1BEE4C: JSR Palettes_LoadMultiple
+#_1BEE4C: JSR PaletteLoadMultiple
 
 #_1BEE4F: SEP #$30
 
@@ -6383,7 +6383,7 @@ Palettes_Load_DungeonMapBG:
 
 ;===================================================================================================
 
-Palettes_Load_HUD:
+PaletteLoad_HUD:
 #_1BEE52: REP #$21
 
 #_1BEE54: LDX.w $0AB2
@@ -6398,7 +6398,7 @@ Palettes_Load_HUD:
 #_1BEE65: LDA.w #$0000
 #_1BEE68: LDX.w #$000F
 #_1BEE6B: LDY.w #$0001
-#_1BEE6E: JSR Palettes_LoadMultiple
+#_1BEE6E: JSR PaletteLoadMultiple
 
 #_1BEE71: SEP #$30
 
@@ -6406,7 +6406,7 @@ Palettes_Load_HUD:
 
 ;===================================================================================================
 
-Palettes_Load_UnderworldSet:
+PaletteLoad_UnderworldSet:
 #_1BEE74: REP #$21
 
 #_1BEE76: LDX.w $0AB6
@@ -6422,7 +6422,7 @@ Palettes_Load_UnderworldSet:
 #_1BEE85: LDA.w #$0042
 #_1BEE88: LDX.w #$000E
 #_1BEE8B: LDY.w #$0005
-#_1BEE8E: JSR Palettes_LoadMultiple
+#_1BEE8E: JSR PaletteLoadMultiple
 
 #_1BEE91: PLA
 #_1BEE92: STA.b $00
@@ -6435,7 +6435,7 @@ Palettes_Load_UnderworldSet:
 
 .not_trans
 #_1BEE9F: LDX.w #$0006
-#_1BEEA2: JSR Palettes_LoadSingle
+#_1BEEA2: JSR PaletteLoadSingle
 
 #_1BEEA5: SEP #$30
 
@@ -6443,7 +6443,7 @@ Palettes_Load_UnderworldSet:
 
 ;===================================================================================================
 
-Palettes_Load_OWBG3:
+PaletteLoad_OWBG3:
 #_1BEEA8: REP #$21
 
 #_1BEEAA: LDX.w $0AB8
@@ -6457,7 +6457,7 @@ Palettes_Load_OWBG3:
 
 #_1BEEBB: LDA.w #$00E2
 #_1BEEBE: LDX.w #$0006
-#_1BEEC1: JSR Palettes_LoadSingle
+#_1BEEC1: JSR PaletteLoadSingle
 
 #_1BEEC4: SEP #$30
 
@@ -6465,7 +6465,7 @@ Palettes_Load_OWBG3:
 
 ;===================================================================================================
 
-Palettes_Load_OWBGMain:
+PaletteLoad_OWBGMain:
 #_1BEEC7: REP #$21
 
 #_1BEEC9: LDA.w $0AB3
@@ -6481,7 +6481,7 @@ Palettes_Load_OWBGMain:
 #_1BEED9: LDA.w #$0042
 #_1BEEDC: LDX.w #$0006
 #_1BEEDF: LDY.w #$0004
-#_1BEEE2: JSR Palettes_LoadMultiple
+#_1BEEE2: JSR PaletteLoadMultiple
 
 #_1BEEE5: SEP #$30
 
@@ -6489,7 +6489,7 @@ Palettes_Load_OWBGMain:
 
 ;===================================================================================================
 
-Palettes_Load_OWBG1:
+PaletteLoad_OWBG1:
 #_1BEEE8: REP #$21
 
 #_1BEEEA: LDA.w $0AB4
@@ -6506,7 +6506,7 @@ Palettes_Load_OWBG1:
 #_1BEEFD: LDA.w #$0052
 #_1BEF00: LDX.w #$0006
 #_1BEF03: LDY.w #$0002
-#_1BEF06: JSR Palettes_LoadMultiple
+#_1BEF06: JSR PaletteLoadMultiple
 
 #_1BEF09: SEP #$30
 
@@ -6514,7 +6514,7 @@ Palettes_Load_OWBG1:
 
 ;===================================================================================================
 
-Palettes_Load_OWBG2:
+PaletteLoad_OWBG2:
 #_1BEF0C: REP #$21
 
 #_1BEF0E: LDA.w $0AB5
@@ -6531,7 +6531,7 @@ Palettes_Load_OWBG2:
 #_1BEF21: LDA.w #$00B2
 #_1BEF24: LDX.w #$0006
 #_1BEF27: LDY.w #$0002
-#_1BEF2A: JSR Palettes_LoadMultiple
+#_1BEF2A: JSR PaletteLoadMultiple
 
 #_1BEF2D: SEP #$30
 
@@ -6539,7 +6539,7 @@ Palettes_Load_OWBG2:
 
 ;===================================================================================================
 
-Palettes_LoadSingle:
+PaletteLoadSingle:
 #_1BEF30: TXY
 #_1BEF31: CLC
 #_1BEF32: ADC.w $0AA8
@@ -6565,7 +6565,7 @@ Palettes_LoadSingle:
 
 ;===================================================================================================
 
-Palettes_LoadMultiple:
+PaletteLoadMultiple:
 #_1BEF4B: STA.b $04
 #_1BEF4D: STX.b $06
 #_1BEF4F: STY.b $08
@@ -6609,7 +6609,7 @@ Palettes_LoadMultiple:
 
 ;===================================================================================================
 
-Palettes_LoadMultiple_Arbitrary:
+PaletteLoadMultiple_Arbitrary:
 #_1BEF7B: TXY
 #_1BEF7C: TAX
 
@@ -6635,7 +6635,7 @@ Palettes_LoadMultiple_Arbitrary:
 
 ;===================================================================================================
 
-Palettes_LoadForFileSelect:
+PaletteLoadForFileSelect:
 #_1BEF96: PHB
 
 #_1BEF97: LDA.b #PaletteData>>16
@@ -6651,15 +6651,15 @@ Palettes_LoadForFileSelect:
 #_1BEFA4: STA.b $0C
 
 #_1BEFA6: LDA.l $70035B
-#_1BEFAA: JSR Palettes_LoadForFileSelect_Armor
+#_1BEFAA: JSR PaletteLoadForFileSelect_Armor
 
 #_1BEFAD: LDX.w #$0000
 #_1BEFB0: LDA.l $700359
-#_1BEFB4: JSR Palettes_LoadForFileSelect_Sword
+#_1BEFB4: JSR PaletteLoadForFileSelect_Sword
 
 #_1BEFB7: LDX.w #$0000
 #_1BEFBA: LDA.l $70035A
-#_1BEFBE: JSR Palettes_LoadForFileSelect_Shield
+#_1BEFBE: JSR PaletteLoadForFileSelect_Shield
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -6668,15 +6668,15 @@ Palettes_LoadForFileSelect:
 #_1BEFC8: STA.b $0C
 
 #_1BEFCA: LDA.l $70085B
-#_1BEFCE: JSR Palettes_LoadForFileSelect_Armor
+#_1BEFCE: JSR PaletteLoadForFileSelect_Armor
 
 #_1BEFD1: LDX.w #$0040
 #_1BEFD4: LDA.l $700859
-#_1BEFD8: JSR Palettes_LoadForFileSelect_Sword
+#_1BEFD8: JSR PaletteLoadForFileSelect_Sword
 
 #_1BEFDB: LDX.w #$0040
 #_1BEFDE: LDA.l $70085A
-#_1BEFE2: JSR Palettes_LoadForFileSelect_Shield
+#_1BEFE2: JSR PaletteLoadForFileSelect_Shield
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -6685,15 +6685,15 @@ Palettes_LoadForFileSelect:
 #_1BEFEC: STA.b $0C
 
 #_1BEFEE: LDA.l $700D5B
-#_1BEFF2: JSR Palettes_LoadForFileSelect_Armor
+#_1BEFF2: JSR PaletteLoadForFileSelect_Armor
 
 #_1BEFF5: LDX.w #$0080
 #_1BEFF8: LDA.l $700D59
-#_1BEFFC: JSR Palettes_LoadForFileSelect_Sword
+#_1BEFFC: JSR PaletteLoadForFileSelect_Sword
 
 #_1BEFFF: LDX.w #$0080
 #_1BF002: LDA.l $700D5A
-#_1BF006: JSR Palettes_LoadForFileSelect_Shield
+#_1BF006: JSR PaletteLoadForFileSelect_Shield
 
 #_1BF009: LDY.w #$0000
 #_1BF00C: LDX.w #$0000
@@ -6723,7 +6723,7 @@ Palettes_LoadForFileSelect:
 
 ;===================================================================================================
 
-Palettes_LoadForFileSelect_Armor:
+PaletteLoadForFileSelect_Armor:
 #_1BF032: PHX
 
 #_1BF033: AND.w #$00FF
@@ -6776,7 +6776,7 @@ Palettes_LoadForFileSelect_Armor:
 
 ;===================================================================================================
 
-Palettes_LoadForFileSelect_Sword:
+PaletteLoadForFileSelect_Sword:
 #_1BF072: AND.w #$00FF
 #_1BF075: TAY
 
@@ -6809,7 +6809,7 @@ Palettes_LoadForFileSelect_Sword:
 
 ;===================================================================================================
 
-Palettes_LoadForFileSelect_Shield:
+PaletteLoadForFileSelect_Shield:
 #_1BF09A: AND.w #$00FF
 #_1BF09D: TAY
 
@@ -6842,7 +6842,7 @@ Palettes_LoadForFileSelect_Shield:
 
 ;===================================================================================================
 
-Palettes_LoadAgahnim:
+PaletteLoadAgahnim:
 #_1BF0C2: REP #$31
 
 #_1BF0C4: LDA.l PaletteIDtoOffset_16bit+($0E*2)
@@ -6853,7 +6853,7 @@ Palettes_LoadAgahnim:
 
 #_1BF0CE: LDA.w #$0162
 #_1BF0D1: LDX.w #$0006
-#_1BF0D4: JSR Palettes_LoadMultiple_Arbitrary
+#_1BF0D4: JSR PaletteLoadMultiple_Arbitrary
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -6864,7 +6864,7 @@ Palettes_LoadAgahnim:
 
 #_1BF0DB: LDA.w #$0182
 #_1BF0DE: LDX.w #$0006
-#_1BF0E1: JSR Palettes_LoadMultiple_Arbitrary
+#_1BF0E1: JSR PaletteLoadMultiple_Arbitrary
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -6873,7 +6873,7 @@ Palettes_LoadAgahnim:
 
 #_1BF0E7: LDA.w #$01A2
 #_1BF0EA: LDX.w #$0006
-#_1BF0ED: JSR Palettes_LoadMultiple_Arbitrary
+#_1BF0ED: JSR PaletteLoadMultiple_Arbitrary
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -6884,7 +6884,7 @@ Palettes_LoadAgahnim:
 
 #_1BF0FA: LDA.w #$01C2
 #_1BF0FD: LDX.w #$0006
-#_1BF100: JSR Palettes_LoadMultiple_Arbitrary
+#_1BF100: JSR PaletteLoadMultiple_Arbitrary
 
 #_1BF103: SEP #$30
 

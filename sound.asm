@@ -782,14 +782,14 @@ SFX3_Echo:
 #_1A9BD9: #_2829: UnusedSFX_2829: incbin "bin/sfx/unused-2829.sfx" ; size: 0x0008
 #_1A9BE1: #_2831: UnusedSFX_2831: incbin "bin/sfx/unused-2831.sfx" ; size: 0x0013
 #_1A9BF4: #_2844: SFX2_26: incbin "bin/sfx/sfx2-26.sfx"            ; size: 0x0006
-#_1A9BFA: #_284A: SFX_284A: incbin "bin/sfx/sfx-284A.sfx"          ; size: 0x0005
+#_1A9BFA: #_284A: UnusedSFX_284A: incbin "bin/sfx/unused-284A.sfx" ; size: 0x0005
 #_1A9BFF: #_284F: SFX1_05: incbin "bin/sfx/sfx1-05.sfx"            ; size: 0x0001
 
 base off
 
 ;===================================================================================================
 
-SFX_Instruments:
+SFXInstruments:
 #_1A9C00: dw $00E1, INSTRUMENT_DATA_SFX ; Transfer size, transfer address
 
 base INSTRUMENT_DATA_SFX

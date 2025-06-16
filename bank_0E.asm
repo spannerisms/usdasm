@@ -162,7 +162,7 @@ CustomUnderworldTileTypes:
 
 ;===================================================================================================
 
-Underworld_LoadCustomTileTypes:
+LoadUnderworldTileTypes:
 #_0E942A: PHB
 #_0E942B: PHK
 #_0E942C: PLB
@@ -405,7 +405,7 @@ pool Module1A_Credits
 #_0E9866: dw Credits_StopCreditsScroll          ; 0x23
 #_0E9868: dw Credits_FadeAndDisperseTriangles   ; 0x24
 #_0E986A: dw Credits_FadeInTheEnd               ; 0x25
-#_0E986C: dw Credits_HangForever
+#_0E986C: dw Credits_HangForever                ; 0x26
 
 pool off
 
@@ -435,7 +435,7 @@ Module1A_Credits:
 ;===================================================================================================
 
 Credits_LoadNextScene_Overworld:
-#_0E9889: JSL Credits_LoadScene_Overworld
+#_0E9889: JSL Credits_LoadOverworldScene
 #_0E988D: JSR Credits_AddEndingSequenceText
 
 #_0E9890: RTS
@@ -443,7 +443,7 @@ Credits_LoadNextScene_Overworld:
 ;===================================================================================================
 
 Credits_LoadNextScene_Underworld:
-#_0E9891: JSL Credits_LoadScene_Underworld
+#_0E9891: JSL Credits_LoadUnderworldScene
 
 #_0E9895: JSR Credits_AddEndingSequenceText
 
@@ -483,7 +483,7 @@ Credits_PrepAndLoadSprites:
 #_0E98BC: LDX.b #$0F
 
 .reset_next_sprite
-#_0E98BE: JSL SpritePrep_ResetProperties
+#_0E98BE: JSL ResetSpriteProperties
 
 #_0E98C2: STZ.w $0DD0,X
 #_0E98C5: STZ.w $0BE0,X
@@ -1816,7 +1816,7 @@ Credits_SpriteDraw_Hera:
 #_0E9FB1: JSR Credits_SpriteDraw_Single
 #_0E9FB4: JSR Credits_SpriteDraw_DrawShadow_priority_set
 
-#_0E9FB7: JSL Sprite_Move_XY_Bank1D_long
+#_0E9FB7: JSL MoveSpriteXY_bank1D_long
 
 #_0E9FBB: DEX
 #_0E9FBC: BPL .next_friend
@@ -2245,7 +2245,7 @@ Credits_SpriteDraw_DeathMountain:
 #_0EA388: LDY.b #$34
 #_0EA38A: JSR Credits_SpriteDraw_Single
 
-#_0EA38D: JSL Sprite_Move_XY_Bank1D_long
+#_0EA38D: JSL MoveSpriteXY_bank1D_long
 
 #_0EA391: PLX
 #_0EA392: RTS
@@ -2261,12 +2261,12 @@ Credits_SpriteDraw_Lumberjacks:
 #_0EA398: STA.w $0E20,X
 
 #_0EA39B: LDA.b #$2C
-#_0EA39D: JSL SpriteDraw_AllocateOAMFromRegionA
+#_0EA39D: JSL AllocateOAMInRegionA
 
 #_0EA3A1: LDA.b #$3B
 #_0EA3A3: STA.w $0F50,X
 
-#_0EA3A6: JSL Sprite_Get16BitCoords_long
+#_0EA3A6: JSL Get16BitSpriteCoords_long
 
 #_0EA3AA: LDA.b #$02
 
@@ -2302,7 +2302,7 @@ Credits_SpriteDraw_Venus:
 #_0EA3C7: PHX
 
 #_0EA3C8: LDX.b #$05
-#_0EA3CA: JSL Sprite_Get16BitCoords_long
+#_0EA3CA: JSL Get16BitSpriteCoords_long
 
 #_0EA3CE: LDA.w $0F00,X
 #_0EA3D1: BNE .skip_sparkles
@@ -2474,7 +2474,7 @@ Credits_SpriteDraw_Kakariko2:
 #_0EA579: ADC.w $0D40,X
 #_0EA57C: STA.w $0D40,X
 
-#_0EA57F: JSL Sprite_Move_XY_Bank1D_long
+#_0EA57F: JSL MoveSpriteXY_bank1D_long
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -2604,8 +2604,8 @@ Credits_SpriteDraw_DrawShadow:
 #_0EA5FF: JSR Credits_SpriteDraw_SetShadowProp
 
 #_0EA602: LDA.b #$04
-#_0EA604: JSL SpriteDraw_AllocateOAMFromRegionA
-#_0EA608: JSL SpriteDraw_Shadow_long
+#_0EA604: JSL AllocateOAMInRegionA
+#_0EA608: JSL DrawSpriteShadow_long
 
 #_0EA60C: RTS
 
@@ -2711,8 +2711,8 @@ Credits_SpriteDraw_ActivateAndRunSprite_allocate8:
 Credits_SpriteDraw_ActivateAndRunSprite:
 #_0EA694: STX.w $0FA0
 
-#_0EA697: JSL SpriteDraw_AllocateOAMFromRegionA
-#_0EA69B: JSL Sprite_Get16BitCoords_long
+#_0EA697: JSL AllocateOAMInRegionA
+#_0EA69B: JSL Get16BitSpriteCoords_long
 
 #_0EA69F: LDA.b $11
 #_0EA6A1: PHA
@@ -2737,11 +2737,11 @@ Credits_SpriteDraw_PreexistingSpriteDraw_eight:
 ;===================================================================================================
 
 Credits_SpriteDraw_PreexistingSpriteDraw:
-#_0EA6B3: JSL SpriteDraw_AllocateOAMFromRegionA
+#_0EA6B3: JSL AllocateOAMInRegionA
 
 #_0EA6B7: STX.w $0FA0
 
-#_0EA6BA: JSL Sprite_Get16BitCoords_long
+#_0EA6BA: JSL Get16BitSpriteCoords_long
 #_0EA6BE: JSL SpriteModule_Active_long
 
 #_0EA6C2: RTS
@@ -2796,8 +2796,8 @@ Credits_SpriteDraw_Single:
 #_0EA706: ASL A
 #_0EA707: ASL A
 
-#_0EA708: JSL SpriteDraw_AllocateOAMFromRegionA
-#_0EA70C: JSL Sprite_Get16BitCoords_long
+#_0EA708: JSL AllocateOAMInRegionA
+#_0EA70C: JSL Get16BitSpriteCoords_long
 
 #_0EA710: PLA
 #_0EA711: STA.w WRMPYA
@@ -2828,7 +2828,7 @@ Credits_SpriteDraw_Single:
 #_0EA735: SEP #$20
 
 #_0EA737: PLA
-#_0EA738: JSL SpriteDraw_Tabulated
+#_0EA738: JSL TabulatedSpriteDraw
 
 #_0EA73C: RTS
 
@@ -2883,7 +2883,7 @@ Credits_SpriteDraw_Zora:
 #_0EA75A: STA.w $0E20,X
 
 #_0EA75D: LDA.w .object_allocation,X
-#_0EA760: JSL SpriteDraw_AllocateOAMFromRegionA
+#_0EA760: JSL AllocateOAMInRegionA
 
 #_0EA764: LDA.w .sprite_ai,X
 #_0EA767: STA.w $0D80,X
@@ -2918,7 +2918,7 @@ Credits_SpriteDraw_Zora:
 #_0EA788: LDA.b #$33
 #_0EA78A: STA.w $0F50,X
 
-#_0EA78D: JSL Sprite_Get16BitCoords_long
+#_0EA78D: JSL Get16BitSpriteCoords_long
 #_0EA791: JSL SpriteModule_Active_long
 
 #_0EA795: DEX
@@ -3284,12 +3284,12 @@ Credits_SpriteDraw_Witch:
 #_0EA9DD: STA.w $0E20,X
 
 #_0EA9E0: LDA.b #$0C
-#_0EA9E2: JSL SpriteDraw_AllocateOAMFromRegionA
+#_0EA9E2: JSL AllocateOAMInRegionA
 
 #_0EA9E6: LDA.b #$37
 #_0EA9E8: STA.w $0F50,X
 
-#_0EA9EB: JSL Sprite_Get16BitCoords_long
+#_0EA9EB: JSL Get16BitSpriteCoords_long
 
 #_0EA9EF: LDA.b $1A
 #_0EA9F1: AND.b #$0F
@@ -3319,7 +3319,7 @@ Credits_SpriteDraw_Witch:
 #_0EAA14: CMP.b #$7C
 #_0EAA16: BEQ .dont_move
 
-#_0EAA18: JSL Sprite_Move_XY_Bank1D_long
+#_0EAA18: JSL MoveSpriteXY_bank1D_long
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -3330,12 +3330,12 @@ Credits_SpriteDraw_Witch:
 #_0EAA1F: STA.w $0E20,X
 
 #_0EAA22: LDA.b #$18
-#_0EAA24: JSL SpriteDraw_AllocateOAMFromRegionA
+#_0EAA24: JSL AllocateOAMInRegionA
 
 #_0EAA28: LDA.b #$39
 #_0EAA2A: STA.w $0F50,X
 
-#_0EAA2D: JSL Sprite_Get16BitCoords_long
+#_0EAA2D: JSL Get16BitSpriteCoords_long
 
 #_0EAA31: LDA.w $0DF0,X
 #_0EAA34: BNE .delay_stir
@@ -3449,7 +3449,7 @@ Credits_SpriteDraw_Grove:
 #_0EAABD: LDA.b #$F8
 #_0EAABF: STA.w $0D40,X
 
-#_0EAAC2: JSL Sprite_Move_XY_Bank1D_long
+#_0EAAC2: JSL MoveSpriteXY_bank1D_long
 
 #_0EAAC6: LDA.b $1A
 #_0EAAC8: LSR A
@@ -3702,7 +3702,7 @@ Credits_SpriteDraw_LostWoods:
 ;---------------------------------------------------------------------------------------------------
 
 .move_pickle
-#_0EAC77: JSL Sprite_Move_XY_Bank1D_long
+#_0EAC77: JSL MoveSpriteXY_bank1D_long
 
 #_0EAC7B: LDA.b $1A
 #_0EAC7D: LSR A
@@ -4029,7 +4029,7 @@ Credits_SpriteDraw_WalkLinkAwayFromPedestal:
 #_0EAE22: JSR Credits_SpriteDraw_Single
 #_0EAE25: JSR Credits_SpriteDraw_DrawShadow_priority_set
 
-#_0EAE28: JSL Sprite_Move_XY_Bank1D_long
+#_0EAE28: JSL MoveSpriteXY_bank1D_long
 
 #_0EAE2C: RTS
 
@@ -4072,7 +4072,7 @@ Credits_SpriteDraw_MoveSquirrel:
 #_0EAE52: LDA.w .speed_y,Y
 #_0EAE55: STA.w $0D40,X
 
-#_0EAE58: JSL Sprite_Move_XY_Bank1D_long
+#_0EAE58: JSL MoveSpriteXY_bank1D_long
 
 #_0EAE5C: RTS
 
@@ -4135,7 +4135,7 @@ Credits_SpriteDraw_CirclingBirds:
 ;---------------------------------------------------------------------------------------------------
 
 .dont_change_y_speed
-#_0EAE99: JSL Sprite_Move_XY_Bank1D_long
+#_0EAE99: JSL MoveSpriteXY_bank1D_long
 
 #_0EAE9D: RTS
 
@@ -6047,7 +6047,7 @@ pool off
 Credits_InitializeTheActualCredits:
 #_0EBC6D: JSL EnableForceBlank
 
-#_0EBC71: JSL EraseTilemaps_triforce
+#_0EBC71: JSL EraseTilemaps_bg3
 #_0EBC75: JSL TransferFontToVRAM
 
 #_0EBC79: JSL Credits_LoadCoolBackground
@@ -6062,7 +6062,7 @@ Credits_InitializeTheActualCredits:
 #_0EBC8A: LDA.b #$01
 #_0EBC8C: STA.w $0AB2
 
-#_0EBC8F: JSL Palettes_Load_HUD
+#_0EBC8F: JSL PaletteLoad_HUD
 
 #_0EBC93: INC.b $15
 
@@ -6080,7 +6080,7 @@ Credits_InitializeTheActualCredits:
 
 #_0EBCAB: LDX.b #$18
 
-.next_death:
+.next_death
 #_0EBCAD: CLC
 #_0EBCAE: ADC.l $7EF3E7,X
 #_0EBCB2: STA.l $7EF405
@@ -6182,7 +6182,7 @@ Credits_InitializeTheActualCredits:
 #_0EBD41: DEX
 #_0EBD42: BPL .next_prop
 
-#_0EBD44: STZ.w HDMA7INDIRECTB
+#_0EBD44: STZ.w HDMA7ITBLB
 
 #_0EBD47: LDA.b #$80
 #_0EBD49: STA.b $9B
@@ -6526,18 +6526,18 @@ Credits_AddNextAttribution:
 .sub1000
 #_0EBEEB: LDY.w #$0000
 
-.get_1e0
+.get_1e2
 #_0EBEEE: CMP.w #$000A
-#_0EBEF1: BMI .set_1e0
+#_0EBEF1: BMI .set_1e2
 
 #_0EBEF3: SEC
 #_0EBEF4: SBC.w #$000A
 
 #_0EBEF7: INY
 
-#_0EBEF8: BRA .get_1e0
+#_0EBEF8: BRA .get_1e2
 
-.set_1e0
+.set_1e2
 #_0EBEFA: CLC
 #_0EBEFB: ADC.b $CE
 #_0EBEFD: STA.w $100A,X
@@ -7134,7 +7134,7 @@ Credits_FadeInTheEnd:
 #_0EC3D7: AND.b #$07
 #_0EC3D9: BNE .delay
 
-#_0EC3DB: JSL PaletteFilter_SP5F
+#_0EC3DB: JSL PaletteFilter_Sprite5Left
 
 #_0EC3DF: LDA.l $7EC007
 #_0EC3E3: BNE .delay
@@ -7257,7 +7257,7 @@ RenderText_Initialize:
 #_0EC489: JSL ResetHUDPalettes4and5
 
 .not_attract_mode
-#_0EC48D: JSL Attract_DecompressStoryGFX
+#_0EC48D: JSL DecompressAttractPlaques
 
 #_0EC491: LDX.b #$00
 
@@ -7331,7 +7331,7 @@ RenderText_ParseMessage:
 #_0EC4F2: LDA.l $7F71C2,X
 #_0EC4F6: STA.b $06
 
-#_0EC4F8: LDA.w #$7F7F ; initialize with a terminater for failsafe
+#_0EC4F8: LDA.w #$7F7F ; initialize with a terminator for failsafe
 #_0EC4FB: STA.l $7F1200
 
 #_0EC4FF: LDY.w #$0000
@@ -7570,7 +7570,8 @@ ParseText_WritePlayerName:
 #_0EC638: RTS
 
 ;===================================================================================================
-
+; I hate this thing...
+;===================================================================================================
 RenderText_FilterName:
 #_0EC639: CMP.b #$5F ; legit characters
 #_0EC63B: BCC .exit
@@ -8456,16 +8457,15 @@ RenderText_FinalizeWindow:
 RenderText_DrawCharacter:
 #_0ECA6C: LDA.w $1CD5
 #_0ECA6F: CMP.b #$02
-
-#_0ECA71: BCC .speed_is_fine
+#_0ECA71: BCC .dont_force
 
 #_0ECA73: LDA.b #$02
 
-.speed_is_fine
+.dont_force
 #_0ECA75: JSL JumpTableLocal
 #_0ECA79: dw RenderText_DrawAllCharacters
 #_0ECA7B: dw RenderText_DrawSingleCharacter
-#_0ECA7D: dw RenderText_ReduceCharacterDrawSpeed
+#_0ECA7D: dw RenderText_TickDownDrawDelay
 #_0ECA7F: dw RenderText_NullCharacterDraw
 #_0ECA81: dw RenderText_NullCharacterDraw
 #_0ECA83: dw RenderText_NullCharacterDraw
@@ -8484,6 +8484,7 @@ RenderText_DrawCharacter:
 
 RenderText_DrawAllCharacters:
 #_0ECA99: JSR RenderText_DrawSingleCharacter
+
 #_0ECA9C: REP #$30
 
 #_0ECA9E: LDA.w $1CDD
@@ -8509,7 +8510,9 @@ RenderText_DrawAllCharacters:
 
 RenderText_DrawSingleCharacter:
 #_0ECAB8: REP #$10
+
 #_0ECABA: LDX.w $1CD9
+
 #_0ECABD: LDA.l $7F1200,X
 #_0ECAC1: CMP.b #$59
 #_0ECAC3: BEQ .space
@@ -8520,7 +8523,7 @@ RenderText_DrawSingleCharacter:
 #_0ECAC9: STA.w $012F
 
 .space
-#_0ECACC: REP #$30
+#_0ECACC: REP #$30 ; THIS DOESN'T DO ANYTHIIIIIIIIIIIING
 
 #_0ECACE: LDA.w $1CDD
 #_0ECAD1: ASL A
@@ -8576,7 +8579,7 @@ pool RenderText_PerformVWFing
 ;              ⎵  <   Ⓐ   Ⓑ  ⓧ   ⓨ
 #_0ECB38: db   4,  8,  8,  8,  8,  8
 
-;              |   ¡   ¡  ⎵
+;              I   i   !  ⎵
 #_0ECB3E: db   8,  8,  8,  4
 
 ;---------------------------------------------------------------------------------------------------
@@ -8619,13 +8622,13 @@ RenderText_PerformVWFing:
 
 #_0ECB79: STZ.w $0720
 
+;---------------------------------------------------------------------------------------------------
+
 .same_row
 #_0ECB7C: SEP #$20
 #_0ECB7E: REP #$10
 
 #_0ECB80: STZ.b $03
-
-;---------------------------------------------------------------------------------------------------
 
 #_0ECB82: LDX.w $1CD9
 #_0ECB85: LDA.l $7F1200,X
@@ -8661,10 +8664,10 @@ RenderText_PerformVWFing:
 
 #_0ECBB0: REP #$20
 
-#_0ECBB2: LDA.w #$8000
+#_0ECBB2: LDA.w #TheFont
 #_0ECBB5: STA.b $0D
 
-#_0ECBB7: LDY.b #$0E
+#_0ECBB7: LDY.b #TheFont>>16
 #_0ECBB9: STY.b $0F
 
 #_0ECBBB: REP #$10
@@ -8894,15 +8897,21 @@ RenderText_PerformVWFing:
 
 .bottom_done
 #_0ECCF1: INC.w $1CD9
+
 #_0ECCF4: SEP #$30
+
 #_0ECCF6: PLB
+
 #_0ECCF7: RTS
 
+;===================================================================================================
+
+UNREACHABLE_0ECCF8:
 #_0ECCF8: RTS
 
 ;===================================================================================================
 
-RenderText_ReduceCharacterDrawSpeed:
+RenderText_TickDownDrawDelay:
 #_0ECCF9: DEC.w $1CD5
 #_0ECCFC: RTS
 
@@ -8918,7 +8927,7 @@ RenderText_NextImage:
 #_0ECD00: CMP.b #$14
 #_0ECD02: BNE .not_attract
 
-#_0ECD04: JSL PaletteFilterHistory
+#_0ECD04: JSL PaletteFilter_AttractPlaque
 
 #_0ECD08: LDA.l $7EC007
 #_0ECD0C: BNE .exit
@@ -9157,13 +9166,13 @@ RenderText_DrawSelectedItem:
 #_0ECE16: ASL A
 #_0ECE17: TAX
 
-#_0ECE18: LDA.l ItemMenu_ItemGFXPointers+0,X
+#_0ECE18: LDA.l ItemIconPointers+0,X
 #_0ECE1C: STA.b $00
 
-#_0ECE1E: LDA.l ItemMenu_ItemGFXPointers+1,X
+#_0ECE1E: LDA.l ItemIconPointers+1,X
 #_0ECE22: STA.b $01
 
-#_0ECE24: LDA.b #ItemMenu_ItemGFXPointers>>16
+#_0ECE24: LDA.b #ItemIconPointers>>16
 #_0ECE26: STA.b $02
 
 #_0ECE28: TYX
@@ -10268,9 +10277,9 @@ RenderText_MoreInitialSettings:
 ;===================================================================================================
 
 RenderText_BorderTiles:
-#_0ED37F: dw $28F3, $28F4, $68F3, $28C8
-#_0ED387: dw $387F, $68C8, $A8F3, $A8F4
-#_0ED38F: dw $E8F3
+#_0ED37F: dw $28F3, $28F4, $68F3
+#_0ED385: dw $28C8, $387F, $68C8
+#_0ED38B: dw $A8F3, $A8F4, $E8F3
 
 RenderText_TextPosition:
 #_0ED391: dw $6125, $6244
@@ -10304,7 +10313,7 @@ RenderText_WaitTimers:
 
 ;===================================================================================================
 
-UNREACH_0ED3CF:
+UNREACHABLE_0ED3CF:
 #_0ED3CF: db $08, $03
 
 ;===================================================================================================
@@ -10551,12 +10560,12 @@ OverworldPalettesLoader:
 #_0ED5DC: STA.w $0AAE
 
 .dont_change_e
-#_0ED5DF: JSL Palettes_Load_OWBG1
-#_0ED5E3: JSL Palettes_Load_OWBG2
-#_0ED5E7: JSL Palettes_Load_OWBG3
+#_0ED5DF: JSL PaletteLoad_OWBG1
+#_0ED5E3: JSL PaletteLoad_OWBG2
+#_0ED5E7: JSL PaletteLoad_OWBG3
 
-#_0ED5EB: JSL Palettes_Load_SpriteAux1
-#_0ED5EF: JSL Palettes_Load_SpriteAux2
+#_0ED5EB: JSL PaletteLoad_SpriteAux1
+#_0ED5EF: JSL PaletteLoad_SpriteAux2
 
 #_0ED5F3: RTL
 
@@ -10597,14 +10606,14 @@ FixedColorBlack:
 
 ;===================================================================================================
 
-Overworld_SetScreenBGColor:
+SetOverworldBackgroundColor:
 #_0ED618: JSR .do_ittttt
 
 #_0ED61B: BRA SetBGColorMainBuffer
 
 ;---------------------------------------------------------------------------------------------------
 
-#Overworld_SetScreenBGColorCacheOnly:
+#SetOverworldBackgroundColorCacheOnly:
 #_0ED61D: JSR .do_ittttt
 
 #_0ED620: BRA SetBGColorCacheOnly
@@ -10657,7 +10666,7 @@ UNREACHABLE_0ED653:
 
 ;===================================================================================================
 
-Palette_AssertTranslucencySwap:
+AssertTranslucencySwap:
 #_0ED657: LDA.b #$01
 #_0ED659: STA.w $0ABD
 
@@ -10720,14 +10729,14 @@ Palette_AssertTranslucencySwap:
 
 ;---------------------------------------------------------------------------------------------------
 
-#Palette_RevertTranslucencySwap:
+#RevertTranslucencySwap:
 #_0ED6BB: STZ.w $0ABD
 
 #_0ED6BE: BRA .apply
 
 ;===================================================================================================
 
-RefreshLinkEquipmentPalettes_sword_and_mail:
+RefreshEquipmentPalettes_sword_and_mail:
 #_0ED6C0: REP #$20
 
 #_0ED6C2: LDA.l $7EF359
@@ -10735,22 +10744,22 @@ RefreshLinkEquipmentPalettes_sword_and_mail:
 
 #_0ED6C8: LDA.l $7EF35B
 #_0ED6CC: AND.w #$00FF
-#_0ED6CF: BRA RefreshLinkEquipmentPalettes
+#_0ED6CF: BRA RefreshEquipmentPalettes
 
 ;===================================================================================================
 
-RefreshLinkEquipmentPalettes_zap:
+RefreshEquipmentPalettes_zap:
 #_0ED6D1: REP #$20
 
 #_0ED6D3: LDA.w #$0202
 #_0ED6D6: STA.b $0C
 
 #_0ED6D8: LDA.w #$0404
-#_0ED6DB: BRA RefreshLinkEquipmentPalettes
+#_0ED6DB: BRA RefreshEquipmentPalettes
 
 ;===================================================================================================
 
-RefreshLinkEquipmentPalettes_bunny:
+RefreshEquipmentPalettes_bunny:
 #_0ED6DD: REP #$20
 
 #_0ED6DF: LDA.l $7EF359
@@ -10760,7 +10769,7 @@ RefreshLinkEquipmentPalettes_bunny:
 
 ;===================================================================================================
 
-RefreshLinkEquipmentPalettes:
+RefreshEquipmentPalettes:
 #_0ED6E8: STA.b $0E
 
 #_0ED6EA: LDA.w #PaletteData>>16
@@ -10977,7 +10986,7 @@ OversaturateColor:
 
 ;===================================================================================================
 
-Palette_RestoreBGFromFlash:
+RestorePalettesAfterFlash:
 #_0ED83A: REP #$20
 
 #_0ED83C: LDX.b #$00
@@ -11033,7 +11042,7 @@ Palette_RestoreBGFromFlash:
 
 ;===================================================================================================
 
-Palette_RestoreFixedColor:
+RestoreFixedColor:
 #_0ED8AE: LDA.b $1B
 #_0ED8B0: BNE .exit
 
@@ -11092,7 +11101,7 @@ Palette_RestoreFixedColor:
 
 ;===================================================================================================
 
-Palette_RestoreBGAndHUD:
+RestoreBackgroundPalettes:
 #_0ED8FB: REP #$20
 
 #_0ED8FD: LDX.b #$7E
@@ -11112,7 +11121,7 @@ Palette_RestoreBGAndHUD:
 
 #_0ED915: INC.b $15
 
-#_0ED917: JMP.w Palette_RestoreFixedColor
+#_0ED917: JMP.w RestoreFixedColor
 
 ;===================================================================================================
 ; FREE ROM: 0x26
@@ -11522,7 +11531,7 @@ NULL_0EDD31:
 
 ;===================================================================================================
 
-Overworld_MemorizeMap16Change:
+MemorizeMap16Change:
 #_0EDD40: CMP.w #$0DC5 ; cut grass
 #_0EDD43: BEQ .exit
 
@@ -11650,7 +11659,7 @@ HandleStakeField:
 #_0EDDEE: LDA.w #$0D20
 #_0EDDF1: STA.w $0698
 
-#_0EDDF4: JSL Overworld_DoMapUpdate32x32_long
+#_0EDDF4: JSL DoMap32Update_long
 
 #_0EDDF8: REP #$30
 
@@ -11661,7 +11670,7 @@ HandleStakeField:
 
 ;===================================================================================================
 
-GanonsTower_FlashAfterCrystals:
+FlashTowerAfterCrystals:
 #_0EDDFC: LDA.b $B0
 #_0EDDFE: BNE .skip_sfx
 
@@ -11697,7 +11706,7 @@ GanonsTower_FlashAfterCrystals:
 
 ;===================================================================================================
 
-pool Overworld_CheckForSpecialOverworldTrigger
+pool CheckForSpecialOverworldTrigger
 
 .tile_type
 #_0EDE29: dw $0105
@@ -11727,7 +11736,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Overworld_CheckForSpecialOverworldTrigger:
+CheckForSpecialOverworldTrigger:
 #_0EDE49: REP #$31
 
 #_0EDE4B: JSR GetMap16Tile
@@ -11834,7 +11843,7 @@ GetMap16Tile:
 
 ;===================================================================================================
 
-pool SpecialOverworld_CheckForReturnTrigger
+pool CheckForReturnTrigger
 
 .tile_type
 #_0EDECE: dw $017C
@@ -11862,7 +11871,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-SpecialOverworld_CheckForReturnTrigger:
+CheckForReturnTrigger:
 #_0EDEE3: REP #$31
 
 #_0EDEE5: JSR GetMap16Tile

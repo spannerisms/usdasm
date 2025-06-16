@@ -4456,7 +4456,7 @@ NULL_04E7F0:
 
 ;===================================================================================================
 
-SmoothCurve:
+TrigTable:
 #_04E800: dw   0,   3,   6,   9,  12,  15,  18,  21
 #_04E810: dw  25,  28,  31,  34,  37,  40,  40,  46
 #_04E820: dw  49,  53,  56,  59,  62,  65,  68,  71
@@ -4536,7 +4536,7 @@ SpriteDraw_Hobo:
 #_04EA77: ADC.b #$00
 #_04EA79: STA.b $09
 
-#_04EA7B: JSL SpriteDraw_Tabulated_player_deferred
+#_04EA7B: JSL TabulatedSpriteDraw_player_deferred
 
 #_04EA7F: PLB
 
@@ -4544,7 +4544,7 @@ SpriteDraw_Hobo:
 
 ;===================================================================================================
 
-Landmine_CheckHammer:
+HammerLandmine:
 #_04EA81: LDA.w $0301
 #_04EA84: AND.b #$0A
 #_04EA86: BEQ .not_hammering
@@ -4554,7 +4554,7 @@ Landmine_CheckHammer:
 #_04EA8C: BEQ .not_hammering
 
 #_04EA8E: JSL SetupActionHitbox_long
-#_04EA92: JSL Sprite_SetupHitbox_long
+#_04EA92: JSL SetupSpriteHitBox_long
 #_04EA96: JSL CheckIfHitBoxesOverlap_long
 
 #_04EA9A: RTL
@@ -4598,7 +4598,7 @@ NRURURU:
 #_04EAD0: STA.l $7EF37B
 
 #_04EAD4: LDA.b $F6
-#_04EAD6: JSL BAGE_HandleSword
+#_04EAD6: JSL UpgradeEquipmentCheat
 
 #_04EADA: LDA.l $7EF359
 #_04EADE: CMP.b #$04
@@ -4655,7 +4655,7 @@ DebugHandleNonBAGE:
 
 ;===================================================================================================
 
-#BAGE_HandleSword:
+#UpgradeEquipmentCheat:
 #_04EB33: BPL .exit
 
 #_04EB35: LDA.l $7EF359
@@ -4693,7 +4693,7 @@ DebugHandleNonBAGE:
 
 ;===================================================================================================
 
-Bomb_HijackSlot0ForRecoil:
+HijackSlot0ForBombRecoil:
 #_04EB63: LDX.b #$00
 
 #_04EB65: LDA.w $0D10,X
@@ -4727,7 +4727,7 @@ Bomb_HijackSlot0ForRecoil:
 
 #_04EB90: TYA
 
-#_04EB91: JSL Sprite_ProjectSpeedTowardsLink_long
+#_04EB91: JSL ProjectSpriteSpeedTowardsLink_long
 
 #_04EB95: PLA
 #_04EB96: STA.w $0F70,X
@@ -4753,7 +4753,7 @@ ProjectReflexiveSpeedOntoSprite_UsingLinkCoordinates:
 #_04EBAB: PHK
 #_04EBAC: PLB
 
-#_04EBAD: JSL Sprite_ProjectSpeedTowardsLink_long
+#_04EBAD: JSL ProjectSpriteSpeedTowardsLink_long
 
 #_04EBB1: PLB
 
@@ -4800,7 +4800,7 @@ SpriteDraw_ArrghusWake:
 #_04EBFE: AND.b #$F0
 #_04EC00: STA.w $0B89,X
 
-#_04EC03: JSL SpriteDraw_AllocateOAMFromRegionC
+#_04EC03: JSL AllocateOAMInRegionC
 
 #_04EC07: REP #$20
 
@@ -4810,7 +4810,7 @@ SpriteDraw_ArrghusWake:
 #_04EC0E: SEP #$20
 
 #_04EC10: LDA.b #$06
-#_04EC12: JSL SpriteDraw_Tabulated
+#_04EC12: JSL TabulatedSpriteDraw
 
 #_04EC16: PLA
 #_04EC17: STA.w $0F50,X
@@ -5141,19 +5141,19 @@ OverlayData_12:
 
 ;===================================================================================================
 
-RoomDraw_LayoutPointers:
-#_04EF2F: dl LayoutData_00
-#_04EF32: dl LayoutData_01
-#_04EF35: dl LayoutData_02
-#_04EF38: dl LayoutData_03
-#_04EF3B: dl LayoutData_04
-#_04EF3E: dl LayoutData_05
-#_04EF41: dl LayoutData_06
-#_04EF44: dl LayoutData_07
+RoomLayoutPointers:
+#_04EF2F: dl RoomLayout_00
+#_04EF32: dl RoomLayout_01
+#_04EF35: dl RoomLayout_02
+#_04EF38: dl RoomLayout_03
+#_04EF3B: dl RoomLayout_04
+#_04EF3E: dl RoomLayout_05
+#_04EF41: dl RoomLayout_06
+#_04EF44: dl RoomLayout_07
 
 ;---------------------------------------------------------------------------------------------------
 
-LayoutData_00:
+RoomLayout_00:
 #_04EF47: db $18, $10, $01 ; 0x001: Wall (top, north) ↔ | { 06, 04 } | Size: 00
 #_04EF4A: db $18, $90, $01 ; 0x001: Wall (top, north) ↔ | { 06, 24 } | Size: 00
 #_04EF4D: db $18, $68, $02 ; 0x002: Wall (top, south) ↔ | { 06, 1A } | Size: 00
@@ -5192,7 +5192,7 @@ LayoutData_00:
 
 ;---------------------------------------------------------------------------------------------------
 
-LayoutData_01:
+RoomLayout_01:
 #_04EFAF: db $18, $10, $01 ; 0x001: Wall (top, north) ↔ | { 06, 04 } | Size: 00
 #_04EFB2: db $18, $E8, $02 ; 0x002: Wall (top, south) ↔ | { 06, 3A } | Size: 00
 #_04EFB5: db $08, $18, $61 ; 0x061: Wall (top, west) ↕ | { 02, 06 } | Size: 00
@@ -5218,7 +5218,7 @@ LayoutData_01:
 
 ;---------------------------------------------------------------------------------------------------
 
-LayoutData_02:
+RoomLayout_02:
 #_04EFF0: db $18, $10, $01 ; 0x001: Wall (top, north) ↔ | { 06, 04 } | Size: 00
 #_04EFF3: db $1A, $92, $01 ; 0x001: Wall (top, north) ↔ | { 06, 24 } | Size: 0A
 #_04EFF6: db $1A, $6A, $02 ; 0x002: Wall (top, south) ↔ | { 06, 1A } | Size: 0A
@@ -5253,7 +5253,7 @@ LayoutData_02:
 
 ;---------------------------------------------------------------------------------------------------
 
-LayoutData_03:
+RoomLayout_03:
 #_04F04C: db $18, $10, $01 ; 0x001: Wall (top, north) ↔ | { 06, 04 } | Size: 00
 #_04F04F: db $9A, $92, $01 ; 0x001: Wall (top, north) ↔ | { 26, 24 } | Size: 0A
 #_04F052: db $9A, $6A, $02 ; 0x002: Wall (top, south) ↔ | { 26, 1A } | Size: 0A
@@ -5288,7 +5288,7 @@ LayoutData_03:
 
 ;---------------------------------------------------------------------------------------------------
 
-LayoutData_04:
+RoomLayout_04:
 #_04F0A8: db $18, $10, $01 ; 0x001: Wall (top, north) ↔ | { 06, 04 } | Size: 00
 #_04F0AB: db $18, $90, $01 ; 0x001: Wall (top, north) ↔ | { 06, 24 } | Size: 00
 #_04F0AE: db $18, $68, $02 ; 0x002: Wall (top, south) ↔ | { 06, 1A } | Size: 00
@@ -5315,7 +5315,7 @@ LayoutData_04:
 
 ;---------------------------------------------------------------------------------------------------
 
-LayoutData_05:
+RoomLayout_05:
 #_04F0EC: db $18, $10, $01 ; 0x001: Wall (top, north) ↔ | { 06, 04 } | Size: 00
 #_04F0EF: db $18, $90, $01 ; 0x001: Wall (top, north) ↔ | { 06, 24 } | Size: 00
 #_04F0F2: db $18, $68, $02 ; 0x002: Wall (top, south) ↔ | { 06, 1A } | Size: 00
@@ -5350,7 +5350,7 @@ LayoutData_05:
 
 ;---------------------------------------------------------------------------------------------------
 
-LayoutData_06:
+RoomLayout_06:
 #_04F148: db $18, $10, $01 ; 0x001: Wall (top, north) ↔ | { 06, 04 } | Size: 00
 #_04F14B: db $18, $90, $01 ; 0x001: Wall (top, north) ↔ | { 06, 24 } | Size: 00
 #_04F14E: db $18, $68, $02 ; 0x002: Wall (top, south) ↔ | { 06, 1A } | Size: 00
@@ -5385,7 +5385,7 @@ LayoutData_06:
 
 ;---------------------------------------------------------------------------------------------------
 
-LayoutData_07:
+RoomLayout_07:
 #_04F1A4: db $18, $10, $01 ; 0x001: Wall (top, north) ↔ | { 06, 04 } | Size: 00
 #_04F1A7: db $18, $E8, $02 ; 0x002: Wall (top, south) ↔ | { 06, 3A } | Size: 00
 #_04F1AA: db $08, $18, $61 ; 0x061: Wall (top, west) ↕ | { 02, 06 } | Size: 00
@@ -5413,7 +5413,7 @@ WaterOverlayData:
 
 ;===================================================================================================
 
-SpecialUnderworldObjects_pushable_block:
+PushableBlocks:
 ;           roomID, tilemap index
 #_04F1DE: dw $010B, $193A ; ROOM 010B
 #_04F1E2: dw $010B, $193E
@@ -5561,7 +5561,7 @@ SpecialUnderworldObjects_pushable_block:
 
 ;===================================================================================================
 
-SpecialUnderworldObjects_torch:
+LightableTorches:
 ;         dw  room : dw tilemap index, ...                : terminator
 #_04F36A: dw $0043 : dw $03AA, $03B6, $09AA, $09B6        : dw $FFFF ; ROOM 0043
 #_04F376: dw $00CA : dw $14B2, $16AA, $18B2               : dw $FFFF ; ROOM 00CA
@@ -5687,8 +5687,8 @@ DefaultSaveFileItems:
 #_04F4DD: db $00 ; $x357 - no pearl
 #_04F4DE: db $00 ; $x358 - unused
 #_04F4DF: db $00 ; $x359 - no sword
-#_04F4E0: db $00 ; $x35A - green mail
-#_04F4E1: db $00 ; $x35B - no shield
+#_04F4E0: db $00 ; $x35A - no shield
+#_04F4E1: db $00 ; $x35B - green mail
 #_04F4E2: db $00 ; $x35C - no bottle 1
 #_04F4E3: db $00 ; $x35D - no bottle 2
 #_04F4E4: db $00 ; $x35E - no bottle 3
@@ -5724,7 +5724,7 @@ DefaultSaveFileItems:
 
 ;===================================================================================================
 
-RoomHeader_RoomToPointer:
+RoomHeaderPointers:
 #_04F502: dw RoomHeader_Room0000
 #_04F504: dw RoomHeader_Room0001
 #_04F506: dw RoomHeader_Room0002

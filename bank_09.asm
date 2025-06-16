@@ -26,7 +26,7 @@ Ancilla_AddHitStars:
 #_098025: PHK
 #_098026: PLB
 
-#_098027: JSR Ancilla_AddAncilla
+#_098027: JSR AddAncilla
 #_09802A: BCS .spawn_failed
 
 #_09802C: STZ.w $0C5E,X
@@ -103,7 +103,7 @@ Ancilla_AddHitStars:
 #_098087: LDA.b $05
 #_098089: STA.w $038F,X
 
-#_09808C: BRL AncillaInit_SetCoordsAndExit
+#_09808C: BRL SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -155,8 +155,8 @@ AncillaAdd_Blanket:
 
 ;===================================================================================================
 
-AncillaInit_SetCoordsAndExit:
-#_0980C3: JSR Ancilla_SetCoordinates
+SetAncillaCoordinatesAndExit:
+#_0980C3: JSR SetAncillaCoordinates
 
 #_0980C6: PLB
 
@@ -169,7 +169,7 @@ AncillaAdd_Snoring:
 #_0980C9: PHK
 #_0980CA: PLB
 
-#_0980CB: JSR Ancilla_AddAncilla
+#_0980CB: JSR AddAncilla
 #_0980CE: BCS EXIT_0980FD
 
 ;---------------------------------------------------------------------------------------------------
@@ -202,7 +202,7 @@ AncillaAdd_Snoring:
 
 #_0980F8: SEP #$20
 
-#_0980FA: BRL AncillaInit_SetCoordsAndExit
+#_0980FA: BRL SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -250,7 +250,7 @@ AncillaAdd_Bomb:
 #_098120: PHK
 #_098121: PLB
 
-#_098122: JSR Ancilla_AddAncilla
+#_098122: JSR AddAncilla
 #_098125: BCS EXIT_0980FD
 
 #_098127: LDA.l $7EF343
@@ -269,7 +269,7 @@ AncillaAdd_Bomb:
 
 #_098139: PHX
 
-#_09813A: JSL RefreshIcon_long
+#_09813A: JSL RefreshItemIcon
 
 #_09813E: PLX
 
@@ -347,11 +347,11 @@ AncillaAdd_Bomb:
 ;---------------------------------------------------------------------------------------------------
 
 .finish_up
-#_0981A5: JSL Link_CalculateSFXPan
+#_0981A5: JSL CalculateLinkSFXPan
 #_0981A9: ORA.b #$0B ; SFX2.0B
 #_0981AB: STA.w $012E
 
-#_0981AE: BRL AncillaInit_SetCoordsAndExit
+#_0981AE: BRL SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -459,7 +459,7 @@ AncillaAdd_Boomerang:
 #_098210: PHK
 #_098211: PLB
 
-#_098212: JSR Ancilla_AddAncilla
+#_098212: JSR AddAncilla
 #_098215: BCC .open_slot
 
 #_098217: BRL .exit
@@ -684,7 +684,6 @@ AncillaAdd_Boomerang:
 #_09830F: LDA.b $20
 #_098311: CLC
 #_098312: ADC.w #$0008
-
 #_098315: CLC
 #_098316: ADC.w .offset_y_sword,Y
 #_098319: STA.b $00
@@ -706,7 +705,6 @@ AncillaAdd_Boomerang:
 #_09832A: LDA.b $20
 #_09832C: CLC
 #_09832D: ADC.w #$0008
-
 #_098330: CLC
 #_098331: ADC.w .offset_y_standard,Y
 #_098334: STA.b $00
@@ -721,7 +719,7 @@ AncillaAdd_Boomerang:
 ;---------------------------------------------------------------------------------------------------
 
 .proceed_to_set_coods
-#_098340: BRL AncillaInit_SetCoordsAndExit
+#_098340: BRL SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -740,7 +738,7 @@ AncillaAdd_BoomerangAsClink:
 #_09834E: CMP.b #$F0 ; TILETYPE F0
 #_098350: BEQ .shut_door
 
-#_098352: JSL Ancilla_CalculateSFXPan
+#_098352: JSL CalculateAncillaSFXPan
 #_098356: ORA.b #$05 ; SFX2.05
 #_098358: STA.w $012E
 
@@ -749,7 +747,7 @@ AncillaAdd_BoomerangAsClink:
 ;---------------------------------------------------------------------------------------------------
 
 .shut_door
-#_09835D: JSL Ancilla_CalculateSFXPan
+#_09835D: JSL CalculateAncillaSFXPan
 #_098361: ORA.b #$06 ; SFX2.06
 #_098363: STA.w $012E
 
@@ -1351,7 +1349,7 @@ AncillaAdd_ItemReceipt:
 #_0985E9: PHK
 #_0985EA: PLB
 
-#_0985EB: JSR Ancilla_AddAncilla
+#_0985EB: JSR AddAncilla
 #_0985EE: BCC .free_slot
 
 #_0985F0: BRL .exit
@@ -1460,7 +1458,7 @@ AncillaAdd_ItemReceipt:
 #_098662: BNE .not_mitts
 
 .power_glove
-#_098664: JSL Palettes_Load_LinkGloves
+#_098664: JSL PaletteLoad_LinkGloves
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -1597,7 +1595,7 @@ AncillaAdd_ItemReceipt:
 #_0986FE: LDA.b #$23 ; ANCILLA 23
 #_098700: JSL AncillaAdd_CapePoof
 
-#_098704: JSL Link_CalculateSFXPan
+#_098704: JSL CalculateLinkSFXPan
 #_098708: ORA.b #$15 ; SFX2.15
 #_09870A: STA.w $012E
 
@@ -1660,7 +1658,7 @@ AncillaAdd_ItemReceipt:
 #_09874D: STA.b [$00]
 
 .refresh_hud
-#_09874F: JSL RefreshIcon_long
+#_09874F: JSL RefreshItemIcon
 
 #_098753: BRA .handle_gfx
 
@@ -1675,7 +1673,7 @@ AncillaAdd_ItemReceipt:
 #_09875C: AND.b #$03
 #_09875E: STA.b [$00]
 
-#_098760: JSL Link_CalculateSFXPan
+#_098760: JSL CalculateLinkSFXPan
 #_098764: ORA.b #$2D ; SFX3.2D
 #_098766: STA.w $012F
 
@@ -1720,7 +1718,7 @@ AncillaAdd_ItemReceipt:
 
 .shield
 #_098792: JSL DecompressShieldGraphics
-#_098796: JSL Palettes_Load_Shield
+#_098796: JSL PaletteLoad_Shield
 
 #_09879A: LDA.b $72
 
@@ -1747,7 +1745,7 @@ AncillaAdd_ItemReceipt:
 #_0987B1: BEQ .not_sword
 
 #_0987B3: JSL DecompressSwordGraphics
-#_0987B7: JSL Palettes_Load_Sword
+#_0987B7: JSL PaletteLoad_Sword
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -1787,7 +1785,7 @@ AncillaAdd_ItemReceipt:
 
 #_0987E7: LDY.b #$04
 #_0987E9: LDA.b #$35 ; ANCILLA 35
-#_0987EB: JSL AncillaAdd_MSCutscene
+#_0987EB: JSL AncillaAdd_MasterSwordCutscene
 
 #_0987EF: PLY
 #_0987F0: PLX
@@ -1918,7 +1916,7 @@ AncillaAdd_ItemReceipt:
 #_098884: CMP.b #$01 ; ITEMGET 01
 #_098886: BNE .not_text_or_ms
 
-#_098888: JSL Link_CalculateSFXPan
+#_098888: JSL CalculateLinkSFXPan
 #_09888C: ORA.b #$2C ; SFX2.2C
 #_09888E: STA.w $012E
 
@@ -1950,7 +1948,7 @@ AncillaAdd_ItemReceipt:
 ;---------------------------------------------------------------------------------------------------
 
 .dungeon_prize_sfx
-#_0988AE: JSL Link_CalculateSFXPan
+#_0988AE: JSL CalculateLinkSFXPan
 #_0988B2: ORA.b #$13 ; SONG 13
 #_0988B4: STA.w $012C
 
@@ -1959,7 +1957,7 @@ AncillaAdd_ItemReceipt:
 ;---------------------------------------------------------------------------------------------------
 
 .not_dungeon_prize_sfx
-#_0988B9: JSL Link_CalculateSFXPan
+#_0988B9: JSL CalculateLinkSFXPan
 #_0988BD: ORA.b #$0F ; SFX3.0F
 #_0988BF: STA.w $012F
 
@@ -2059,7 +2057,7 @@ AncillaAdd_ItemReceipt:
 
 #_09892B: SEP #$20
 
-#_09892D: BRL AncillaInit_SetCoordsAndExit
+#_09892D: BRL SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -2218,10 +2216,10 @@ AncillaAdd_TossedPondItem:
 
 #_098A35: STX.w $02D8
 
-#_098A38: JSR Ancilla_AddAncilla
+#_098A38: JSR AddAncilla
 #_098A3B: BCS EXIT_098AB8
 
-#_098A3D: JSL Link_CalculateSFXPan
+#_098A3D: JSL CalculateLinkSFXPan
 #_098A41: ORA.b #$13 ; SFX3.13
 #_098A43: STA.w $012F
 
@@ -2279,8 +2277,6 @@ AncillaAdd_TossedPondItem:
 #_098A8C: LDA.b #$10
 #_098A8E: STA.w $0C68,X
 
-;---------------------------------------------------------------------------------------------------
-
 #_098A91: LDA.w $02D8
 #_098A94: STA.w $0C5E,X
 
@@ -2291,21 +2287,19 @@ AncillaAdd_TossedPondItem:
 #_098A9A: LDA.w .offset_y,Y
 #_098A9D: AND.w #$00FF
 #_098AA0: ORA.w #$FF00
-
 #_098AA3: CLC
 #_098AA4: ADC.b $20
 #_098AA6: STA.b $00
 
 #_098AA8: LDA.w .offset_x,Y
 #_098AAB: AND.w #$00FF
-
 #_098AAE: CLC
 #_098AAF: ADC.b $22
 #_098AB1: STA.b $02
 
 #_098AB3: SEP #$20
 
-#_098AB5: BRL AncillaInit_SetCoordsAndExit
+#_098AB5: BRL SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -2359,7 +2353,7 @@ AddHappinessPondRupees:
 
 #_098AE5: LDY.b #$09
 #_098AE7: LDA.b #$42 ; ANCILLA 42
-#_098AE9: JSR Ancilla_AddAncilla
+#_098AE9: JSR AddAncilla
 #_098AEC: BCC .free_slot
 
 #_098AEE: PLA
@@ -2370,7 +2364,7 @@ AddHappinessPondRupees:
 ;---------------------------------------------------------------------------------------------------
 
 .free_slot
-#_098AF2: JSL Link_CalculateSFXPan
+#_098AF2: JSL CalculateLinkSFXPan
 #_098AF6: ORA.b #$13 ; SFX3.13
 #_098AF8: STA.w $012F
 
@@ -2551,7 +2545,7 @@ AncillaAdd_FallingPrize:
 
 #_098BC4: STX.w $02D8
 
-#_098BC7: JSR Ancilla_AddAncilla
+#_098BC7: JSR AddAncilla
 #_098BCA: BCS EXIT_098B8E
 
 #_098BCC: PHX
@@ -2630,7 +2624,7 @@ AncillaAdd_FallingPrize:
 #_098C36: STA.b $03
 #_098C38: STZ.b $02
 
-#_098C3A: BRL AncillaInit_SetCoordsAndExit
+#_098C3A: BRL SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -2653,7 +2647,7 @@ AncillaAdd_FallingPrize:
 
 #_098C52: SEP #$20
 
-#_098C54: BRL AncillaInit_SetCoordsAndExit
+#_098C54: BRL SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -2676,7 +2670,7 @@ AncillaAdd_FallingPrize:
 
 #_098C6C: SEP #$20
 
-#_098C6E: BRL AncillaInit_SetCoordsAndExit
+#_098C6E: BRL SetAncillaCoordinatesAndExit
 
 ;===================================================================================================
 
@@ -2692,7 +2686,7 @@ AncillaAdd_DugUpFlute:
 #_098C74: PHK
 #_098C75: PLB
 
-#_098C76: JSR Ancilla_AddAncilla
+#_098C76: JSR AddAncilla
 #_098C79: BCS .exit
 
 #_098C7B: STZ.w $0C54,X
@@ -2730,7 +2724,7 @@ AncillaAdd_DugUpFlute:
 
 #_098CAA: SEP #$20
 
-#_098CAC: BRL AncillaInit_SetCoordsAndExit
+#_098CAC: BRL SetAncillaCoordinatesAndExit
 
 .exit
 #_098CAF: PLB
@@ -2815,7 +2809,7 @@ AncillaAdd_ExplodingWeatherVane:
 #_098D12: PHK
 #_098D13: PLB
 
-#_098D14: JSR Ancilla_AddAncilla
+#_098D14: JSR AddAncilla
 #_098D17: BCS .exit
 
 #_098D19: LDA.b #$0A
@@ -2898,10 +2892,10 @@ AncillaAdd_CutsceneDuck:
 #_098D91: PHK
 #_098D92: PLB
 
-#_098D93: JSR AncillaAdd_CheckForPresence
+#_098D93: JSR CheckAncillaPresence
 #_098D96: BCS .exit
 
-#_098D98: JSR Ancilla_AddAncilla
+#_098D98: JSR AddAncilla
 #_098D9B: BCS .exit
 
 #_098D9D: LDA.b #$02
@@ -2932,7 +2926,7 @@ AncillaAdd_CutsceneDuck:
 
 #_098DCB: SEP #$20
 
-#_098DCD: BRL AncillaInit_SetCoordsAndExit
+#_098DCD: BRL SetAncillaCoordinatesAndExit
 
 .exit
 #_098DD0: PLB
@@ -2981,7 +2975,7 @@ AncillaAdd_SuperBombExplosion:
 #_098DFA: PHK
 #_098DFB: PLB
 
-#_098DFC: JSR Ancilla_AddAncilla
+#_098DFC: JSR AddAncilla
 #_098DFF: BCC .free_slot
 
 #_098E01: BRL .exit
@@ -3031,7 +3025,7 @@ AncillaAdd_SuperBombExplosion:
 
 #_098E47: SEP #$20
 
-#_098E49: BRL AncillaInit_SetCoordsAndExit
+#_098E49: BRL SetAncillaCoordinatesAndExit
 
 .exit
 #_098E4C: PLB
@@ -3076,7 +3070,7 @@ ConfigureRevivalAncillae:
 
 #_098E7D: SEP #$20
 
-#_098E7F: JSR Ancilla_SetCoordinates
+#_098E7F: JSR SetAncillaCoordinates
 
 #_098E82: STZ.w $029E,X
 
@@ -3131,7 +3125,6 @@ ConfigureRevivalAncillae:
 #_098EC3: LDA.b $20
 #_098EC5: CLC
 #_098EC6: ADC.w AncillaAdd_MagicPowder_offset_y,Y
-
 #_098EC9: CLC
 #_098ECA: ADC.w #$FFEC
 #_098ECD: STA.b $00
@@ -3139,14 +3132,13 @@ ConfigureRevivalAncillae:
 #_098ECF: LDA.b $22
 #_098ED1: CLC
 #_098ED2: ADC.w #$FFF8
-
 #_098ED5: CLC
 #_098ED6: ADC.w AncillaAdd_MagicPowder_offset_x,Y
 #_098ED9: STA.b $02
 
 #_098EDB: SEP #$20
 
-#_098EDD: BRL AncillaInit_SetCoordsAndExit
+#_098EDD: BRL SetAncillaCoordinatesAndExit
 
 ;===================================================================================================
 
@@ -3175,7 +3167,7 @@ AncillaAdd_CaneOfByrnaInitSpark:
 ;---------------------------------------------------------------------------------------------------
 
 #_098EF3: PLA
-#_098EF4: JSR Ancilla_AddAncilla
+#_098EF4: JSR AddAncilla
 #_098EF7: BCS .exit
 
 #_098EF9: STZ.w $0C5E,X
@@ -3219,7 +3211,7 @@ AncillaAdd_LampFlame:
 #_098F1D: PHK
 #_098F1E: PLB
 
-#_098F1F: JSR Ancilla_AddAncilla
+#_098F1F: JSR AddAncilla
 #_098F22: BCS .exit
 
 #_098F24: STZ.w $0C5E,X
@@ -3248,8 +3240,8 @@ AncillaAdd_LampFlame:
 
 #_098F49: SEP #$20
 
-#_098F4B: JSR Ancilla_SetCoordinates
-#_098F4E: JSL Ancilla_CalculateSFXPan
+#_098F4B: JSR SetAncillaCoordinates
+#_098F4E: JSL CalculateAncillaSFXPan
 
 #_098F52: ORA.b #$2A ; SFX2.2A
 #_098F54: STA.w $012E
@@ -3270,7 +3262,7 @@ AncillaAdd_ShovelDirt:
 #_098F5C: PHK
 #_098F5D: PLB
 
-#_098F5E: JSR Ancilla_AddAncilla
+#_098F5E: JSR AddAncilla
 #_098F61: BCS .exit
 
 #_098F63: STZ.w $0C5E,X
@@ -3288,7 +3280,7 @@ AncillaAdd_ShovelDirt:
 
 #_098F75: SEP #$20
 
-#_098F77: BRL AncillaInit_SetCoordsAndExit
+#_098F77: BRL SetAncillaCoordinatesAndExit
 
 .exit
 #_098F7A: PLB
@@ -3297,12 +3289,12 @@ AncillaAdd_ShovelDirt:
 
 ;===================================================================================================
 
-AncillaAdd_MSCutscene:
+AncillaAdd_MasterSwordCutscene:
 #_098F7C: PHB
 #_098F7D: PHK
 #_098F7E: PLB
 
-#_098F7F: JSR Ancilla_AddAncilla
+#_098F7F: JSR AddAncilla
 #_098F82: BCS .exit
 
 #_098F84: STZ.w $0C5E,X
@@ -3327,7 +3319,7 @@ AncillaAdd_MSCutscene:
 
 #_098FA3: SEP #$20
 
-#_098FA5: BRL AncillaInit_SetCoordsAndExit
+#_098FA5: BRL SetAncillaCoordinatesAndExit
 
 .exit
 #_098FA8: PLB
@@ -3374,7 +3366,7 @@ AncillaAdd_DashDust:
 .continue
 #_098FC6: STX.b $72
 
-#_098FC8: JSR Ancilla_AddAncilla
+#_098FC8: JSR AddAncilla
 #_098FCB: BCS .exit
 
 #_098FCD: LDA.b $72
@@ -3408,7 +3400,7 @@ AncillaAdd_DashDust:
 
 #_098FF3: SEP #$20
 
-#_098FF5: JMP.w AncillaInit_SetCoordsAndExit
+#_098FF5: JMP.w SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -3427,7 +3419,7 @@ AncillaAdd_DashDust:
 
 #_09900A: SEP #$20
 
-#_09900C: JMP.w AncillaInit_SetCoordsAndExit
+#_09900C: JMP.w SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -3524,7 +3516,7 @@ AncillaAdd_BlastWallFireball:
 
 #_099081: SEP #$20
 
-#_099083: BRL AncillaInit_SetCoordsAndExit
+#_099083: BRL SetAncillaCoordinatesAndExit
 
 .exit
 #_099086: PLB
@@ -3576,13 +3568,13 @@ AncillaAdd_Arrow:
 
 #_0990A7: STX.b $76
 
-#_0990A9: JSR AncillaAdd_CheckForPresence
+#_0990A9: JSR CheckAncillaPresence
 #_0990AC: BCC .none_exist
 
 #_0990AE: BRL .exit
 
 .none_exist
-#_0990B1: JSR AncillaAdd_ArrowFindSlot
+#_0990B1: JSR FindArrowAncillaSlot
 #_0990B4: BCC .free_slot
 
 #_0990B6: BRL .exit
@@ -3590,7 +3582,7 @@ AncillaAdd_Arrow:
 ;---------------------------------------------------------------------------------------------------
 
 .free_slot
-#_0990B9: JSL Link_CalculateSFXPan
+#_0990B9: JSL CalculateLinkSFXPan
 #_0990BD: ORA.b #$07 ; SFX2.07
 #_0990BF: STA.w $012E
 
@@ -3630,7 +3622,7 @@ AncillaAdd_Arrow:
 
 #_0990F7: SEP #$20
 
-#_0990F9: JSR Ancilla_SetCoordinates
+#_0990F9: JSR SetAncillaCoordinates
 
 #_0990FC: SEC
 
@@ -3654,7 +3646,7 @@ AncillaAdd_BunnyPoof:
 #_099103: PHK
 #_099104: PLB
 
-#_099105: JSR Ancilla_AddAncilla
+#_099105: JSR AddAncilla
 #_099108: BCS EXIT_09915D
 
 #_09910A: LDA.b #$0C
@@ -3665,14 +3657,14 @@ AncillaAdd_BunnyPoof:
 #_099111: LDA.w $02E0
 #_099114: BNE .bunny
 
-#_099116: JSL Link_CalculateSFXPan
+#_099116: JSL CalculateLinkSFXPan
 #_09911A: ORA.b #$14 ; SFX2.14
 #_09911C: STA.w $012E
 
 #_09911F: BRA .proceed
 
 .bunny
-#_099121: JSL Link_CalculateSFXPan
+#_099121: JSL CalculateLinkSFXPan
 #_099125: ORA.b #$15 ; SFX2.15
 #_099127: STA.w $012E
 
@@ -3686,7 +3678,7 @@ AncillaAdd_CapePoof:
 #_09912D: PHK
 #_09912E: PLB
 
-#_09912F: JSR Ancilla_AddAncilla
+#_09912F: JSR AddAncilla
 #_099132: BCS EXIT_09915D
 
 #_099134: LDA.b #$01
@@ -3718,7 +3710,7 @@ AncillaAdd_ArbitraryPoof:
 
 #_099158: SEP #$20
 
-#_09915A: BRL AncillaInit_SetCoordsAndExit
+#_09915A: BRL SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -3734,21 +3726,21 @@ AncillaAdd_DwarfPoof:
 #_099160: PHK
 #_099161: PLB
 
-#_099162: JSR Ancilla_AddAncilla
+#_099162: JSR AddAncilla
 #_099165: BCS .exit
 
 #_099167: LDA.l $7EF3CC
 #_09916B: CMP.b #$08 ; FOLLOWER 08
 #_09916D: BNE .not_dwarf
 
-#_09916F: JSL Link_CalculateSFXPan
+#_09916F: JSL CalculateLinkSFXPan
 #_099173: ORA.b #$14 ; SFX2.14
 #_099175: STA.w $012E
 
 #_099178: BRA .continue
 
 .not_dwarf
-#_09917A: JSL Link_CalculateSFXPan
+#_09917A: JSL CalculateLinkSFXPan
 #_09917E: ORA.b #$15 ; SFX2.15
 #_099180: STA.w $012E
 
@@ -3792,7 +3784,7 @@ AncillaAdd_DwarfPoof:
 
 #_0991BC: SEP #$20
 
-#_0991BE: BRL AncillaInit_SetCoordsAndExit
+#_0991BE: BRL SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -3814,7 +3806,7 @@ AncillaAdd_BushPoof:
 
 #_0991CD: LDY.b #$04
 #_0991CF: LDA.b #$3F ; ANCILLA 3F
-#_0991D1: JSR Ancilla_AddAncilla
+#_0991D1: JSR AddAncilla
 #_0991D4: BCS .exit
 
 #_0991D6: STZ.w $0C5E,X
@@ -3822,7 +3814,7 @@ AncillaAdd_BushPoof:
 #_0991D9: LDA.b #$07
 #_0991DB: STA.w $0C68,X
 
-#_0991DE: JSL Link_CalculateSFXPan
+#_0991DE: JSL CalculateLinkSFXPan
 #_0991E2: ORA.b #$15 ; SFX2.15
 #_0991E4: STA.w $012E
 
@@ -3838,7 +3830,7 @@ AncillaAdd_BushPoof:
 
 #_0991F5: SEP #$20
 
-#_0991F7: JMP.w AncillaInit_SetCoordsAndExit
+#_0991F7: JMP.w SetAncillaCoordinatesAndExit
 
 .exit
 #_0991FA: PLB
@@ -3852,7 +3844,7 @@ AncillaAdd_EtherSpell:
 #_0991FD: PHK
 #_0991FE: PLB
 
-#_0991FF: JSR Ancilla_AddAncilla
+#_0991FF: JSR AddAncilla
 #_099202: BCC .free_slot
 
 #_099204: BRL .exit
@@ -3887,7 +3879,7 @@ AncillaAdd_EtherSpell:
 #_09922D: LDA.b #$40
 #_09922F: STA.l $7F5812
 
-#_099233: JSL Link_CalculateSFXPan
+#_099233: JSL CalculateLinkSFXPan
 #_099237: ORA.b #$26 ; SFX3.26
 #_099239: STA.w $012F
 
@@ -3941,15 +3933,15 @@ AncillaAdd_EtherSpell:
 #_099293: LDA.b $20
 #_099295: SEC
 #_099296: SBC.w #$0010
-
 #_099299: STA.l $7F580A
+
 #_09929D: CLC
 #_09929E: ADC.w #$0024
 #_0992A1: STA.l $7F5810
 
 #_0992A5: SEP #$20
 
-#_0992A7: BRL AncillaInit_SetCoordsAndExit
+#_0992A7: BRL SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -3960,7 +3952,7 @@ AncillaAdd_EtherSpell:
 
 ;===================================================================================================
 
-AncillaAdd_VictorySpin:
+AncillaAdd_SwordUpSparkle:
 #_0992AC: PHB
 #_0992AD: PHK
 #_0992AE: PLB
@@ -3972,7 +3964,7 @@ AncillaAdd_VictorySpin:
 
 #_0992B8: LDY.b #$00
 #_0992BA: LDA.b #$3B ; ANCILLA 3B
-#_0992BC: JSR Ancilla_AddAncilla
+#_0992BC: JSR AddAncilla
 #_0992BF: BCS .exit
 
 #_0992C1: STZ.w $0C5E,X
@@ -4025,7 +4017,7 @@ AncillaAdd_MagicPowder:
 #_0992F1: PHK
 #_0992F2: PLB
 
-#_0992F3: JSR Ancilla_AddAncilla
+#_0992F3: JSR AddAncilla
 #_0992F6: BCC .free_slot
 
 #_0992F8: BRL .exit
@@ -4123,11 +4115,11 @@ AncillaAdd_MagicPowder:
 
 #_099375: SEP #$20
 
-#_099377: JSL Link_CalculateSFXPan
+#_099377: JSL CalculateLinkSFXPan
 #_09937B: ORA.b #$0D ; SFX2.0D
 #_09937D: STA.w $012E
 
-#_099380: JMP.w AncillaInit_SetCoordsAndExit
+#_099380: JMP.w SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -4161,7 +4153,7 @@ AncillaAdd_WallTapSpark:
 #_099396: PHK
 #_099397: PLB
 
-#_099398: JSR Ancilla_AddAncilla
+#_099398: JSR AddAncilla
 #_09939B: BCS .exit
 
 #_09939D: LDA.b #$05
@@ -4186,7 +4178,7 @@ AncillaAdd_WallTapSpark:
 
 #_0993BB: SEP #$20
 
-#_0993BD: BRL AncillaInit_SetCoordsAndExit
+#_0993BD: BRL SetAncillaCoordinatesAndExit
 
 .exit
 #_0993C0: PLB
@@ -4200,7 +4192,7 @@ AncillaAdd_SwordSwingSparkle:
 #_0993C3: PHK
 #_0993C4: PLB
 
-#_0993C5: JSR Ancilla_AddAncilla
+#_0993C5: JSR AddAncilla
 #_0993C8: BCS .exit
 
 #_0993CA: STZ.w $0C5E,X
@@ -4222,7 +4214,7 @@ AncillaAdd_SwordSwingSparkle:
 
 #_0993E2: SEP #$20
 
-#_0993E4: BRL AncillaInit_SetCoordsAndExit
+#_0993E4: BRL SetAncillaCoordinatesAndExit
 
 .exit
 #_0993E7: PLB
@@ -4256,10 +4248,10 @@ AncillaAdd_DashTremor:
 #_0993F4: PHK
 #_0993F5: PLB
 
-#_0993F6: JSR AncillaAdd_CheckForPresence
+#_0993F6: JSR CheckAncillaPresence
 #_0993F9: BCS .exit
 
-#_0993FB: JSR Ancilla_AddAncilla
+#_0993FB: JSR AddAncilla
 #_0993FE: BCS .exit
 
 #_099400: LDA.b #$10
@@ -4366,7 +4358,7 @@ AncillaAdd_BoomerangWallClink:
 
 #_099493: LDY.b #$01
 #_099495: LDA.b #$06 ; ANCILLA 06
-#_099497: JSR Ancilla_AddAncilla
+#_099497: JSR AddAncilla
 #_09949A: BCS EXIT_0994C4
 
 #_09949C: STZ.w $0C5E,X
@@ -4393,7 +4385,7 @@ AncillaAdd_BoomerangWallClink:
 
 #_0994BF: SEP #$20
 
-#_0994C1: BRL AncillaInit_SetCoordsAndExit
+#_0994C1: BRL SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -4411,7 +4403,7 @@ AncillaAdd_HookshotWallClink:
 
 #_0994C9: STX.b $74
 
-#_0994CB: JSR Ancilla_AddAncilla
+#_0994CB: JSR AddAncilla
 #_0994CE: BCS EXIT_0994C4
 
 ;---------------------------------------------------------------------------------------------------
@@ -4424,7 +4416,7 @@ AncillaAdd_HookshotWallClink:
 #_0994D8: PHX
 
 #_0994D9: LDX.b $74
-#_0994DB: JSR Ancilla_GetCoordinates
+#_0994DB: JSR CopyAncillaCoordinates
 
 #_0994DE: LDA.w $0C72,X
 #_0994E1: ASL A
@@ -4446,7 +4438,7 @@ AncillaAdd_HookshotWallClink:
 
 #_0994F7: PLX
 
-#_0994F8: BRL AncillaInit_SetCoordsAndExit
+#_0994F8: BRL SetAncillaCoordinatesAndExit
 
 ;===================================================================================================
 
@@ -4460,10 +4452,10 @@ AncillaAdd_Duck_take_off:
 #_0994FF: PHK
 #_099500: PLB
 
-#_099501: JSR AncillaAdd_CheckForPresence
+#_099501: JSR CheckAncillaPresence
 #_099504: BCS EXIT_099587_bounce
 
-#_099506: JSR Ancilla_AddAncilla
+#_099506: JSR AddAncilla
 #_099509: BCS EXIT_099587_bounce
 
 ;---------------------------------------------------------------------------------------------------
@@ -4486,10 +4478,10 @@ AncillaAdd_Duck_drop_off:
 #_09951E: PHK
 #_09951F: PLB
 
-#_099520: JSR AncillaAdd_CheckForPresence
+#_099520: JSR CheckAncillaPresence
 #_099523: BCS EXIT_099587
 
-#_099525: JSR Ancilla_AddAncilla
+#_099525: JSR AddAncilla
 #_099528: BCS EXIT_099587
 
 #_09952A: LDA.b #$00 ; LINKSTATE 00
@@ -4554,7 +4546,7 @@ AncillaAdd_ArbitraryDuck:
 
 #_099582: SEP #$20
 
-#_099584: BRL AncillaInit_SetCoordsAndExit
+#_099584: BRL SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -4570,7 +4562,7 @@ AncillaAdd_QuakeSpell:
 #_09958A: PHK
 #_09958B: PLB
 
-#_09958C: JSR Ancilla_AddAncilla
+#_09958C: JSR AddAncilla
 #_09958F: BCC .free_slot
 
 #_099591: BRL .exit
@@ -4654,7 +4646,7 @@ AncillaAdd_SpinAttackInitSpark:
 
 #_09960E: STX.b $72
 
-#_099610: JSR Ancilla_AddAncilla
+#_099610: JSR AddAncilla
 #_099613: BCS .exit
 
 ;---------------------------------------------------------------------------------------------------
@@ -4710,7 +4702,7 @@ AncillaAdd_SpinAttackInitSpark:
 
 #_099653: SEP #$20
 
-#_099655: BRL AncillaInit_SetCoordsAndExit
+#_099655: BRL SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -4820,11 +4812,11 @@ AncillaAdd_BlastWall:
 
 #_099708: LDA.l $7F001C
 #_09970C: CMP.b #$04
-#_09970E: BCS .use_second_set
+#_09970E: BCS .use_first_set
 
 #_099710: LDY.b #$10
 
-.use_second_set
+.use_first_set
 #_099712: LDX.b #$06
 
 ;---------------------------------------------------------------------------------------------------
@@ -4926,12 +4918,11 @@ AncillaAdd_SwordChargeSparkle:
 
 #_099782: LDX.b $72
 
-#_099784: JSR Ancilla_GetCoordinates
+#_099784: JSR CopyAncillaCoordinates
 
 #_099787: STZ.b $0B
 
 #_099789: LDA.w $029E,X
-
 #_09978C: CMP.b #$F8
 #_09978E: BCC .dont_zero
 
@@ -4978,7 +4969,7 @@ AncillaAdd_SwordChargeSparkle:
 
 #_0997C7: SEP #$20
 
-#_0997C9: BRL AncillaInit_SetCoordsAndExit
+#_0997C9: BRL SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -5046,7 +5037,7 @@ AncillaAdd_SilverArrowSparkle:
 
 #_099809: LDX.b $72
 
-#_09980B: JSR Ancilla_GetCoordinates
+#_09980B: JSR CopyAncillaCoordinates
 
 #_09980E: STZ.b $0B
 
@@ -5089,7 +5080,7 @@ AncillaAdd_SilverArrowSparkle:
 
 #_099844: SEP #$20
 
-#_099846: BRL AncillaInit_SetCoordsAndExit
+#_099846: BRL SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -5135,18 +5126,18 @@ AncillaAdd_IceRodShot:
 #_099864: PHK
 #_099865: PLB
 
-#_099866: JSR Ancilla_AddAncilla
+#_099866: JSR AddAncilla
 #_099869: BCC .free_slot
 
 #_09986B: LDX.b #$00
-#_09986D: JSL Refund_Magic
+#_09986D: JSL RefundMagic
 
 #_099871: BRA EXIT_099849
 
 ;---------------------------------------------------------------------------------------------------
 
 .free_slot
-#_099873: JSL Link_CalculateSFXPan
+#_099873: JSL CalculateLinkSFXPan
 #_099877: ORA.b #$0F ; SFX2.0F
 #_099879: STA.w $012E
 
@@ -5225,7 +5216,7 @@ AncillaAdd_IceRodShot:
 #_0998DC: BRA .exit
 
 .onscreen
-#_0998DE: BRL AncillaInit_SetCoordsAndExit
+#_0998DE: BRL SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -5266,10 +5257,10 @@ AncillaAdd_Splash:
 #_0998FD: PHK
 #_0998FE: PLB
 
-#_0998FF: JSR Ancilla_AddAncilla
+#_0998FF: JSR AddAncilla
 #_099902: BCS .exit
 
-#_099904: JSL Link_CalculateSFXPan
+#_099904: JSL CalculateLinkSFXPan
 #_099908: ORA.b #$24 ; SFX2.24
 #_09990A: STA.w $012E
 
@@ -5301,7 +5292,7 @@ AncillaAdd_Splash:
 
 #_099932: SEP #$20
 
-#_099934: JSR Ancilla_SetCoordinates
+#_099934: JSR SetAncillaCoordinates
 
 #_099937: CLC
 
@@ -5441,7 +5432,7 @@ AncillaAdd_GraveStone:
 #_0999EA: PHK
 #_0999EB: PLB
 
-#_0999EC: JSR Ancilla_AddAncilla
+#_0999EC: JSR AddAncilla
 #_0999EF: BCC .free_slot
 
 #_0999F1: BRL .exit
@@ -5466,8 +5457,6 @@ AncillaAdd_GraveStone:
 #_099A04: TYA
 #_099A05: CLC
 #_099A06: ADC.w #$0010
-
-;---------------------------------------------------------------------------------------------------
 
 .clip16px
 #_099A09: AND.w #$FFF0
@@ -5586,7 +5575,7 @@ AncillaAdd_GraveStone:
 .hole
 #_099A92: SEP #$30
 
-#_099A94: JSL Link_CalculateSFXPan
+#_099A94: JSL CalculateLinkSFXPan
 #_099A98: ORA.b #$1B ; SFX3.1B
 #_099A9A: STA.w $012F
 
@@ -5604,7 +5593,7 @@ AncillaAdd_GraveStone:
 #_099AA9: PHY
 #_099AAA: PHX
 
-#_099AAB: JSL Overworld_DoMapUpdate32x32_long
+#_099AAB: JSL DoMap32Update_long
 
 #_099AAF: PLX
 #_099AB0: PLY
@@ -5638,7 +5627,7 @@ AncillaAdd_GraveStone:
 #_099AD3: CMP.b #$1B ; SFX3.1B
 #_099AD5: BEQ .dont_overwrite_sfx
 
-#_099AD7: JSL Link_CalculateSFXPan
+#_099AD7: JSL CalculateLinkSFXPan
 #_099ADB: ORA.b #$22 ; SFX2.22
 #_099ADD: STA.w $012E
 
@@ -5655,7 +5644,7 @@ AncillaAdd_GraveStone:
 #_099AEE: LDA.b $05
 #_099AF0: STA.w $038F,X
 
-#_099AF3: BRL AncillaInit_SetCoordsAndExit
+#_099AF3: BRL SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -5701,7 +5690,7 @@ AncillaAdd_Hookshot:
 #_099B11: PHK
 #_099B12: PLB
 
-#_099B13: JSR Ancilla_AddAncilla
+#_099B13: JSR AddAncilla
 #_099B16: BCS .exit
 
 #_099B18: LDA.b #$03
@@ -5750,7 +5739,7 @@ AncillaAdd_Hookshot:
 
 #_099B61: SEP #$20
 
-#_099B63: JMP.w AncillaInit_SetCoordsAndExit
+#_099B63: JMP.w SetAncillaCoordinatesAndExit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -5768,10 +5757,10 @@ AncillaAdd_WaterfallSplash:
 
 #_099B6B: LDY.b #$04
 #_099B6D: LDA.b #$41 ; ANCILLA 41
-#_099B6F: JSR AncillaAdd_CheckForPresence
+#_099B6F: JSR CheckAncillaPresence
 #_099B72: BCS EXIT_099B81
 
-#_099B74: JSR Ancilla_AddAncilla
+#_099B74: JSR AddAncilla
 #_099B77: BCS EXIT_099B81
 
 #_099B79: LDA.b #$02
@@ -5807,14 +5796,14 @@ AncillaAdd_GTCutscene:
 #_099B9D: AND.b #$20
 #_099B9F: BNE EXIT_099B81
 
-#_099BA1: JSL Ancilla_TerminateSparkleObjects
+#_099BA1: JSL TerminateSparkles
 
 #_099BA5: LDY.b #$04
 #_099BA7: LDA.b #$43 ; ANCILLA 43
-#_099BA9: JSR AncillaAdd_CheckForPresence
+#_099BA9: JSR CheckAncillaPresence
 #_099BAC: BCS EXIT_099B81
 
-#_099BAE: JSR Ancilla_AddAncilla
+#_099BAE: JSR AddAncilla
 #_099BB1: BCS EXIT_099B81
 
 ;---------------------------------------------------------------------------------------------------
@@ -5857,7 +5846,7 @@ AncillaAdd_GTCutscene:
 #_099BDB: LDA.b #$02
 #_099BDD: STA.w $0AA9
 
-#_099BE0: JSL Palettes_Load_SpriteEnvironment_Underworld
+#_099BE0: JSL PaletteLoad_SpriteEnvironment_Underworld
 
 #_099BE4: INC.b $15
 
@@ -5904,7 +5893,7 @@ AncillaAdd_GTCutscene:
 
 #_099C31: SEP #$20
 
-#_099C33: BRL AncillaInit_SetCoordsAndExit
+#_099C33: BRL SetAncillaCoordinatesAndExit
 
 ;===================================================================================================
 
@@ -5922,7 +5911,7 @@ AncillaAdd_DoorDebris:
 
 #_099C3B: LDY.b #$01
 #_099C3D: LDA.b #$08 ; ANCILLA 08
-#_099C3F: JSR Ancilla_AddAncilla
+#_099C3F: JSR AddAncilla
 #_099C42: BCS EXIT_099C4D
 
 #_099C44: STZ.w $03C2,X
@@ -5941,7 +5930,7 @@ AncillaAdd_DoorDebris:
 
 ;===================================================================================================
 
-FireRodShot_BecomeSkullWoodsFire:
+BecomeSkullWoodsFire:
 #_099C4F: PHB
 #_099C50: PHK
 #_099C51: PLB
@@ -6026,10 +6015,10 @@ FireRodShot_BecomeSkullWoodsFire:
 
 ;===================================================================================================
 
-Ancilla_AddAncilla:
+AddAncilla:
 #_099CE2: PHA
 
-#_099CE3: JSL Ancilla_CheckForAvailableSlot
+#_099CE3: JSL FindAncillaSlot
 
 #_099CE7: PLA
 
@@ -6074,12 +6063,12 @@ Ancilla_AddAncilla:
 
 ;===================================================================================================
 
-AncillaAdd_AddAncilla_Bank09:
+AddAncilla_bank09:
 #_099D18: PHB
 #_099D19: PHK
 #_099D1A: PLB
 
-#_099D1B: JSR Ancilla_AddAncilla
+#_099D1B: JSR AddAncilla
 
 #_099D1E: PLB
 
@@ -6087,7 +6076,7 @@ AncillaAdd_AddAncilla_Bank09:
 
 ;===================================================================================================
 
-AncillaAdd_CheckForPresence:
+CheckAncillaPresence:
 #_099D20: LDX.b #$05
 
 .next
@@ -6108,12 +6097,12 @@ AncillaAdd_CheckForPresence:
 
 ;===================================================================================================
 
-AncillaAdd_CheckForPresence_long:
+CheckAncillaPresence_long:
 #_099D2E: PHB
 #_099D2F: PHK
 #_099D30: PLB
 
-#_099D31: JSR AncillaAdd_CheckForPresence
+#_099D31: JSR CheckAncillaPresence
 
 #_099D34: PLB
 
@@ -6121,7 +6110,7 @@ AncillaAdd_CheckForPresence_long:
 
 ;===================================================================================================
 
-AncillaAdd_ArrowFindSlot:
+FindArrowAncillaSlot:
 #_099D36: PHA
 
 #_099D37: INY
@@ -6428,7 +6417,7 @@ Ancilla_CheckInitialTileCollision_Class2:
 
 ;===================================================================================================
 
-Follower_CheckBlindTrigger:
+CheckBlindMaidenTrigger:
 #_099E90: PHB
 #_099E91: PHK
 #_099E92: PLB
@@ -6528,7 +6517,7 @@ FollowerPriority:
 
 ;===================================================================================================
 
-Follower_Initialize:
+InitializeFollower:
 #_099EFC: PHB
 #_099EFD: PHK
 #_099EFE: PLB
@@ -6573,7 +6562,7 @@ Follower_Initialize:
 
 ;===================================================================================================
 
-Sprite_BecomeFollower:
+BecomeFollower:
 #_099F39: PHB
 #_099F3A: PHK
 #_099F3B: PLB
@@ -6626,7 +6615,7 @@ Sprite_BecomeFollower:
 #_099F84: LDA.b #$00
 #_099F86: STA.l $7EF3D3
 
-#_099F8A: JSL Follower_MoveTowardsLink
+#_099F8A: JSL StepTowardsLink
 
 #_099F8E: PLX
 #_099F8F: PLB
@@ -6635,7 +6624,7 @@ Sprite_BecomeFollower:
 
 ;===================================================================================================
 
-Follower_Main:
+HandleFollower:
 #_099F91: PHB
 #_099F92: PHK
 #_099F93: PLB
@@ -6693,7 +6682,7 @@ Follower_Main:
 #_099FCB: CMP.b #$0E ; FOLLOWER 0E
 #_099FCD: BNE .not_ms_telepathy
 
-#_099FCF: BRL Follower_HandleTrigger
+#_099FCF: BRL HandleFollowerMessageTrigger
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -6733,7 +6722,7 @@ Follower_Main:
 
 #_099FF8: SEP #$20
 
-#_099FFA: JSL Follower_ValidateMessageFreedom
+#_099FFA: JSL ValidateAbilityToNag
 #_099FFE: BCS .display_timed_message
 
 #_09A000: STZ.w $02CD
@@ -6760,7 +6749,7 @@ Follower_Main:
 
 #_09A01D: SEP #$20
 
-#_09A01F: JSL Interface_PrepAndDisplayMessage
+#_09A01F: JSL PrepAndDisplayMessage
 
 #_09A023: PLY
 
@@ -6790,22 +6779,22 @@ Follower_NoTimedMessage:
 .follower_following
 #_09A036: LDA.l $7EF3CC
 #_09A03A: CMP.b #$0C ; FOLLOWER 0C
-#_09A03C: BNE .not_purple_chest_a
+#_09A03C: BNE .is_purple_chest
 
 #_09A03E: LDA.b $4D
 #_09A040: BNE .not_default_game_mode
 
 #_09A042: BRA .continue_a
 
-.not_purple_chest_a
+.is_purple_chest
 #_09A044: LDA.l $7EF3CC
 #_09A048: CMP.b #$0D ; FOLLOWER 0D
-#_09A04A: BEQ .not_super_bomb_a
+#_09A04A: BEQ .is_super_bomb
 
 .not_default_game_mode
-#_09A04C: BRL Follower_CheckGameMode
+#_09A04C: BRL FollowerGameModeTest
 
-.not_super_bomb_a
+.is_super_bomb
 #_09A04F: LDA.b $4D
 #_09A051: CMP.b #$02
 #_09A053: BEQ .recoiling_or_falling
@@ -6822,16 +6811,16 @@ Follower_NoTimedMessage:
 
 #_09A05F: LDA.b $4D
 #_09A061: CMP.b #$01
-#_09A063: BEQ Follower_CheckGameMode
+#_09A063: BEQ FollowerGameModeTest
 
 #_09A065: BIT.w $0308
-#_09A068: BMI Follower_CheckGameMode
+#_09A068: BMI FollowerGameModeTest
 
 #_09A06A: LDA.w $02F9
-#_09A06D: BNE Follower_CheckGameMode
+#_09A06D: BNE FollowerGameModeTest
 
 #_09A06F: LDA.w $02D0
-#_09A072: BNE Follower_CheckGameMode
+#_09A072: BNE FollowerGameModeTest
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -6840,12 +6829,12 @@ Follower_NoTimedMessage:
 #_09A077: LDA.w $1A50,X
 #_09A07A: BEQ .zero_altitude
 
-#_09A07C: BPL Follower_CheckGameMode
+#_09A07C: BPL FollowerGameModeTest
 
 .zero_altitude
 #_09A07E: LDA.b $F6
 #_09A080: AND.b #$80
-#_09A082: BEQ Follower_CheckGameMode
+#_09A082: BEQ FollowerGameModeTest
 
 .recoiling_or_falling
 #_09A084: LDA.l $7EF3CC
@@ -6859,13 +6848,13 @@ Follower_NoTimedMessage:
 
 #_09A090: LDA.b $5D
 #_09A092: CMP.b #$08 ; LINKSTATE 08
-#_09A094: BEQ Follower_CheckGameMode
+#_09A094: BEQ FollowerGameModeTest
 
 #_09A096: CMP.b #$09 ; LINKSTATE 09
-#_09A098: BEQ Follower_CheckGameMode
+#_09A098: BEQ FollowerGameModeTest
 
 #_09A09A: CMP.b #$0A ; LINKSTATE 0A
-#_09A09C: BEQ Follower_CheckGameMode
+#_09A09C: BEQ FollowerGameModeTest
 
 #_09A09E: LDA.b #$03
 #_09A0A0: STA.w $04B4
@@ -6905,11 +6894,11 @@ Follower_NoTimedMessage:
 ;---------------------------------------------------------------------------------------------------
 
 .not_following_bounce
-#_09A0DE: BRL Follower_NotFollowing
+#_09A0DE: BRL NotLiterallyFollowing
 
 ;===================================================================================================
 
-Follower_CheckGameMode:
+FollowerGameModeTest:
 #_09A0E1: SEP #$20
 
 #_09A0E3: LDA.w $02E4
@@ -6940,14 +6929,14 @@ Follower_CheckGameMode:
 #_09A102: BNE .not_text_mode
 
 .dont_do_anything
-#_09A104: BRL Follower_ExecuteAI
+#_09A104: BRL RunFollowerAI
 
 ;---------------------------------------------------------------------------------------------------
 
 .not_text_mode
 #_09A107: LDA.b $30
 #_09A109: ORA.b $31
-#_09A10B: BEQ Follower_ExecuteAI
+#_09A10B: BEQ RunFollowerAI
 
 #_09A10D: LDX.w $02D3
 #_09A110: INX
@@ -7040,7 +7029,7 @@ Follower_CheckGameMode:
 #_09A178: LDY.b #$80
 
 #_09A17A: LDA.w $0351
-#_09A17D: BEQ Follower_ExecuteAI
+#_09A17D: BEQ RunFollowerAI
 
 #_09A17F: CMP.b #$01
 #_09A181: BEQ .set_priority
@@ -7054,7 +7043,7 @@ Follower_CheckGameMode:
 
 ;===================================================================================================
 
-Follower_ExecuteAI:
+RunFollowerAI:
 #_09A18C: LDA.l $7EF3CC
 #_09A190: DEC A
 #_09A191: ASL A
@@ -7064,7 +7053,7 @@ Follower_ExecuteAI:
 
 ;===================================================================================================
 
-#UNREACHABLE_09A196:
+UNREACHABLE_09A196:
 #_09A196: RTS
 
 ;===================================================================================================
@@ -7101,7 +7090,7 @@ Follower_BasicMover:
 ;---------------------------------------------------------------------------------------------------
 
 .not_text_mode
-#_09A1BB: JSR Follower_HandleTrigger
+#_09A1BB: JSR HandleFollowerMessageTrigger
 
 #_09A1BE: LDA.l $7EF3CC
 #_09A1C2: CMP.b #$0A ; FOLLOWER 0A
@@ -7147,7 +7136,7 @@ Follower_BasicMover:
 
 #_09A1FE: SEP #$20
 
-#_09A200: JSL Follower_CheckBlindTrigger
+#_09A200: JSL CheckBlindMaidenTrigger
 #_09A204: BCC .no_blind_transform
 
 ;---------------------------------------------------------------------------------------------------
@@ -7281,7 +7270,7 @@ Follower_BasicMover:
 ;---------------------------------------------------------------------------------------------------
 
 .proceed_to_draw
-#_09A2AE: BRL Follower_Draw
+#_09A2AE: BRL AnimateAndDrawFollower
 
 ;===================================================================================================
 
@@ -7290,7 +7279,7 @@ Follower_BasicMover:
 
 ;---------------------------------------------------------------------------------------------------
 
-Follower_NotFollowing:
+NotLiterallyFollowing:
 #_09A2B2: LDA.l $7EF3D1
 #_09A2B6: CMP.b $1B
 #_09A2B8: BNE EXIT_09A2B1
@@ -7298,10 +7287,10 @@ Follower_NotFollowing:
 #_09A2BA: LDA.w $0372
 #_09A2BD: BNE .dont_reset_self
 
-#_09A2BF: JSR Follower_CheckProximityToLink
+#_09A2BF: JSR CheckFollowerProximityToLink
 #_09A2C2: BCS .dont_reset_self
 
-#_09A2C4: JSL Follower_Initialize
+#_09A2C4: JSL InitializeFollower
 
 #_09A2C8: LDA.b $1B
 #_09A2CA: STA.l $7EF3D1
@@ -7318,7 +7307,7 @@ Follower_NotFollowing:
 #_09A2DE: LDA.b #$00
 #_09A2E0: STA.l $7EF3D3
 
-#_09A2E4: BRL Follower_Draw
+#_09A2E4: BRL AnimateAndDrawFollower
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -7341,7 +7330,7 @@ Follower_NotFollowing:
 #_09A302: STA.l $7EF3D3
 
 .not_superbomb_exploding
-#_09A306: BRL Follower_DoLayers
+#_09A306: BRL DoFollowerLayers
 
 ;===================================================================================================
 
@@ -7407,7 +7396,7 @@ Follower_OldMan:
 #_09A344: STA.b $5E
 
 .dont_reset_link_speed
-#_09A346: JSR Follower_HandleTrigger
+#_09A346: JSR HandleFollowerMessageTrigger
 
 #_09A349: SEP #$30
 
@@ -7556,7 +7545,7 @@ Follower_OldMan:
 ;---------------------------------------------------------------------------------------------------
 
 .just_draw
-#_09A40C: BRL Follower_Draw
+#_09A40C: BRL AnimateAndDrawFollower
 
 ;===================================================================================================
 
@@ -7593,25 +7582,25 @@ Follower_OldManUnused:
 #_09A421: STA.b $5E
 
 #_09A423: LDA.w $0372
-#_09A426: BNE Follower_DoLayers
+#_09A426: BNE DoFollowerLayers
 
 #_09A428: LDA.b $4D
-#_09A42A: BNE Follower_DoLayers
+#_09A42A: BNE DoFollowerLayers
 
 #_09A42C: LDA.b $5D
 #_09A42E: CMP.b #$04 ; LINKSTATE 04
-#_09A430: BEQ Follower_DoLayers
+#_09A430: BEQ DoFollowerLayers
 
 #_09A432: STZ.b $5E
 
 #_09A434: LDA.b $5D
 #_09A436: CMP.b #$13 ; LINKSTATE 13
-#_09A438: BEQ Follower_DoLayers
+#_09A438: BEQ DoFollowerLayers
 
-#_09A43A: JSR Follower_CheckProximityToLink
-#_09A43D: BCS Follower_DoLayers
+#_09A43A: JSR CheckFollowerProximityToLink
+#_09A43D: BCS DoFollowerLayers
 
-#_09A43F: JSL Follower_Initialize
+#_09A43F: JSL InitializeFollower
 
 #_09A443: LDA.l $7EF3CC
 #_09A447: TAX
@@ -7623,7 +7612,7 @@ Follower_OldManUnused:
 
 ;===================================================================================================
 
-Follower_DoLayers:
+DoFollowerLayers:
 #_09A450: LDA.l $7EF3D2
 #_09A454: TAX
 
@@ -7662,11 +7651,11 @@ Follower_DoLayers:
 
 .bomb_or_chest
 #_09A48A: TXA
-#_09A48B: BRL Follower_AnimateMovement_preserved
+#_09A48B: BRL AnimateFollower_preserved
 
 ;===================================================================================================
 
-Follower_CheckProximityToLink:
+CheckFollowerProximityToLink:
 #_09A48E: DEC.w $02D2
 #_09A491: BPL .too_far
 
@@ -7715,7 +7704,7 @@ Follower_CheckProximityToLink:
 
 ;===================================================================================================
 
-pool Follower_HandleTrigger
+pool HandleFollowerMessageTrigger
 
 .room_id
 #_09A4C8: dw $00F1 ; ROOM 00F1 - old man cave
@@ -7727,6 +7716,7 @@ pool Follower_HandleTrigger
 #_09A4D4: dw $0022 ; ROOM 0022 - sewer rats
 
 .coordinates_uw
+;              Y      X     ID     MSG   Follower
 #_09A4D6: dw $1EF0, $0288, $0001, $0099, $0004 ; Old man - MESSAGE 0099
 #_09A4E0: dw $1E58, $02F0, $0002, $009A, $0004 ; Old man - MESSAGE 009A
 #_09A4EA: dw $1EA8, $03B8, $0004, $009B, $0004 ; Old man - MESSAGE 009B
@@ -7754,6 +7744,7 @@ pool Follower_HandleTrigger
 #_09A552: dw $0000 ; OW 00 - Lost woods
 
 .coordinates_ow
+;              Y      X     ID     MSG   Follower
 #_09A554: dw $03C0, $0730, $0001, $009D, $0004 ; Old man - MESSAGE 009D
 
 #_09A55E: dw $0648, $0F50, $0000, $FFFF, $000A ; Kiki
@@ -7775,7 +7766,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Follower_HandleTrigger:
+HandleFollowerMessageTrigger:
 #_09A59E: LDA.b $11
 #_09A5A0: BNE .fail_fast
 
@@ -7852,7 +7843,7 @@ Follower_HandleTrigger:
 
 #_09A5FD: SEP #$30
 
-#_09A5FF: JSR Follower_CheckForTrigger
+#_09A5FF: JSR CheckForMessageTrigger
 #_09A602: BCS .trigger_activated
 
 #_09A604: REP #$30
@@ -7900,7 +7891,7 @@ Follower_HandleTrigger:
 
 #_09A641: SEP #$30
 
-#_09A643: JSR Follower_CheckForTrigger
+#_09A643: JSR CheckForMessageTrigger
 #_09A646: BCS .trigger_activated
 
 #_09A648: REP #$30
@@ -7966,7 +7957,7 @@ Follower_HandleTrigger:
 .continue_with_message_id
 #_09A695: SEP #$20
 
-#_09A697: JSL Interface_PrepAndDisplayMessage
+#_09A697: JSL PrepAndDisplayMessage
 
 #_09A69B: BRA .exit
 
@@ -8018,7 +8009,7 @@ Follower_HandleTrigger:
 
 ;===================================================================================================
 
-pool FollowerDraw_Drawing
+pool ActuallyDrawFollower
 
 .props
 #_09A6CD: db $20, $C0, $00 ; up
@@ -8165,7 +8156,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Follower_Draw:
+AnimateAndDrawFollower:
 #_09A907: LDA.w $02F9
 #_09A90A: BEQ .do_indeed_draw
 
@@ -8230,17 +8221,17 @@ Follower_Draw:
 
 #_09A952: LDA.w $1A64,X
 
-#_09A955: BRA Follower_AnimateMovement
+#_09A955: BRA AnimateFollower
 
 ;===================================================================================================
 
-Follower_AnimateMovement_preserved:
+AnimateFollower_preserved:
 #_09A957: PHX
 #_09A958: PHY
 
 ;===================================================================================================
 
-Follower_AnimateMovement:
+AnimateFollower:
 #_09A959: STA.b $05
 
 #_09A95B: AND.b #$20
@@ -8261,12 +8252,12 @@ Follower_AnimateMovement:
 
 #_09A96E: LDA.l $7EF3CC
 #_09A972: CMP.b #$06 ; FOLLOWER 06
-#_09A974: BEQ .not_blind_maiden
+#_09A974: BEQ .is_maiden
 
 #_09A976: CMP.b #$01 ; FOLLOWER 01
 #_09A978: BNE .low_priority
 
-.not_blind_maiden
+.is_maiden
 #_09A97A: LDY.b #$08
 
 #_09A97C: LDA.w $033C
@@ -8278,7 +8269,7 @@ Follower_AnimateMovement:
 #_09A98A: LDA.b $1A
 #_09A98C: AND.b #$08
 #_09A98E: LSR A
-#_09A98F: BRA FollowerDraw_Drawing
+#_09A98F: BRA ActuallyDrawFollower
 
 .no_collision
 #_09A991: LDA.b $1A
@@ -8286,7 +8277,7 @@ Follower_AnimateMovement:
 #_09A995: LSR A
 #_09A996: LSR A
 
-#_09A997: BRA FollowerDraw_Drawing
+#_09A997: BRA ActuallyDrawFollower
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -8358,7 +8349,7 @@ Follower_AnimateMovement:
 #_09A9EA: LDA.b #$04
 #_09A9EC: STA.b $72
 
-#_09A9EE: BRA FollowerDraw_Drawing
+#_09A9EE: BRA ActuallyDrawFollower
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -8368,7 +8359,7 @@ Follower_AnimateMovement:
 
 #_09A9F5: LDA.b $1A
 #_09A9F7: AND.b #$04
-#_09A9F9: BRA FollowerDraw_Drawing
+#_09A9F9: BRA ActuallyDrawFollower
 
 .not_dashing
 #_09A9FB: LDA.b $1A
@@ -8377,7 +8368,7 @@ Follower_AnimateMovement:
 
 ;===================================================================================================
 
-FollowerDraw_Drawing:
+ActuallyDrawFollower:
 #_09AA00: CLC
 #_09AA01: ADC.b $04
 #_09AA03: STA.b $04
@@ -8524,7 +8515,7 @@ FollowerDraw_Drawing:
 
 #_09AAAE: SEP #$20
 
-#_09AAB0: JSR FollowerDraw_CalculateOAMCoords
+#_09AAB0: JSR CalculateFollowerOAMCoords
 
 #_09AAB3: LDA.w .head_body_char+0,X
 #_09AAB6: STA.b ($90),Y
@@ -8564,7 +8555,7 @@ FollowerDraw_Drawing:
 
 #_09AADA: SEP #$20
 
-#_09AADC: JSR FollowerDraw_CalculateOAMCoords
+#_09AADC: JSR CalculateFollowerOAMCoords
 
 #_09AADF: LDA.w .head_body_char+2,X
 #_09AAE2: STA.b ($90),Y
@@ -8680,7 +8671,7 @@ FollowerDraw_Drawing:
 
 #_09AB60: SEP #$30
 
-#_09AB62: JSR FollowerDraw_CalculateOAMCoords
+#_09AB62: JSR CalculateFollowerOAMCoords
 
 #_09AB65: LDA.b #$20
 #_09AB67: STA.b ($90),Y
@@ -8760,7 +8751,7 @@ FollowerDraw_Drawing:
 
 #_09ABC2: SEP #$30
 
-#_09ABC4: JSR FollowerDraw_CalculateOAMCoords
+#_09ABC4: JSR CalculateFollowerOAMCoords
 
 #_09ABC7: LDA.b #$22
 #_09ABC9: STA.b ($90),Y
@@ -8810,7 +8801,7 @@ FollowerDraw_Drawing:
 
 ;===================================================================================================
 
-FollowerDraw_CalculateOAMCoords:
+CalculateFollowerOAMCoords:
 #_09ABF9: REP #$20
 
 #_09ABFB: LDA.b $02
@@ -8848,7 +8839,7 @@ FollowerDraw_CalculateOAMCoords:
 
 ;===================================================================================================
 
-Follower_CheckForTrigger:
+CheckForMessageTrigger:
 #_09AC26: REP #$20
 
 #_09AC28: LDA.b $00
@@ -8907,7 +8898,7 @@ Follower_CheckForTrigger:
 
 ;===================================================================================================
 
-Ancilla_TerminateSelectInteractives:
+TerminateSelectInteractives:
 #_09AC6B: PHB
 #_09AC6C: PHK
 #_09AC6D: PLB
@@ -9020,7 +9011,7 @@ Ancilla_TerminateSelectInteractives:
 
 ;===================================================================================================
 
-Follower_Disable:
+RemoveKikiAndLocksmith:
 #_09ACF3: LDA.l $7EF3CC
 #_09ACF7: CMP.b #$0A ; FOLLOWER 0A
 #_09ACF9: BEQ .kiki
@@ -9037,7 +9028,7 @@ Follower_Disable:
 
 ;===================================================================================================
 
-Ancilla_SetCoordinates:
+SetAncillaCoordinates:
 #_09AD06: LDA.b $00
 #_09AD08: STA.w $0BFA,X
 
@@ -9054,7 +9045,7 @@ Ancilla_SetCoordinates:
 
 ;===================================================================================================
 
-Ancilla_GetCoordinates:
+CopyAncillaCoordinates:
 #_09AD1B: LDA.w $0BFA,X
 #_09AD1E: STA.b $00
 
@@ -9103,7 +9094,7 @@ AncillaAdd_ExplodingSomariaBlock:
 
 #_09AD59: STZ.w $0646
 
-#_09AD5C: JSL Ancilla_CalculateSFXPan
+#_09AD5C: JSL CalculateAncillaSFXPan
 #_09AD60: ORA.b #$01 ; SFX3.01
 #_09AD62: STA.w $012F
 
@@ -9223,7 +9214,7 @@ Ancilla_AddRupees:
 
 ;===================================================================================================
 
-Ancilla_TerminateSparkleObjects:
+TerminateSparkles:
 #_09ADC7: PHX
 
 #_09ADC8: LDX.b #$04
@@ -9303,7 +9294,7 @@ DashDust_Motive:
 #_09AE14: BNE .not_behind
 
 #_09AE16: LDA.b #$04
-#_09AE18: JSL SpriteDraw_AllocateOAMFromRegionB
+#_09AE18: JSL AllocateOAMInRegionB
 
 .not_behind
 #_09AE1C: JSL Ancilla_PrepOAMCoord_long
@@ -9344,9 +9335,9 @@ NULL_09AE3E:
 
 ;===================================================================================================
 
-Sprite_SpawnSuperficialBombBlast:
+SpawnSuperficialExplosion:
 #_09AE40: LDA.b #$4A ; SPRITE 4A
-#_09AE42: JSL Sprite_SpawnDynamically
+#_09AE42: JSL SpawnSpriteDynamically
 #_09AE46: BMI .exit
 
 #_09AE48: LDA.b #$06
@@ -9363,11 +9354,11 @@ Sprite_SpawnSuperficialBombBlast:
 #_09AE5B: STA.w $0F50,Y
 
 #_09AE5E: LDA.b #$15 ; SFX2.15
-#_09AE60: JSL SpriteSFX_QueueSFX2WithPan
+#_09AE60: JSL QueueSpriteSFX2WithPan
 
 ;===================================================================================================
 
-#Sprite_SetSpawnedCoordinates:
+#SetSpawnedSpriteCoordinates:
 #_09AE64: LDA.b $00
 #_09AE66: STA.w $0D10,Y
 
@@ -9388,12 +9379,12 @@ Sprite_SpawnSuperficialBombBlast:
 
 ;===================================================================================================
 
-Sprite_SpawnDummyDeathAnimation:
+SpawnDummyDeathAnimation:
 #_09AE7E: LDA.b #$0B ; SPRITE 0B
-#_09AE80: JSL Sprite_SpawnDynamically
+#_09AE80: JSL SpawnSpriteDynamically
 #_09AE84: BMI .exit
 
-#_09AE86: JSL Sprite_SetSpawnedCoordinates
+#_09AE86: JSL SetSpawnedSpriteCoordinates
 
 #_09AE8A: LDA.b #$06
 #_09AE8C: STA.w $0DD0,Y
@@ -9402,7 +9393,7 @@ Sprite_SpawnDummyDeathAnimation:
 #_09AE91: STA.w $0DF0,Y
 
 #_09AE94: LDA.b #$14 ; SFX2.14
-#_09AE96: JSL SpriteSFX_QueueSFX2WithPan
+#_09AE96: JSL QueueSpriteSFX2WithPan
 
 #_09AE9A: LDA.b #$02
 #_09AE9C: STA.w $0F20,Y
@@ -9412,7 +9403,7 @@ Sprite_SpawnDummyDeathAnimation:
 
 ;===================================================================================================
 
-pool MagicBat_SpawnLightning
+pool SpawnCursedLightning
 
 .speed_x
 #_09AEA0: db  -8,  -4,   4,   8
@@ -9424,7 +9415,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-MagicBat_SpawnLightning:
+SpawnCursedLightning:
 #_09AEA8: JSL .spawn_bolt
 #_09AEAC: JSL .spawn_bolt
 #_09AEB0: JSL .spawn_bolt
@@ -9433,15 +9424,15 @@ MagicBat_SpawnLightning:
 
 .spawn_bolt
 #_09AEB4: LDA.b #$3A ; SPRITE 3A
-#_09AEB6: JSL Sprite_SpawnDynamically
+#_09AEB6: JSL SpawnSpriteDynamically
 #_09AEBA: BMI .exit
 
 #_09AEBC: LDA.b #$01 ; SFX3.01
-#_09AEBE: JSL SpriteSFX_QueueSFX3WithPan
+#_09AEBE: JSL QueueSpriteSFX3WithPan
 
 ;---------------------------------------------------------------------------------------------------
 
-#_09AEC2: JSL Sprite_SetSpawnedCoordinates
+#_09AEC2: JSL SetSpawnedSpriteCoordinates
 
 #_09AEC6: LDA.b $00
 #_09AEC8: CLC
@@ -9637,7 +9628,7 @@ InitializeMirrorPortal:
 ;---------------------------------------------------------------------------------------------------
 
 #_09AFA0: LDA.b #$6C ; SPRITE 6C
-#_09AFA2: JSL Sprite_SpawnDynamically
+#_09AFA2: JSL SpawnSpriteDynamically
 #_09AFA6: BPL .free_slot
 
 #_09AFA8: LDY.b #$00
@@ -9670,7 +9661,7 @@ InitializeMirrorPortal:
 
 ;===================================================================================================
 
-Sprite_InitializeSlots:
+InitializeSpriteSlots:
 #_09AFD6: PHB
 #_09AFD7: PHK
 #_09AFD8: PLB
@@ -9737,7 +9728,7 @@ Sprite_InitializeSlots:
 
 ;===================================================================================================
 
-Fireball_SpawnTrailGarnish:
+SpawnFireballTail:
 #_09B020: TXA
 #_09B021: EOR.b $1A
 #_09B023: AND.b #$03
@@ -9793,7 +9784,7 @@ Fireball_SpawnTrailGarnish:
 
 ;===================================================================================================
 
-Garnish_ExecuteUpperSlots_long:
+HandleUpperGarnishSlots_long:
 #_09B06E: JSL HandleScreenFlash
 
 #_09B072: LDA.w $0FB4
@@ -9803,7 +9794,7 @@ Garnish_ExecuteUpperSlots_long:
 #_09B078: PHK
 #_09B079: PLB
 
-#_09B07A: JSR Garnish_ExecuteUpperSlots
+#_09B07A: JSR HandleUpperGarnishSlots
 
 #_09B07D: PLB
 
@@ -9812,7 +9803,7 @@ Garnish_ExecuteUpperSlots_long:
 
 ;===================================================================================================
 
-Garnish_ExecuteLowerSlots_long:
+HandleLowerGarnishSlots_long:
 #_09B07F: LDA.w $0FB4
 #_09B082: BEQ .exit
 
@@ -9820,7 +9811,7 @@ Garnish_ExecuteLowerSlots_long:
 #_09B085: PHK
 #_09B086: PLB
 
-#_09B087: JSR Garnish_ExecuteLowerSlots
+#_09B087: JSR HandleLowerGarnishSlots
 
 #_09B08A: PLB
 
@@ -9829,11 +9820,11 @@ Garnish_ExecuteLowerSlots_long:
 
 ;===================================================================================================
 
-Garnish_ExecuteUpperSlots:
+HandleUpperGarnishSlots:
 #_09B08C: LDX.b #$1D
 
 .next
-#_09B08E: JSR Garnish_ExecuteSingle
+#_09B08E: JSR HandleSingleGarnish
 
 #_09B091: DEX
 #_09B092: CPX.b #$0E
@@ -9843,11 +9834,11 @@ Garnish_ExecuteUpperSlots:
 
 ;===================================================================================================
 
-Garnish_ExecuteLowerSlots:
+HandleLowerGarnishSlots:
 #_09B097: LDX.b #$0E
 
 .next
-#_09B099: JSR Garnish_ExecuteSingle
+#_09B099: JSR HandleSingleGarnish
 
 #_09B09C: DEX
 #_09B09D: BPL .next
@@ -9856,7 +9847,7 @@ Garnish_ExecuteLowerSlots:
 
 ;===================================================================================================
 
-pool Garnish_ExecuteSingle
+pool HandleSingleGarnish
 
 .object_allocation
 #_09B0A0: db $04 ; Fire snake tail
@@ -9886,7 +9877,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Garnish_ExecuteSingle:
+HandleSingleGarnish:
 #_09B0B6: STX.w $0FA0
 
 #_09B0B9: LDA.l $7FF800,X
@@ -9926,7 +9917,7 @@ Garnish_ExecuteSingle:
 #_09B0EC: TAY
 
 #_09B0ED: LDA.w .object_allocation-1,Y
-#_09B0F0: JSL SpriteDraw_AllocateOAMFromRegionF
+#_09B0F0: JSL AllocateOAMInRegionF
 
 #_09B0F4: BRA .run_ai
 
@@ -9937,7 +9928,7 @@ Garnish_ExecuteSingle:
 #_09B0FA: TAY
 
 #_09B0FB: LDA.w .object_allocation-1,Y
-#_09B0FE: JSL SpriteDraw_AllocateOAMFromRegionD
+#_09B0FE: JSL AllocateOAMInRegionD
 
 #_09B102: BRA .run_ai
 
@@ -9948,7 +9939,7 @@ Garnish_ExecuteSingle:
 #_09B108: TAY
 
 #_09B109: LDA.w .object_allocation-1,Y
-#_09B10C: JSL SpriteDraw_AllocateOAMFromRegionA
+#_09B10C: JSL AllocateOAMInRegionA
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -10421,7 +10412,7 @@ Garnish0C_TrinexxIceBreath:
 #_09B37A: STA.b $03
 
 #_09B37C: LDY.b #$12
-#_09B37E: JSL Underworld_UpdateTilemapWithCommonTile
+#_09B37E: JSL UpdateTilemapWithCommonObject
 
 #_09B382: PLA
 
@@ -11107,7 +11098,7 @@ Garnish03_FallingTile:
 #_09B654: PHX
 
 #_09B655: LDY.b #$04
-#_09B657: JSL Underworld_UpdateTilemapWithCommonTile
+#_09B657: JSL UpdateTilemapWithCommonObject
 
 #_09B65B: PLX
 
@@ -11274,7 +11265,7 @@ Garnish_FinalizeBigOAMObject:
 
 ;===================================================================================================
 
-Overlord_SpawnBoulder:
+SpawnBoulder:
 #_09B714: LDA.b $1B
 #_09B716: BNE .exit
 
@@ -11301,7 +11292,7 @@ Overlord_SpawnBoulder:
 
 #_09B738: LDA.b #$C2 ; SPRITE C2
 #_09B73A: LDY.b #$0D
-#_09B73C: JSL Sprite_SpawnDynamically
+#_09B73C: JSL SpawnSpriteDynamically
 #_09B740: BMI .exit
 
 #_09B742: JSL GetRandomNumber
@@ -11337,21 +11328,21 @@ Overlord_SpawnBoulder:
 
 ;===================================================================================================
 
-Overlord_Main:
+HandleAllOverlords:
 #_09B773: PHB
 #_09B774: PHK
 #_09B775: PLB
 
-#_09B776: JSR Overlord_ExecuteAll
-#_09B779: JSR Overlord_SpawnBoulder
+#_09B776: JSR .main
+#_09B779: JSR SpawnBoulder
 
 #_09B77C: PLB
 
 #_09B77D: RTL
 
-;===================================================================================================
+;---------------------------------------------------------------------------------------------------
 
-Overlord_ExecuteAll:
+.main
 #_09B77E: LDA.b $11
 #_09B780: ORA.w $0FC1
 #_09B783: BNE .exit
@@ -11499,7 +11490,7 @@ Overlord18_InvisibleStalfos:
 .next
 #_09B831: LDA.b #$A7 ; SPRITE A7
 #_09B833: LDY.b #$0C
-#_09B835: JSL Sprite_SpawnDynamically_slot_limited
+#_09B835: JSL SpawnSpriteDynamically_slot_limited
 #_09B839: BMI .skip
 
 #_09B83B: PHX
@@ -11652,7 +11643,7 @@ Overlord16_ZoroSpawner:
 
 #_09B908: LDA.b #$9C ; SPRITE 9C
 #_09B90A: LDY.b #$0C
-#_09B90C: JSL Sprite_SpawnDynamically_slot_limited
+#_09B90C: JSL SpawnSpriteDynamically_slot_limited
 #_09B910: BMI .exit
 
 #_09B912: PHX
@@ -11764,7 +11755,7 @@ Overlord15_WizzrobeSpawner:
 .next
 #_09B9A0: LDA.b #$9B ; SPRITE 9B
 #_09B9A2: LDY.b #$0C
-#_09B9A4: JSL Sprite_SpawnDynamically_slot_limited
+#_09B9A4: JSL SpawnSpriteDynamically_slot_limited
 #_09B9A8: BMI .no_space
 
 #_09B9AA: PHX
@@ -11842,7 +11833,7 @@ Overlord14_TileRoom:
 ;---------------------------------------------------------------------------------------------------
 
 .continue
-#_09BA11: JSR TileRoom_SpawnTile
+#_09BA11: JSR SpawnFlyingTile
 #_09BA14: BMI .no_space
 
 #_09BA16: INC.w $0B28,X
@@ -11864,7 +11855,7 @@ Overlord14_TileRoom:
 
 ;===================================================================================================
 
-pool TileRoom_SpawnTile
+pool SpawnFlyingTile
 
 .position_x
 #_09BA2A: db $70, $80, $60, $90
@@ -11886,9 +11877,9 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-TileRoom_SpawnTile:
+SpawnFlyingTile:
 #_09BA56: LDA.b #$94 ; SPRITE 94
-#_09BA58: JSL Sprite_SpawnDynamically
+#_09BA58: JSL SpawnSpriteDynamically
 #_09BA5C: BMI .exit
 
 #_09BA5E: LDA.b #$01
@@ -12002,7 +11993,7 @@ Overlord13_PirogusuSpawner_bottom:
 
 #_09BAEB: LDY.b #$0C
 #_09BAED: LDA.b #$94 ; SPRITE 94
-#_09BAEF: JSL Sprite_SpawnDynamically_slot_limited
+#_09BAEF: JSL SpawnSpriteDynamically_slot_limited
 #_09BAF3: BMI .exit
 
 #_09BAF5: LDA.b $05
@@ -12090,21 +12081,21 @@ FallingTilesPattern:
 
 ;---------------------------------------------------------------------------------------------------
 
-.adjust_x_low
+.move_x_low
 #_09BB90: db  16, -16,   0,   0
 
-.adjust_x_high
+.move_x_high
 #_09BB94: db   0,  -1,   0,   0
 
-.adjust_y_low
+.move_y_low
 #_09BB98: db   0,   0,  16, -16
 
-.adjust_y_high
+.move_y_high
 #_09BB9C: db   0,   0,   0,  -1
 
 ;---------------------------------------------------------------------------------------------------
 
-.adjust_limit
+.tile_count
 #_09BBA0: db $1A
 #_09BBA1: db $2A
 #_09BBA2: db $0C
@@ -12191,7 +12182,7 @@ Overlord0F_FallingTiles_SouthToNorth:
 #_09BBF3: LDA.w FallingTilesPattern_pointers_high,Y
 #_09BBF6: STA.b $01
 
-#_09BBF8: LDA.w FallingTilesPattern_adjust_limit,Y
+#_09BBF8: LDA.w FallingTilesPattern_tile_count,Y
 #_09BBFB: CMP.w $0B28,X
 #_09BBFE: BNE .not_last_tile
 
@@ -12208,20 +12199,20 @@ Overlord0F_FallingTiles_SouthToNorth:
 
 #_09BC0A: LDA.w $0B08,X
 #_09BC0D: CLC
-#_09BC0E: ADC.w FallingTilesPattern_adjust_x_low,Y
+#_09BC0E: ADC.w FallingTilesPattern_move_x_low,Y
 #_09BC11: STA.w $0B08,X
 
 #_09BC14: LDA.w $0B10,X
-#_09BC17: ADC.w FallingTilesPattern_adjust_x_high,Y
+#_09BC17: ADC.w FallingTilesPattern_move_x_high,Y
 #_09BC1A: STA.w $0B10,X
 
 #_09BC1D: LDA.w $0B18,X
 #_09BC20: CLC
-#_09BC21: ADC.w FallingTilesPattern_adjust_y_low,Y
+#_09BC21: ADC.w FallingTilesPattern_move_y_low,Y
 #_09BC24: STA.w $0B18,X
 
 #_09BC27: LDA.w $0B20,X
-#_09BC2A: ADC.w FallingTilesPattern_adjust_y_high,Y
+#_09BC2A: ADC.w FallingTilesPattern_move_y_high,Y
 #_09BC2D: STA.w $0B20,X
 
 #_09BC30: RTS
@@ -12244,7 +12235,7 @@ SpawnFallingTile:
 #_09BC41: LDA.w $0B08,Y
 #_09BC44: STA.l $7FF83C,X
 
-#_09BC48: JSL CalculateSFXPan_Arbitrary
+#_09BC48: JSL CalculateArbitrarySFXPan
 #_09BC4C: ORA.b #$1F ; SFX2.1F
 #_09BC4E: STA.w $012E
 
@@ -12302,7 +12293,7 @@ Overlord09_WallmasterSpawner:
 
 #_09BC91: LDA.b #$90 ; SPRITE 90
 #_09BC93: LDY.b #$0C
-#_09BC95: JSL Sprite_SpawnDynamically_slot_limited
+#_09BC95: JSL SpawnSpriteDynamically_slot_limited
 #_09BC99: BMI .no_space
 
 #_09BC9B: LDA.b $22
@@ -12325,7 +12316,7 @@ Overlord09_WallmasterSpawner:
 #_09BCB5: TYX
 
 #_09BCB6: LDA.b #$20 ; SFX2.20
-#_09BCB8: JSL SpriteSFX_QueueSFX2WithPan
+#_09BCB8: JSL QueueSpriteSFX2WithPan
 
 #_09BCBC: PLX
 
@@ -12375,7 +12366,7 @@ Overlord08_BlobSpawner:
 
 #_09BCEC: LDA.b #$8F ; SPRITE 8F
 #_09BCEE: LDY.b #$0C
-#_09BCF0: JSL Sprite_SpawnDynamically_slot_limited
+#_09BCF0: JSL SpawnSpriteDynamically_slot_limited
 #_09BCF4: BMI .exit
 
 #_09BCF6: PHX
@@ -12428,12 +12419,12 @@ Overlord08_BlobSpawner:
 Overlord07_MovingFloor:
 #_09BD3F: LDA.w $0DD0
 #_09BD42: CMP.b #$04
-#_09BD44: BNE .boss_dying
+#_09BD44: BNE .boss_not_dying
 
 #_09BD46: STZ.w $0B00,X
 #_09BD49: BRA .stop_floor
 
-.boss_dying
+.boss_not_dying
 #_09BD4B: LDA.w $0B28,X
 #_09BD4E: BNE .direction_lock
 
@@ -12540,7 +12531,7 @@ Overlord04_Unused:
 
 #_09BDC0: LDA.b #$85 ; SPRITE 85
 #_09BDC2: LDY.b #$0C
-#_09BDC4: JSL Sprite_SpawnDynamically_slot_limited
+#_09BDC4: JSL SpawnSpriteDynamically_slot_limited
 #_09BDC8: BMI .no_space
 
 #_09BDCA: PHX
@@ -12584,7 +12575,7 @@ Overlord04_Unused:
 #_09BDFE: TYX
 
 #_09BDFF: LDA.b #$20 ; SFX2.20
-#_09BE01: JSL SpriteSFX_QueueSFX2WithPan
+#_09BE01: JSL QueueSpriteSFX2WithPan
 
 #_09BE05: PLX
 
@@ -12641,7 +12632,7 @@ Overlord05_FallingStalfos:
 
 #_09BE40: LDA.b #$85 ; SPRITE 85
 #_09BE42: LDY.b #$0C
-#_09BE44: JSL Sprite_SpawnDynamically_slot_limited
+#_09BE44: JSL SpawnSpriteDynamically_slot_limited
 #_09BE48: BMI .exit_b
 
 #_09BE4A: LDA.b $05
@@ -12697,7 +12688,7 @@ Overlord1A_BadSwitchBomb:
 #_09BE89: BNE .exit
 
 #_09BE8B: LDA.b #$6E ; SPRITE 6E
-#_09BE8D: JSL Sprite_SpawnDynamically
+#_09BE8D: JSL SpawnSpriteDynamically
 #_09BE91: BMI .exit
 
 #_09BE93: LDA.b $05
@@ -12733,7 +12724,7 @@ Overlord1A_BadSwitchBomb:
 #_09BECA: LDA.b #$4A ; SPRITE 4A
 #_09BECC: STA.w $0E20,Y
 
-#_09BECF: JSL Sprite_TransmuteToBomb
+#_09BECF: JSL TransmuteSpriteToBomb
 
 #_09BED3: LDA.b #$70
 #_09BED5: STA.w $0E00,Y
@@ -12890,7 +12881,7 @@ Overlord03_VerticalCannon:
 
 Overlord_SpawnCannonBall:
 #_09BFAF: LDA.b #$50 ; SPRITE 50
-#_09BFB1: JSL Sprite_SpawnDynamically
+#_09BFB1: JSL SpawnSpriteDynamically
 #_09BFB5: BMI .exit
 
 #_09BFB7: PHX
@@ -12955,7 +12946,7 @@ Overlord_SpawnCannonBall:
 #_09C00D: TYX
 
 #_09C00E: LDA.b #$07 ; SFX3.07
-#_09C010: JSL SpriteSFX_QueueSFX3WithPan
+#_09C010: JSL QueueSpriteSFX3WithPan
 
 #_09C014: PLX
 
@@ -12980,7 +12971,7 @@ Overlord01_PositionTarget:
 
 ;===================================================================================================
 
-pool Snitch_SpawnGuard
+pool CallThePolice
 
 .position_x_low
 #_09C023: db $20, $40, $E0
@@ -12998,14 +12989,14 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Snitch_SpawnGuard:
+CallThePolice:
 #_09C02F: PHB
 #_09C030: PHK
 #_09C031: PLB
 
 #_09C032: LDA.b #$45 ; SPRITE 45
 #_09C034: LDY.b #$00
-#_09C036: JSL Sprite_SpawnDynamically_slot_limited
+#_09C036: JSL SpawnSpriteDynamically_slot_limited
 #_09C03A: BMI .exit
 
 #_09C03C: PHX
@@ -13203,7 +13194,7 @@ Underworld_ResetSprites:
 #_09C11A: STZ.w $0309
 #_09C11D: STZ.w $0308
 
-#_09C120: JSL Sprite_DisableAll
+#_09C120: JSL DisableAllEntities
 
 #_09C124: REP #$20
 
@@ -13217,14 +13208,14 @@ Underworld_ResetSprites:
 
 #_09C131: LDA.w $048E
 
-.next_overlord
+.check_next_room
 #_09C134: CMP.w $0B80,X
 #_09C137: BEQ .finish_up
 
 #_09C139: INX
 #_09C13A: INX
 #_09C13B: CPX.b #$07
-#_09C13D: BCC .next_overlord
+#_09C13D: BCC .check_next_room
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -13258,7 +13249,7 @@ Underworld_ResetSprites:
 .finish_up
 #_09C16E: SEP #$30
 
-#_09C170: JSR Underworld_LoadSprites
+#_09C170: JSR LoadUnderworldSprites
 
 #_09C173: PLB
 
@@ -13378,7 +13369,7 @@ Underworld_CacheTransSprites:
 
 ;===================================================================================================
 
-Sprite_DisableAll:
+DisableAllEntities:
 #_09C22F: LDX.b #$0F
 
 .next_sprite
@@ -13461,7 +13452,7 @@ Sprite_DisableAll:
 
 ;===================================================================================================
 
-Underworld_LoadSprites:
+LoadUnderworldSprites:
 #_09C290: REP #$30
 
 #_09C292: LDA.w $048E
@@ -13504,7 +13495,7 @@ Underworld_LoadSprites:
 #_09C2C3: CMP.b #$FF
 #_09C2C5: BEQ .done
 
-#_09C2C7: JSR Underworld_LoadSingleSprite
+#_09C2C7: JSR LoadSingleUnderworldSprite
 
 #_09C2CA: INC.b $02
 
@@ -13527,7 +13518,7 @@ SpriteSlotToDeathBit:
 
 ;---------------------------------------------------------------------------------------------------
 
-Sprite_ManuallySetDeathFlagUW:
+ManuallySetDeathFlagUW:
 #_09C2F5: PHB
 #_09C2F6: PHK
 #_09C2F7: PLB
@@ -13572,7 +13563,7 @@ Sprite_ManuallySetDeathFlagUW:
 
 ;===================================================================================================
 
-Underworld_LoadSingleSprite:
+LoadSingleUnderworldSprite:
 #_09C327: INY
 #_09C328: INY
 
@@ -13624,7 +13615,7 @@ Underworld_LoadSingleSprite:
 #_09C353: CMP.b #$E0
 #_09C355: BCC .not_overlord_or_bigkey
 
-#_09C357: JSR Underworld_LoadSingleOverlord
+#_09C357: JSR LoadSingleUnderworldOverlord
 
 #_09C35A: DEC.b $02
 
@@ -13739,7 +13730,7 @@ Underworld_LoadSingleSprite:
 
 ;===================================================================================================
 
-Underworld_LoadSingleOverlord:
+LoadSingleUnderworldOverlord:
 #_09C3E8: LDX.b #$07
 
 .next_slot
@@ -13787,13 +13778,13 @@ Underworld_LoadSingleOverlord:
 #_09C41B: ASL A
 #_09C41C: STA.w $0B08,X
 
-;---------------------------------------------------------------------------------------------------
-
 #_09C41F: LDA.w $0FB0
 #_09C422: ADC.b #$00
 #_09C424: STA.w $0B10,X
 
-#_09C427: JSR InitSpawnedOevrlord
+;---------------------------------------------------------------------------------------------------
+
+#_09C427: JSR InitSpawnedOverlord
 
 #_09C42A: LDA.w $0B00,X
 #_09C42D: CMP.b #$0A ; OVERLORD 0A
@@ -13826,12 +13817,12 @@ Underworld_LoadSingleOverlord:
 
 ;===================================================================================================
 
-Sprite_ResetAll:
-#_09C44E: JSL Sprite_DisableAll
+ResetAllSprites:
+#_09C44E: JSL DisableAllEntities
 
 ;===================================================================================================
 
-Sprite_ResetBuffers:
+ResetSpriteBuffers:
 #_09C452: STZ.w $0FDD
 #_09C455: STZ.w $0FDC
 #_09C458: STZ.w $0FFD
@@ -13846,12 +13837,12 @@ Sprite_ResetBuffers:
 
 #_09C467: LDA.l $7EF3CC
 #_09C46B: CMP.b #$0D ; FOLLOWER 0D
-#_09C46D: BEQ .not_superbomb
+#_09C46D: BEQ .is_super_bomb
 
 #_09C46F: LDA.b #$FE
 #_09C471: STA.w $04B4
 
-.not_superbomb
+.is_super_bomb
 #_09C474: REP #$10
 
 ;---------------------------------------------------------------------------------------------------
@@ -13893,20 +13884,20 @@ Sprite_ResetBuffers:
 
 ;===================================================================================================
 
-Sprite_ReloadAll_Overworld:
-#_09C499: JSL Sprite_DisableAll
+ResetAndReloadOverworldSprites:
+#_09C499: JSL DisableAllEntities
 
 ;===================================================================================================
 
-Sprite_LoadAll_Overworld:
-#_09C49D: JSL Sprite_ResetBuffers
+ReloadOverworldSprites:
+#_09C49D: JSL ResetSpriteBuffers
 
 #_09C4A1: PHB
 #_09C4A2: PHK
 #_09C4A3: PLB
 
-#_09C4A4: JSR Overworld_LoadSprites
-#_09C4A7: JSR Sprite_ActivateAllProxima
+#_09C4A4: JSR LoadOverworldSprites
+#_09C4A7: JSR ActivateAllNearbySprites
 
 #_09C4AA: PLB
 
@@ -13914,7 +13905,7 @@ Sprite_LoadAll_Overworld:
 
 ;===================================================================================================
 
-Overworld_LoadSprites:
+LoadOverworldSprites:
 #_09C4AC: LDA.w $040A
 #_09C4AF: AND.b #$07
 #_09C4B1: ASL A
@@ -14074,7 +14065,7 @@ Overworld_LoadSprites:
 
 ;===================================================================================================
 
-Sprite_ActivateAllProxima:
+ActivateAllNearbySprites:
 #_09C55E: LDA.b $E2
 #_09C560: PHA
 
@@ -14094,7 +14085,7 @@ Sprite_ActivateAllProxima:
 .next
 #_09C56F: PHY
 
-#_09C570: JSR Sprite_ActivateWhenProximal_Horizontal
+#_09C570: JSR ActivateSpriteWhenProximal_Horizontal
 
 #_09C573: PLY
 
@@ -14125,7 +14116,7 @@ Sprite_ActivateAllProxima:
 
 ;===================================================================================================
 
-Sprite_ProximityActivation:
+ProximalSpriteActivation:
 #_09C58F: PHB
 #_09C590: PHK
 #_09C591: PLB
@@ -14133,8 +14124,8 @@ Sprite_ProximityActivation:
 #_09C592: LDA.b $11
 #_09C594: BEQ .good_submode
 
-#_09C596: JSR Sprite_ActivateWhenProximal_Horizontal
-#_09C599: JSR Sprite_ActivateWhenProximal_Vertical
+#_09C596: JSR ActivateSpriteWhenProximal_Horizontal
+#_09C599: JSR ActivateSpriteWhenProximal_Vertical
 
 #_09C59C: PLB
 
@@ -14147,14 +14138,14 @@ Sprite_ProximityActivation:
 #_09C5A1: AND.b #$01
 #_09C5A3: BNE .big_screen
 
-#_09C5A5: JSR Sprite_ActivateWhenProximal_Horizontal
+#_09C5A5: JSR ActivateSpriteWhenProximal_Horizontal
 
 .big_screen
 #_09C5A8: LDA.w $0FB7
 #_09C5AB: AND.b #$01
 #_09C5AD: BEQ .not_big
 
-#_09C5AF: JSR Sprite_ActivateWhenProximal_Vertical
+#_09C5AF: JSR ActivateSpriteWhenProximal_Vertical
 
 .not_big
 #_09C5B2: INC.w $0FB7
@@ -14165,19 +14156,19 @@ Sprite_ProximityActivation:
 
 ;===================================================================================================
 
-pool Sprite_ActivateWhenProximal_Horizontal
+pool ActivateSpriteWhenProximal_Horizontal
 
 .offset_low
-#_09C5B7: db  16, -16
+#_09C5B7: db $10, $F0
 
 .offset_high
-#_09C5B9: db   1,  -1
+#_09C5B9: db $01, $FF
 
 pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Sprite_ActivateWhenProximal_Horizontal:
+ActivateSpriteWhenProximal_Horizontal:
 #_09C5BB: LDY.b #$00
 
 #_09C5BD: LDA.w $069F
@@ -14210,7 +14201,7 @@ Sprite_ActivateWhenProximal_Horizontal:
 #_09C5E1: LDX.b #$15
 
 .next
-#_09C5E3: JSR Overworld_ProximityMotivatedLoad
+#_09C5E3: JSR ProximityMotivatedLoad
 
 #_09C5E6: REP #$20
 
@@ -14229,19 +14220,19 @@ Sprite_ActivateWhenProximal_Horizontal:
 
 ;===================================================================================================
 
-pool Sprite_ActivateWhenProximal_Vertical
+pool ActivateSpriteWhenProximal_Vertical
 
 .offset_low
-#_09C5F6: db  16, -16
+#_09C5F6: db $10, $F0
 
 .offset_high
-#_09C5F8: db   1,  -1
+#_09C5F8: db $01, $FF
 
 pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Sprite_ActivateWhenProximal_Vertical:
+ActivateSpriteWhenProximal_Vertical:
 #_09C5FA: LDY.b #$00
 
 #_09C5FC: LDA.w $069E
@@ -14275,7 +14266,7 @@ Sprite_ActivateWhenProximal_Vertical:
 #_09C620: LDX.b #$15
 
 .next
-#_09C622: JSR Overworld_ProximityMotivatedLoad
+#_09C622: JSR ProximityMotivatedLoad
 
 #_09C625: REP #$20
 
@@ -14324,7 +14315,7 @@ OverworldScreenSizeForLoading:
 
 ;===================================================================================================
 
-Overworld_ProximityMotivatedLoad:
+ProximityMotivatedLoad:
 #_09C6F5: REP #$20
 
 #_09C6F7: LDA.b $0E
@@ -14366,7 +14357,7 @@ Overworld_ProximityMotivatedLoad:
 
 #_09C729: PHX
 
-#_09C72A: JSR Overworld_LoadProximaSpriteIfAlive
+#_09C72A: JSR LoadProximaSpriteIfAlive
 
 #_09C72D: PLX
 
@@ -14377,12 +14368,12 @@ Overworld_ProximityMotivatedLoad:
 
 ;===================================================================================================
 
-Overworld_AliveStatusBits:
+OverworldAlivenessMasks:
 #_09C731: db $80, $40, $20, $10, $08, $04, $02, $01
 
 ;===================================================================================================
 
-Overworld_LoadProximaSpriteIfAlive:
+LoadProximaSpriteIfAlive:
 #_09C739: REP #$20
 
 #_09C73B: LDA.b $00
@@ -14418,22 +14409,22 @@ Overworld_LoadProximaSpriteIfAlive:
 #_09C764: TAY
 
 #_09C765: LDA.b [$02]
-#_09C767: AND.w Overworld_AliveStatusBits,Y
+#_09C767: AND.w OverworldAlivenessMasks,Y
 #_09C76A: BNE .alive
 
-#_09C76C: JSR Overworld_LoadSingleSprite
+#_09C76C: JSR LoadSingleOverworldSprite
 
 .alive
 #_09C76F: RTS
 
 ;===================================================================================================
 
-Overworld_LoadSingleSprite:
+LoadSingleOverworldSprite:
 #_09C770: LDA.b [$05]
 #_09C772: CMP.b #$F4
 #_09C774: BCC .load_sprite
 
-#_09C776: JSR Overworld_LoadSingleOverlord
+#_09C776: JSR LoadSingleOverworldOverlord
 
 #_09C779: RTS
 
@@ -14485,7 +14476,7 @@ Overworld_LoadSingleSprite:
 
 .free_slot
 #_09C7AF: LDA.b [$02]
-#_09C7B1: ORA.w Overworld_AliveStatusBits,Y
+#_09C7B1: ORA.w OverworldAlivenessMasks,Y
 #_09C7B4: STA.b [$02]
 
 #_09C7B6: PHX
@@ -14548,7 +14539,7 @@ Overworld_LoadSingleSprite:
 
 ;===================================================================================================
 
-Overworld_LoadSingleOverlord:
+LoadSingleOverworldOverlord:
 #_09C80B: LDX.b #$07
 
 .next_check
@@ -14564,7 +14555,7 @@ Overworld_LoadSingleOverlord:
 
 .free_slot
 #_09C816: LDA.b [$02]
-#_09C818: ORA.w Overworld_AliveStatusBits,Y
+#_09C818: ORA.w OverworldAlivenessMasks,Y
 #_09C81B: STA.b [$02]
 
 #_09C81D: PHX
@@ -14632,7 +14623,7 @@ Overworld_LoadSingleOverlord:
 
 ;===================================================================================================
 
-InitSpawnedOevrlord:
+InitSpawnedOverlord:
 #_09C871: LDA.w $040A
 #_09C874: STA.w $0CCA,X
 
@@ -14821,8 +14812,8 @@ Overworld_SpritePointers:
 #_09C9D1: dw Overworld_Sprites_Screen68     ; 68 - Digging Game
 #_09C9D3: dw Overworld_Sprites_Screen69     ; 69 - South of Outcasts
 #_09C9D5: dw Overworld_Sprites_Screen6A     ; 6A - Stumpy Grove
-#_09C9D7: dw Overworld_Sprites_Screen6B     ; 6B - West of Bomb Shoppe
-#_09C9D9: dw Overworld_Sprites_Screen6C     ; 6C - Bomb Shoppe
+#_09C9D7: dw Overworld_Sprites_Screen6B     ; 6B - West of Bomb Shop
+#_09C9D9: dw Overworld_Sprites_Screen6C     ; 6C - Bomb Shop
 #_09C9DB: dw Overworld_Sprites_Screen6D     ; 6D - Hammer Bridge
 #_09C9DD: dw Overworld_Sprites_Screen6E     ; 6E - Dark Lake Hylia River Bend
 #_09C9DF: dw Overworld_Sprites_Screen6F     ; 6F - East Dark World Portalway
@@ -14969,8 +14960,8 @@ Overworld_SpritePointers:
 #_09CAF1: dw Overworld_Sprites_Screen68     ; 68 - Digging Game
 #_09CAF3: dw Overworld_Sprites_Screen69     ; 69 - South of Outcasts
 #_09CAF5: dw Overworld_Sprites_Screen6A     ; 6A - Stumpy Grove
-#_09CAF7: dw Overworld_Sprites_Screen6B     ; 6B - West of Bomb Shoppe
-#_09CAF9: dw Overworld_Sprites_Screen6C     ; 6C - Bomb Shoppe
+#_09CAF7: dw Overworld_Sprites_Screen6B     ; 6B - West of Bomb Shop
+#_09CAF9: dw Overworld_Sprites_Screen6C     ; 6C - Bomb Shop
 #_09CAFB: dw Overworld_Sprites_Screen6D     ; 6D - Hammer Bridge
 #_09CAFD: dw Overworld_Sprites_Screen6E     ; 6E - Dark Lake Hylia River Bend
 #_09CAFF: dw Overworld_Sprites_Screen6F     ; 6F - East Dark World Portalway
@@ -16546,7 +16537,7 @@ Overworld_Sprites_Screen3F_2:
 ;   i - sprite ID
 ;   s - aux part 1
 ;   t - aux part 2
-;       if every bit of t is set, then the entry corresponds to an overlord or a key
+;       if every bit of t is set, then the entry corresponds to an overlord
 ;
 ;   s and t form a 5 bit auxiliary value written to $0E30,X
 ;     ...ssttt
@@ -20032,7 +20023,7 @@ SpriteModule_Explode:
 
 .main
 #_09EDA7: LDA.w $0D90,X
-#_09EDAA: BEQ Explode_VerifyPrizing
+#_09EDAA: BEQ VerifyExplosionPrize
 
 #_09EDAC: LDA.w $0DF0,X
 #_09EDAF: BNE .draw
@@ -20088,13 +20079,13 @@ SpriteModule_Explode:
 #_09EDE6: SEP #$20
 
 #_09EDE8: LDA.b #$04
-#_09EDEA: JSL SpriteDraw_Tabulated
+#_09EDEA: JSL TabulatedSpriteDraw
 
 #_09EDEE: RTS
 
 ;===================================================================================================
 
-pool Explode_SpawnExplosion
+pool SpawnExplosion
 
 .offset_low
 #_09EDEF: db   0,   4,   8,  12
@@ -20112,7 +20103,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Explode_VerifyPrizing:
+VerifyExplosionPrize:
 #_09EE0F: LDA.b #$02
 #_09EE11: STA.w $0F20,X
 
@@ -20120,7 +20111,7 @@ Explode_VerifyPrizing:
 #_09EE17: CMP.b #$20
 #_09EE19: BEQ .validate
 
-#_09EE1B: JMP.w Explode_SpawnExplosion
+#_09EE1B: JMP.w SpawnExplosion
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -20152,7 +20143,7 @@ Explode_VerifyPrizing:
 ;---------------------------------------------------------------------------------------------------
 
 .no_win
-#_09EE41: JMP.w Explode_SpawnExplosion
+#_09EE41: JMP.w SpawnExplosion
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -20160,7 +20151,7 @@ Explode_VerifyPrizing:
 #_09EE44: LDA.b #$13 ; SONG 13
 #_09EE46: STA.w $012C
 
-#_09EE49: JMP.w Explode_SpawnExplosion
+#_09EE49: JMP.w SpawnExplosion
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -20169,8 +20160,8 @@ Explode_VerifyPrizing:
 
 #_09EE4F: LDA.b #$EA ; SPRITE EA
 #_09EE51: LDY.b #$0E
-#_09EE53: JSL Sprite_SpawnDynamically_slot_limited
-#_09EE57: JSL Sprite_SetSpawnedCoordinates
+#_09EE53: JSL SpawnSpriteDynamically_slot_limited
+#_09EE57: JSL SetSpawnedSpriteCoordinates
 
 #_09EE5B: LDA.b #$20
 #_09EE5D: STA.w $0F80,Y
@@ -20235,7 +20226,7 @@ Explode_VerifyPrizing:
 
 ;===================================================================================================
 
-Explode_SpawnExplosion:
+SpawnExplosion:
 #_09EEAD: CMP.b #$40
 #_09EEAF: BCC .delay
 
@@ -20276,7 +20267,7 @@ Explode_SpawnExplosion:
 #_09EED7: BNE .skip_sfx
 
 #_09EED9: LDA.b #$0C ; SFX2.0C
-#_09EEDB: JSL SpriteSFX_QueueSFX2WithPan
+#_09EEDB: JSL QueueSpriteSFX2WithPan
 
 .skip_sfx
 #_09EEDF: PLA
@@ -20284,7 +20275,7 @@ Explode_SpawnExplosion:
 #_09EEE2: BNE .exit
 
 #_09EEE4: LDA.b #$1C ; SPRITE 1C
-#_09EEE6: JSL Sprite_SpawnDynamically
+#_09EEE6: JSL SpawnSpriteDynamically
 #_09EEEA: BMI .exit
 
 #_09EEEC: LDA.b #$0B
@@ -20367,7 +20358,7 @@ Explode_SpawnExplosion:
 
 ;===================================================================================================
 
-Sprite_KillFriends:
+KillFellowSprites:
 #_09EF56: LDY.b #$0F
 
 .next
@@ -20752,7 +20743,7 @@ GarnishDraw_ThrownItemDebris:
 
 ;===================================================================================================
 
-Sprite_KillSelf:
+KillThisSprite:
 #_09F1F8: LDA.w $0CAA,X
 #_09F1FB: AND.b #$40
 #_09F1FD: BNE .force_die
@@ -20852,14 +20843,14 @@ pool Module12_GameOver
 #_09F272: dw GameOver_InitializeAndFadeMusic  ; 0x01
 #_09F274: dw GameOver_DelayBeforeIris         ; 0x02
 #_09F276: dw GameOver_IrisWipe                ; 0x03
-#_09F278: dw Link_SpinAndDie_bounce           ; 0x04
+#_09F278: dw SpinAndDie_bounce                ; 0x04
 #_09F27A: dw GameOver_SplatAndFade            ; 0x05
 #_09F27C: dw GameOver_LoadGAMEOVR             ; 0x06
 #_09F27E: dw Animate_GAMEOVER_Letters_bounce  ; 0x07
 #_09F280: dw GameOver_Finalize_GAMEOVR        ; 0x08
 #_09F282: dw GameOver_SaveAndOrContinue       ; 0x09
 #_09F284: dw GameOver_InitializeRevivalFairy  ; 0x0A
-#_09F286: dw RevivalFairy_Main_bounce         ; 0x0B
+#_09F286: dw RevivalFairy_bounce              ; 0x0B
 #_09F288: dw GameOver_RiseALittle             ; 0x0C
 #_09F28A: dw GameOver_Restore0D               ; 0x0D
 #_09F28C: dw GameOver_Restore0E               ; 0x0E
@@ -20880,7 +20871,7 @@ Module12_GameOver:
 #_09F299: CMP.b #$09
 #_09F29B: BEQ .exit
 
-#_09F29D: JSL LinkOAM_Main
+#_09F29D: JSL DrawLink
 
 .exit
 #_09F2A1: RTL
@@ -20966,7 +20957,7 @@ GameOver_InitializeAndFadeMusic:
 
 #_09F32A: STZ.w $04A0
 
-#_09F32D: JSL HUD_HandleFloorIndicator
+#_09F32D: JSL HandleFloorIndicator
 
 #_09F331: INC.b $16
 
@@ -20983,7 +20974,7 @@ GameOver_DelayBeforeIris:
 #_09F33B: DEC.b $C8
 #_09F33D: BNE .exit
 
-#_09F33F: JSL GameOver_InitializeLetters
+#_09F33F: JSL InitializeGAMEOVERLetters
 #_09F343: JSL IrisSpotlight_close
 
 #_09F347: LDA.b #$30
@@ -21149,6 +21140,7 @@ GameOver_SplatAndFade:
 #_09F430: LDA.b #$16
 #_09F432: STA.b $17
 #_09F434: STA.w $0710
+
 #_09F437: INC.b $11
 
 .exit
@@ -21173,7 +21165,7 @@ GameOver_SplatAndFade:
 #_09F447: LDA.b #$0F
 #_09F449: STA.w $0AAA
 
-#_09F44C: JSL Graphics_LoadChrHalfSlot
+#_09F44C: JSL LoadChrHalfSlot
 
 #_09F450: STZ.w $0AAA
 
@@ -21191,7 +21183,7 @@ GameOver_LoadGAMEOVR:
 #_09F45C: LDA.b #$0F
 #_09F45E: STA.w $0AAA
 
-#_09F461: JSL Graphics_LoadChrHalfSlot
+#_09F461: JSL LoadChrHalfSlot
 
 #_09F465: STZ.w $0AAA
 
@@ -21203,16 +21195,16 @@ GameOver_LoadGAMEOVR:
 #_09F46D: LDA.b #$02
 #_09F46F: STA.w $0AA9
 
-#_09F472: JSL Palettes_Load_SpriteEnvironment_Underworld
-#_09F476: JSL Palettes_Load_SpriteMain
+#_09F472: JSL PaletteLoad_SpriteEnvironment_Underworld
+#_09F476: JSL PaletteLoad_SpriteMain
 
 #_09F47A: INC.b $15
 #_09F47C: INC.b $11
 
 ;===================================================================================================
 
-Link_SpinAndDie_bounce:
-#_09F47E: JSL Link_SpinAndDie
+SpinAndDie_bounce:
+#_09F47E: JSL SpinAndDie
 
 #_09F482: RTS
 
@@ -21337,7 +21329,7 @@ GameOver_FadeAndRevive:
 #_09F514: LDA.b $1B
 #_09F516: BEQ .outdoors
 
-#_09F518: JSL Underworld_FlagRoomData_Quadrants
+#_09F518: JSL FullyUpdateRoomFlags
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -21415,7 +21407,7 @@ GameOver_FadeAndRevive:
 #_09F584: STA.l $7EF37C,X
 
 .cave
-#_09F588: JSL Sprite_ResetAll
+#_09F588: JSL ResetAllSprites
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -21643,8 +21635,8 @@ GameOver_InitializeRevivalFairy:
 
 ;===================================================================================================
 
-RevivalFairy_Main_bounce:
-#_09F6B4: JSL RevivalFairy_Main
+RevivalFairy_bounce:
+#_09F6B4: JSL RevivalFairy
 
 #_09F6B8: RTS
 
@@ -21706,8 +21698,8 @@ GameOver_AriseAdvancement:
 ;===================================================================================================
 
 GameOver_RunFairyRefill:
-#_09F714: JSL RevivalFairy_Main
-#_09F718: JSL RefillLogic_long
+#_09F714: JSL RevivalFairy
+#_09F718: JSL HandleItemRefills
 
 #_09F71C: RTS
 
@@ -21720,7 +21712,7 @@ GameOver_Restore0D:
 #_09F722: LDA.b #$01
 #_09F724: STA.w $0AAA
 
-#_09F727: JSL Graphics_LoadChrHalfSlot
+#_09F727: JSL LoadChrHalfSlot
 
 #_09F72B: LDA.l $7EC017
 #_09F72F: JSL ApplyGrayscaleFixed_Parameterized
@@ -21730,7 +21722,7 @@ GameOver_Restore0D:
 ;===================================================================================================
 
 GameOver_Restore0E:
-#_09F735: JSL Graphics_LoadChrHalfSlot
+#_09F735: JSL LoadChrHalfSlot
 
 #_09F739: LDA.l $7EC212
 #_09F73D: STA.b $1D
@@ -21812,8 +21804,8 @@ Module17_SaveAndQuit:
 
 #_09F7A3: JSR (.submodules,X)
 
-#_09F7A6: JSL Sprite_Main
-#_09F7AA: JSL LinkOAM_Main
+#_09F7A6: JSL HandleAllSprites
+#_09F7AA: JSL DrawLink
 
 #_09F7AE: RTL
 
@@ -21951,7 +21943,7 @@ Polyhedral_SetRotationMatrix:
 
 #_09F866: LDY.b $001F04
 
-#_09F868: LDA.w Polyhedral_SineFunction,Y
+#_09F868: LDA.w Polyhedral_SineTable,Y
 #_09F86B: STA.b $001F50
 
 #_09F86D: CMP.b #$80
@@ -21959,7 +21951,7 @@ Polyhedral_SetRotationMatrix:
 #_09F871: EOR.b #$FF
 #_09F873: STA.b $001F51
 
-#_09F875: LDA.w Polyhedral_CosineFunction,Y
+#_09F875: LDA.w Polyhedral_CosineTable,Y
 #_09F878: STA.b $001F52
 
 #_09F87A: CMP.b #$80
@@ -21971,7 +21963,7 @@ Polyhedral_SetRotationMatrix:
 
 #_09F882: LDY.b $001F05
 
-#_09F884: LDA.w Polyhedral_SineFunction,Y
+#_09F884: LDA.w Polyhedral_SineTable,Y
 #_09F887: STA.b $001F54
 
 #_09F889: CMP.b #$80
@@ -21980,7 +21972,7 @@ Polyhedral_SetRotationMatrix:
 #_09F88D: EOR.b #$FF
 #_09F88F: STA.b $001F55
 
-#_09F891: LDA.w Polyhedral_CosineFunction,Y
+#_09F891: LDA.w Polyhedral_CosineTable,Y
 #_09F894: STA.b $001F56
 
 #_09F896: CMP.b #$80
@@ -22637,7 +22629,7 @@ Polyhedral_CalculateCrossProduct:
 
 ;===================================================================================================
 
-Polyhedral_SineFunction:
+Polyhedral_SineTable:
 #_09FB6D: db $00, $02, $03, $05, $06, $08, $09, $0B
 #_09FB75: db $0C, $0E, $10, $11, $13, $14, $16, $17
 #_09FB7D: db $18, $1A, $1B, $1D, $1E, $20, $21, $22
@@ -22649,7 +22641,7 @@ Polyhedral_SineFunction:
 
 ;===================================================================================================
 
-Polyhedral_CosineFunction:
+Polyhedral_CosineTable:
 #_09FBAD: db $40, $40, $40, $40, $40, $40, $3F, $3F
 #_09FBB5: db $3F, $3E, $3E, $3E, $3D, $3D, $3C, $3C
 #_09FBBD: db $3B, $3B, $3A, $39, $38, $38, $37, $36
@@ -23117,39 +23109,39 @@ Polyhedral_SetLeft:
 ;---------------------------------------------------------------------------------------------------
 
 .continue
-#_09FEBA: LDX.b $E9
+#_09FEBA: LDX.b $001FE9
 #_09FEBC: DEX
 #_09FEBD: DEX
 #_09FEBE: BNE .dont_reload
 
-#_09FEC0: LDX.b $C0
+#_09FEC0: LDX.b $001FC0
 
 .dont_reload
-#_09FEC2: LDA.b $C0,X
-#_09FEC4: CMP.b $E2
+#_09FEC2: LDA.b $001FC0,X
+#_09FEC4: CMP.b $001FE2
 #_09FEC6: BCC .fail
 #_09FEC8: BNE .dont_restart
 
-#_09FECA: LDA.b $BF,X
-#_09FECC: STA.b $E1
+#_09FECA: LDA.b $001FBF,X
+#_09FECC: STA.b $001FE1
 
-#_09FECE: STX.b $E9
+#_09FECE: STX.b $001FE9
 
 #_09FED0: BRA .restart
 
 ;---------------------------------------------------------------------------------------------------
 
 .dont_restart
-#_09FED2: STA.b $E4
+#_09FED2: STA.b $001FE4
 
-#_09FED4: LDA.b $BF,X
-#_09FED6: STA.b $E3
+#_09FED4: LDA.b $001FBF,X
+#_09FED6: STA.b $001FE3
 
-#_09FED8: STX.b $E9
+#_09FED8: STX.b $001FE9
 
 #_09FEDA: LDX.b #$00
 #_09FEDC: SEC
-#_09FEDD: SBC.b $E1
+#_09FEDD: SBC.b $001FE1
 #_09FEDF: BCS .positive
 
 #_09FEE1: DEX
@@ -23167,18 +23159,18 @@ Polyhedral_SetLeft:
 
 #_09FEF0: SEC
 
-#_09FEF1: LDA.b $E4
-#_09FEF3: SBC.b $E2
+#_09FEF1: LDA.b $001FE4
+#_09FEF3: SBC.b $001FE2
 #_09FEF5: STA.l WRDIVB
 
 ;---------------------------------------------------------------------------------------------------
 
 #_09FEF9: REP #$20
 
-#_09FEFB: LDA.b $E0
+#_09FEFB: LDA.b $001FE0
 #_09FEFD: AND.w #$FF00
 #_09FF00: ORA.w #$0080
-#_09FF03: STA.b $E5
+#_09FF03: STA.b $001FE5
 
 #_09FF05: LDA.w #$0000
 

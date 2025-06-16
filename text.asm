@@ -754,7 +754,7 @@ Message_001E:
 ; Please help me…
 ;---------------------------------------------------------------------------------------------------
 Message_001F:
-#_1C8813: db $6B, $02 ; set window border
+#_1C8813: db $6B, $02 ; set border
 #_1C8815: db $7A, $03 ; set draw speed
 #_1C8817: db $07, $1E, $25, $29, $59, $BE, $43 ; Help⎵[me]…
 #_1C881E: db $78, $01 ; delay
@@ -821,7 +821,7 @@ Message_001F:
 ; the garden inside.
 ;---------------------------------------------------------------------------------------------------
 Message_0020:
-#_1C890D: db $6B, $02 ; set window border
+#_1C890D: db $6B, $02 ; set border
 #_1C890F: db $7A, $03 ; set draw speed
 #_1C8911: db $07, $1E, $25, $29, $59, $BE, $43 ; Help⎵[me]…
 #_1C8918: db $75 ; line 2
@@ -1082,7 +1082,7 @@ Message_0027:
 ; … … …
 ;---------------------------------------------------------------------------------------------------
 Message_0028:
-#_1C8C5F: db $6B, $02 ; set window border
+#_1C8C5F: db $6B, $02 ; set border
 #_1C8C61: db $7A, $03 ; set draw speed
 #_1C8C63: db $6A, $3E, $8A, $07, $1E, $25, $29, $3E ; [LINK]![  ]Help!
 #_1C8C6B: db $8A, $E6, $59, $D2, $25, $9E, $A6, $2C ; [  ][The]⎵[so]l[di][er]s
@@ -1540,7 +1540,7 @@ Message_0034:
 ; I beg you!
 ;---------------------------------------------------------------------------------------------------
 Message_0035:
-#_1C91E0: db $6B, $02 ; set window border
+#_1C91E0: db $6B, $02 ; set border
 #_1C91E2: db $7A, $03 ; set draw speed
 #_1C91E4: db $6A, $42, $59, $B6, $59, $B5, $59, $08 ; [LINK],⎵[it]⎵[is]⎵I
 #_1C91EC: db $42, $59, $12, $1A, $AE, $2B, $1A, $21 ; ,⎵Sa[has]rah
@@ -1668,7 +1668,7 @@ Message_0035:
 ; heroic figure.
 ;---------------------------------------------------------------------------------------------------
 Message_0036:
-#_1C9412: db $6B, $02 ; set window border
+#_1C9412: db $6B, $02 ; set border
 #_1C9414: db $7A, $03 ; set draw speed
 #_1C9416: db $01, $2E, $2D, $59, $08, $59, $D0, $27 ; But⎵I⎵[se]n
 #_1C941E: db $D0, $59, $E3, $2B, $59, $21, $1E, $25 ; [se]⎵[you]r⎵hel
@@ -3116,7 +3116,7 @@ Message_006F:
 ; Please, [LINK]…
 ;---------------------------------------------------------------------------------------------------
 Message_0070:
-#_1CA61D: db $6B, $02 ; set window border
+#_1CA61D: db $6B, $02 ; set border
 #_1CA61F: db $7A, $03 ; set draw speed
 #_1CA621: db $12, $2E, $1D, $1D, $A5, $25, $32, $42 ; Sudd[en]ly,
 #_1CA629: db $59, $12, $1A, $AE, $2B, $1A, $21, $BA ; ⎵Sa[has]rah[la]
@@ -4904,7 +4904,7 @@ Message_00B3:
 ; to defeat armored foes.
 ;---------------------------------------------------------------------------------------------------
 Message_00B4:
-#_1CBC9E: db $6B, $02 ; set window border
+#_1CBC9E: db $6B, $02 ; set border
 #_1CBCA0: db $6A, $42, $59, $B6, $59, $B5, $59, $08 ; [LINK],⎵[it]⎵[is]⎵I
 #_1CBCA8: db $42, $59, $12, $1A, $AE, $2B, $1A, $21 ; ,⎵Sa[has]rah
 #_1CBCB0: db $BA, $41, $8A, $08 ; [la].[  ]I
@@ -4943,7 +4943,7 @@ Message_00B4:
 ; Don't forget the Moon Pearl…
 ;---------------------------------------------------------------------------------------------------
 Message_00B5:
-#_1CBD1B: db $6B, $02 ; set window border
+#_1CBD1B: db $6B, $02 ; set border
 #_1CBD1D: db $6A, $42, $59, $B6, $59, $B5, $59, $08 ; [LINK],⎵[it]⎵[is]⎵I
 #_1CBD25: db $42, $59, $12, $1A, $AE, $2B, $1A, $21 ; ,⎵Sa[has]rah
 #_1CBD2D: db $BA, $59, $D8 ; [la]⎵[the]
@@ -5040,7 +5040,7 @@ Message_00B7:
 ; top of Death Mountain.
 ;---------------------------------------------------------------------------------------------------
 Message_00B8:
-#_1CBE65: db $6B, $02 ; set window border
+#_1CBE65: db $6B, $02 ; set border
 #_1CBE67: db $6A, $42, $59, $B6, $59, $B5, $59, $08 ; [LINK],⎵[it]⎵[is]⎵I
 #_1CBE6F: db $42, $59, $12, $1A, $AE, $2B, $1A, $21 ; ,⎵Sa[has]rah
 #_1CBE77: db $BA, $41 ; [la].
@@ -5074,7 +5074,7 @@ Message_00B8:
 ; twin in the other world.
 ;---------------------------------------------------------------------------------------------------
 Message_00B9:
-#_1CBED8: db $6B, $02 ; set window border
+#_1CBED8: db $6B, $02 ; set border
 #_1CBEDA: db $6A, $42, $59, $B6, $59, $B5, $59, $08 ; [LINK],⎵[it]⎵[is]⎵I
 #_1CBEE2: db $42, $59, $12, $1A, $AE, $2B, $1A, $21 ; ,⎵Sa[has]rah
 #_1CBEEA: db $BA, $41 ; [la].
@@ -5109,7 +5109,7 @@ Message_00B9:
 ; of Blind the Thief!  Be careful!
 ;---------------------------------------------------------------------------------------------------
 Message_00BA:
-#_1CBF64: db $6B, $02 ; set window border
+#_1CBF64: db $6B, $02 ; set border
 #_1CBF66: db $6A, $43, $8A, $08, $2D, $8B, $BE, $42 ; [LINK]…[  ]It['s ][me],
 #_1CBF6E: db $59, $19, $1E, $25, $1D, $1A, $43 ; ⎵Zelda…
 #_1CBF75: db $75 ; line 2
@@ -5129,7 +5129,7 @@ Message_00BA:
 ; the way forward.
 ;---------------------------------------------------------------------------------------------------
 Message_00BB:
-#_1CBFA7: db $6B, $02 ; set window border
+#_1CBFA7: db $6B, $02 ; set border
 #_1CBFA9: db $6A, $42, $8A, $B6, $59, $B5, $59, $08 ; [LINK],[  ][it]⎵[is]⎵I
 #_1CBFB1: db $42, $59, $12, $1A, $AE, $2B, $1A, $21 ; ,⎵Sa[has]rah
 #_1CBFB9: db $BA ; [la]
@@ -5187,7 +5187,7 @@ Message_00BD:
 ; Do you understand, [LINK]?
 ;---------------------------------------------------------------------------------------------------
 Message_00BE:
-#_1CC044: db $6B, $02 ; set window border
+#_1CC044: db $6B, $02 ; set border
 #_1CC046: db $16, $21, $A0, $06, $93, $C7, $59, $B5 ; Wh[en ]G[an][on]⎵[is]
 #_1CC04E: db $59, $D3, $2E, $27, $27, $1E, $1D, $42 ; ⎵[st]unned,
 #_1CC056: db $59, $20, $22, $2F, $1E ; ⎵give
@@ -5212,7 +5212,7 @@ Message_00BE:
 ; your best, but please hurry…
 ;---------------------------------------------------------------------------------------------------
 Message_00BF:
-#_1CC08C: db $6B, $02 ; set window border
+#_1CC08C: db $6B, $02 ; set border
 #_1CC08E: db $6A, $42, $59, $99, $E3, $59, $21, $A2 ; [LINK],⎵[can ][you]⎵h[ear]
 #_1CC096: db $59, $BE, $3F ; ⎵[me]?
 #_1CC099: db $75 ; line 2
@@ -5240,7 +5240,7 @@ Message_00BF:
 ; the treasures in each dungeon.
 ;---------------------------------------------------------------------------------------------------
 Message_00C0:
-#_1CC0F2: db $6B, $02 ; set window border
+#_1CC0F2: db $6B, $02 ; set border
 #_1CC0F4: db $6A, $42, $59, $B6, $59, $B5, $59, $08 ; [LINK],⎵[it]⎵[is]⎵I
 #_1CC0FC: db $42, $59, $12, $1A, $AE, $2B, $1A, $21 ; ,⎵Sa[has]rah
 #_1CC104: db $BA, $41 ; [la].
@@ -5263,7 +5263,7 @@ Message_00C0:
 ; his own evil magic power to him.
 ;---------------------------------------------------------------------------------------------------
 Message_00C1:
-#_1CC137: db $6B, $02 ; set window border
+#_1CC137: db $6B, $02 ; set border
 #_1CC139: db $0B, $B5, $2D, $A0, $E0, $25, $25, $42 ; L[is]t[en ][we]ll,
 #_1CC141: db $59, $6A, $41 ; ⎵[LINK].
 #_1CC144: db $75 ; line 2
@@ -5295,7 +5295,7 @@ Message_00C1:
 ; depths of this dungeon.
 ;---------------------------------------------------------------------------------------------------
 Message_00C2:
-#_1CC1A9: db $6B, $02 ; set window border
+#_1CC1A9: db $6B, $02 ; set border
 #_1CC1AB: db $6A, $42, $59, $9F, $59, $C2, $59, $2E ; [LINK],⎵[do]⎵[not]⎵u
 #_1CC1B3: db $D0, $59, $8E, $E3, $2B ; [se]⎵[all ][you]r
 #_1CC1B8: db $75 ; line 2
@@ -5324,7 +5324,7 @@ Message_00C2:
 ; further.
 ;---------------------------------------------------------------------------------------------------
 Message_00C3:
-#_1CC20D: db $6B, $02 ; set window border
+#_1CC20D: db $6B, $02 ; set border
 #_1CC20F: db $6A, $42, $59, $9F, $59, $E3, $59, $29 ; [LINK],⎵[do]⎵[you]⎵p
 #_1CC217: db $28, $2C, $D0, $2C, $2C, $59, $D8 ; os[se]ss⎵[the]
 #_1CC21E: db $75 ; line 2
@@ -5345,7 +5345,7 @@ Message_00C3:
 ; dungeon.
 ;---------------------------------------------------------------------------------------------------
 Message_00C4:
-#_1CC24F: db $6B, $02 ; set window border
+#_1CC24F: db $6B, $02 ; set border
 #_1CC251: db $6A, $42, $59, $D8, $59, $BD, $20, $22 ; [LINK],⎵[the]⎵[ma]gi
 #_1CC259: db $1C, $59, $1F, $BA, $BE, $2C, $59, $E2 ; c⎵f[la][me]s⎵[wi]
 #_1CC261: db $25, $25 ; ll
@@ -5364,7 +5364,7 @@ Message_00C4:
 ; vulnerable to another weapon.
 ;---------------------------------------------------------------------------------------------------
 Message_00C5:
-#_1CC281: db $6B, $02 ; set window border
+#_1CC281: db $6B, $02 ; set border
 #_1CC283: db $E8, $59, $1C, $93, $C2, $59, $9D, $DB ; [You]⎵c[an][not]⎵[des][tr]
 #_1CC28B: db $28, $32, $59, $D8 ; oy⎵[the]
 #_1CC28F: db $75 ; line 2
@@ -5392,7 +5392,7 @@ Message_00C5:
 ; Do not forget this!
 ;---------------------------------------------------------------------------------------------------
 Message_00C6:
-#_1CC2D4: db $6B, $02 ; set window border
+#_1CC2D4: db $6B, $02 ; set border
 #_1CC2D6: db $6A, $42, $59, $B6, $59, $B5, $59, $08 ; [LINK],⎵[it]⎵[is]⎵I
 #_1CC2DE: db $42, $59, $12, $1A, $AE, $2B, $1A, $21 ; ,⎵Sa[has]rah
 #_1CC2E6: db $BA, $59, $D8 ; [la]⎵[the]
@@ -6242,7 +6242,7 @@ Message_00E9:
 ; Sahasrahla…
 ;---------------------------------------------------------------------------------------------------
 Message_00EA:
-#_1CCD1B: db $6D, $01 ; set window position
+#_1CCD1B: db $6D, $01 ; set position
 #_1CCD1D: db $07, $28, $1C, $2E, $2C, $59, $29, $28 ; Hocus⎵po
 #_1CCD25: db $1C, $2E, $2C, $3E ; cus!
 #_1CCD29: db $75 ; line 2
@@ -6258,7 +6258,7 @@ Message_00EA:
 ; the Book of Mudora.
 ;---------------------------------------------------------------------------------------------------
 Message_00EB:
-#_1CCD44: db $6D, $01 ; set window position
+#_1CCD44: db $6D, $01 ; set position
 #_1CCD46: db $00, $1B, $2B, $1A, $1C, $1A, $1D, $1A ; Abracada
 #_1CCD4E: db $1B, $2B, $1A, $59, $1A, $BA, $24, $1A ; bra⎵a[la]ka
 #_1CCD56: db $33, $1A, $26, $3E ; zam!
@@ -6277,7 +6277,7 @@ Message_00EB:
 ; wise men's line in the desert.
 ;---------------------------------------------------------------------------------------------------
 Message_00EC:
-#_1CCD7E: db $6D, $01 ; set window position
+#_1CCD7E: db $6D, $01 ; set position
 #_1CCD80: db $07, $28, $1C, $2E, $2C, $59, $29, $28 ; Hocus⎵po
 #_1CCD88: db $1C, $2E, $2C, $3E ; cus!
 #_1CCD8C: db $75 ; line 2
@@ -6296,7 +6296,7 @@ Message_00EC:
 ; at the Magic Shop…
 ;---------------------------------------------------------------------------------------------------
 Message_00ED:
-#_1CCDB5: db $6D, $01 ; set window position
+#_1CCDB5: db $6D, $01 ; set position
 #_1CCDB7: db $00, $1B, $2B, $1A, $1C, $1A, $1D, $1A ; Abracada
 #_1CCDBF: db $1B, $2B, $1A, $59, $1A, $BA, $24, $1A ; bra⎵a[la]ka
 #_1CCDC7: db $33, $1A, $26, $3E ; zam!
@@ -6315,7 +6315,7 @@ Message_00ED:
 ; lake at the river's source…
 ;---------------------------------------------------------------------------------------------------
 Message_00EE:
-#_1CCDF1: db $6D, $01 ; set window position
+#_1CCDF1: db $6D, $01 ; set position
 #_1CCDF3: db $07, $28, $1C, $2E, $2C, $59, $29, $28 ; Hocus⎵po
 #_1CCDFB: db $1C, $2E, $2C, $3E ; cus!
 #_1CCDFF: db $75 ; line 2
@@ -6335,7 +6335,7 @@ Message_00EE:
 ; mountain tower.
 ;---------------------------------------------------------------------------------------------------
 Message_00EF:
-#_1CCE28: db $6D, $01 ; set window position
+#_1CCE28: db $6D, $01 ; set position
 #_1CCE2A: db $00, $1B, $2B, $1A, $1C, $1A, $1D, $1A ; Abracada
 #_1CCE32: db $1B, $2B, $1A, $59, $1A, $BA, $24, $1A ; bra⎵a[la]ka
 #_1CCE3A: db $33, $1A, $26, $3E ; zam!
@@ -6358,7 +6358,7 @@ Message_00EF:
 ; cannot harm the wizard's body.
 ;---------------------------------------------------------------------------------------------------
 Message_00F0:
-#_1CCE6B: db $6D, $01 ; set window position
+#_1CCE6B: db $6D, $01 ; set position
 #_1CCE6D: db $07, $28, $1C, $2E, $2C, $59, $29, $28 ; Hocus⎵po
 #_1CCE75: db $1C, $2E, $2C, $3E ; cus!
 #_1CCE79: db $75 ; line 2
@@ -6377,7 +6377,7 @@ Message_00F0:
 ; well near the smithy's shop.
 ;---------------------------------------------------------------------------------------------------
 Message_00F1:
-#_1CCEA3: db $6D, $01 ; set window position
+#_1CCEA3: db $6D, $01 ; set position
 #_1CCEA5: db $00, $1B, $2B, $1A, $1C, $1A, $1D, $1A ; Abracada
 #_1CCEAD: db $1B, $2B, $1A, $59, $1A, $BA, $24, $1A ; bra⎵a[la]ka
 #_1CCEB5: db $33, $1A, $26, $3E ; zam!
@@ -6397,7 +6397,7 @@ Message_00F1:
 ; want you to come back again…
 ;---------------------------------------------------------------------------------------------------
 Message_00F2:
-#_1CCEE5: db $6D, $01 ; set window position
+#_1CCEE5: db $6D, $01 ; set position
 #_1CCEE7: db $16, $1E, $25, $25, $42, $59, $08, $59 ; Well,⎵I⎵
 #_1CCEEF: db $AD, $59, $DA, $59, $2C, $1A, $32, $59 ; [have]⎵[to]⎵say⎵
 #_1CCEF7: db $26, $32, $59, $1C, $C7, $9E, $2D, $22 ; my⎵c[on][di]ti
@@ -6421,7 +6421,7 @@ Message_00F2:
 ;        Not interested
 ;---------------------------------------------------------------------------------------------------
 Message_00F3:
-#_1CCF29: db $6D, $01 ; set window position
+#_1CCF29: db $6D, $01 ; set position
 #_1CCF2B: db $07, $26, $26, $26, $43, $8A, $E8, $59 ; Hmmm…[  ][You]⎵
 #_1CCF33: db $BB, $28, $24, $59, $25, $22, $24, $1E ; [lo]ok⎵like
 #_1CCF3B: db $59, $E3, $59, $26, $22, $20, $21, $2D ; ⎵[you]⎵might
@@ -6452,7 +6452,7 @@ Message_00F3:
 ; Yeehah ha hah!
 ;---------------------------------------------------------------------------------------------------
 Message_00F4:
-#_1CCF9A: db $6D, $01 ; set window position
+#_1CCF9A: db $6D, $01 ; set position
 #_1CCF9C: db $0D, $28, $30, $59, $08, $59, $E2, $25 ; Now⎵I⎵[wi]l
 #_1CCFA4: db $25, $59, $2D, $1A, $24, $1E, $59 ; l⎵take⎵
 #_1CCFAB: db $6C, $00, $6C, $01, $59, $11, $DC, $1E ; [#0][#1]⎵R[up]e
@@ -6472,7 +6472,7 @@ Message_00F4:
 ; I'll be waiting for your return.
 ;---------------------------------------------------------------------------------------------------
 Message_00F5:
-#_1CCFDB: db $6D, $01 ; set window position
+#_1CCFDB: db $6D, $01 ; set position
 #_1CCFDD: db $08, $2D, $59, $B5, $59, $B4, $1D, $1E ; It⎵[is]⎵[in]de
 #_1CCFE5: db $A4, $1A, $59, $29, $28, $C8, $59, $BC ; [ed ]a⎵po[or]⎵[man]
 #_1CCFED: db $59, $E1, $28, $59, $B5 ; ⎵[wh]o⎵[is]
@@ -6492,7 +6492,7 @@ Message_00F5:
 ; standing in the desert…
 ;---------------------------------------------------------------------------------------------------
 Message_00F6:
-#_1CD01C: db $6D, $01 ; set window position
+#_1CD01C: db $6D, $01 ; set position
 #_1CD01E: db $07, $28, $1C, $2E, $2C, $59, $29, $28 ; Hocus⎵po
 #_1CD026: db $1C, $2E, $2C, $3E ; cus!
 #_1CD02A: db $75 ; line 2
@@ -6511,7 +6511,7 @@ Message_00F6:
 ; asking…
 ;---------------------------------------------------------------------------------------------------
 Message_00F7:
-#_1CD04B: db $6D, $01 ; set window position
+#_1CD04B: db $6D, $01 ; set position
 #_1CD04D: db $00, $1B, $2B, $1A, $1C, $1A, $1D, $1A ; Abracada
 #_1CD055: db $1B, $2B, $1A, $59, $1A, $BA, $24, $1A ; bra⎵a[la]ka
 #_1CD05D: db $33, $1A, $26, $3E ; zam!
@@ -6534,7 +6534,7 @@ Message_00F7:
 ; Village Of Outcasts.
 ;---------------------------------------------------------------------------------------------------
 Message_00F8:
-#_1CD090: db $6D, $01 ; set window position
+#_1CD090: db $6D, $01 ; set position
 #_1CD092: db $07, $28, $1C, $2E, $2C, $59, $29, $28 ; Hocus⎵po
 #_1CD09A: db $1C, $2E, $2C, $3E ; cus!
 #_1CD09E: db $75 ; line 2
@@ -6557,7 +6557,7 @@ Message_00F8:
 ; in peace in the graveyard.
 ;---------------------------------------------------------------------------------------------------
 Message_00F9:
-#_1CD0CF: db $6D, $01 ; set window position
+#_1CD0CF: db $6D, $01 ; set position
 #_1CD0D1: db $00, $1B, $2B, $1A, $1C, $1A, $1D, $1A ; Abracada
 #_1CD0D9: db $1B, $2B, $1A, $59, $1A, $BA, $24, $1A ; bra⎵a[la]ka
 #_1CD0E1: db $33, $1A, $26, $3E ; zam!
@@ -6577,7 +6577,7 @@ Message_00F9:
 ; in the Bomb Shop.
 ;---------------------------------------------------------------------------------------------------
 Message_00FA:
-#_1CD114: db $6D, $01 ; set window position
+#_1CD114: db $6D, $01 ; set position
 #_1CD116: db $07, $28, $1C, $2E, $2C, $59, $29, $28 ; Hocus⎵po
 #_1CD11E: db $1C, $2E, $2C, $3E ; cus!
 #_1CD122: db $75 ; line 2
@@ -6596,7 +6596,7 @@ Message_00FA:
 ; the pyramid of the Dark World.
 ;---------------------------------------------------------------------------------------------------
 Message_00FB:
-#_1CD14C: db $6D, $01 ; set window position
+#_1CD14C: db $6D, $01 ; set position
 #_1CD14E: db $00, $1B, $2B, $1A, $1C, $1A, $1D, $1A ; Abracada
 #_1CD156: db $1B, $2B, $1A, $59, $1A, $BA, $24, $1A ; bra⎵a[la]ka
 #_1CD15E: db $33, $1A, $26, $3E ; zam!
@@ -6617,7 +6617,7 @@ Message_00FB:
 ; Ganon's tower.
 ;---------------------------------------------------------------------------------------------------
 Message_00FC:
-#_1CD190: db $6D, $01 ; set window position
+#_1CD190: db $6D, $01 ; set position
 #_1CD192: db $07, $28, $1C, $2E, $2C, $59, $29, $28 ; Hocus⎵po
 #_1CD19A: db $1C, $2E, $2C, $3E ; cus!
 #_1CD19E: db $75 ; line 2
@@ -6638,7 +6638,7 @@ Message_00FC:
 ; give Ganon his last moment.
 ;---------------------------------------------------------------------------------------------------
 Message_00FD:
-#_1CD1CA: db $6D, $01 ; set window position
+#_1CD1CA: db $6D, $01 ; set position
 #_1CD1CC: db $00, $1B, $2B, $1A, $1C, $1A, $1D, $1A ; Abracada
 #_1CD1D4: db $1B, $2B, $1A, $59, $1A, $BA, $24, $1A ; bra⎵a[la]ka
 #_1CD1DC: db $33, $1A, $26, $3E ; zam!
@@ -7244,7 +7244,7 @@ Message_0112:
 #_1CD95F: db $6E, $00 ; set scroll speed
 #_1CD961: db $77, $07 ; set text color
 #_1CD963: db $7A, $03 ; set draw speed
-#_1CD965: db $6B, $02 ; set window border
+#_1CD965: db $6B, $02 ; set border
 #_1CD967: db $67 ; next image
 #_1CD968: db $0B, $C7, $20, $59, $1A, $AC, $42, $59 ; L[on]g⎵a[go],⎵
 #_1CD970: db $B4, $59, $D8, $59, $97, $1A, $2E, $2D ; [in]⎵[the]⎵[be]aut
@@ -7339,7 +7339,7 @@ Message_0112:
 ; the good King of Hyrule…
 ;---------------------------------------------------------------------------------------------------
 Message_0113:
-#_1CDAEE: db $6B, $02 ; set window border
+#_1CDAEE: db $6B, $02 ; set border
 #_1CDAF0: db $77, $07 ; set text color
 #_1CDAF2: db $7A, $03 ; set draw speed
 #_1CDAF4: db $74 ; line 1
@@ -7369,7 +7369,7 @@ Message_0113:
 ; after another.
 ;---------------------------------------------------------------------------------------------------
 Message_0114:
-#_1CDB52: db $6B, $02 ; set window border
+#_1CDB52: db $6B, $02 ; set border
 #_1CDB54: db $77, $07 ; set text color
 #_1CDB56: db $7A, $03 ; set draw speed
 #_1CDB58: db $74 ; line 1
@@ -7396,7 +7396,7 @@ Message_0114:
 ; near.
 ;---------------------------------------------------------------------------------------------------
 Message_0115:
-#_1CDBA3: db $6B, $02 ; set window border
+#_1CDBA3: db $6B, $02 ; set border
 #_1CDBA5: db $77, $07 ; set text color
 #_1CDBA7: db $7A, $03 ; set draw speed
 #_1CDBA9: db $74 ; line 1
@@ -8071,8 +8071,8 @@ Message_0131:
 ;---------------------------------------------------------------------------------------------------
 Message_0132:
 #_1CE399: db $7A, $02 ; set draw speed
-#_1CE39B: db $6D, $01 ; set window position
-#_1CE39D: db $6B, $02 ; set window border
+#_1CE39B: db $6D, $01 ; set position
+#_1CE39D: db $6B, $02 ; set border
 #_1CE39F: db $6A, $42, $59, $97, $1C, $1A, $2E, $D0 ; [LINK],⎵[be]cau[se]
 #_1CE3A7: db $59, $C6, $59, $E3, $42, $8A, $08, $59 ; ⎵[of]⎵[you],[  ]I⎵
 #_1CE3AF: db $1C, $93 ; c[an]
@@ -8213,8 +8213,8 @@ Message_0132:
 ;---------------------------------------------------------------------------------------------------
 Message_0133:
 #_1CE576: db $7A, $02 ; set draw speed
-#_1CE578: db $6D, $01 ; set window position
-#_1CE57A: db $6B, $02 ; set window border
+#_1CE578: db $6D, $01 ; set position
+#_1CE57A: db $6B, $02 ; set border
 #_1CE57C: db $6A, $42, $59, $97, $1C, $1A, $2E, $D0 ; [LINK],⎵[be]cau[se]
 #_1CE584: db $59, $C6, $59, $E3, $42, $59, $08, $59 ; ⎵[of]⎵[you],⎵I⎵
 #_1CE58C: db $1C, $93 ; c[an]
@@ -8367,8 +8367,8 @@ Message_0133:
 ;---------------------------------------------------------------------------------------------------
 Message_0134:
 #_1CE7B7: db $7A, $02 ; set draw speed
-#_1CE7B9: db $6D, $01 ; set window position
-#_1CE7BB: db $6B, $02 ; set window border
+#_1CE7B9: db $6D, $01 ; set position
+#_1CE7BB: db $6B, $02 ; set border
 #_1CE7BD: db $6A, $42, $59, $97, $1C, $1A, $2E, $D0 ; [LINK],⎵[be]cau[se]
 #_1CE7C5: db $59, $C6, $59, $E3, $42, $59, $08, $59 ; ⎵[of]⎵[you],⎵I⎵
 #_1CE7CD: db $1C, $93 ; c[an]
@@ -8478,8 +8478,8 @@ Message_0134:
 ;---------------------------------------------------------------------------------------------------
 Message_0135:
 #_1CE951: db $7A, $02 ; set draw speed
-#_1CE953: db $6D, $01 ; set window position
-#_1CE955: db $6B, $02 ; set window border
+#_1CE953: db $6D, $01 ; set position
+#_1CE955: db $6B, $02 ; set border
 #_1CE957: db $6A, $42, $59, $97, $1C, $1A, $2E, $D0 ; [LINK],⎵[be]cau[se]
 #_1CE95F: db $59, $C6, $59, $E3, $42, $59, $08, $59 ; ⎵[of]⎵[you],⎵I⎵
 #_1CE967: db $1C, $93 ; c[an]
@@ -8578,8 +8578,8 @@ Message_0135:
 ;---------------------------------------------------------------------------------------------------
 Message_0136:
 #_1CEAA4: db $7A, $02 ; set draw speed
-#_1CEAA6: db $6D, $01 ; set window position
-#_1CEAA8: db $6B, $02 ; set window border
+#_1CEAA6: db $6D, $01 ; set position
+#_1CEAA8: db $6B, $02 ; set border
 #_1CEAAA: db $6A, $42, $59, $97, $1C, $1A, $2E, $D0 ; [LINK],⎵[be]cau[se]
 #_1CEAB2: db $59, $C6, $59, $E3, $42, $59, $08, $59 ; ⎵[of]⎵[you],⎵I⎵
 #_1CEABA: db $1C, $93 ; c[an]
@@ -8697,8 +8697,8 @@ Message_0136:
 ;---------------------------------------------------------------------------------------------------
 Message_0137:
 #_1CEC67: db $7A, $02 ; set draw speed
-#_1CEC69: db $6D, $01 ; set window position
-#_1CEC6B: db $6B, $02 ; set window border
+#_1CEC69: db $6D, $01 ; set position
+#_1CEC6B: db $6B, $02 ; set border
 #_1CEC6D: db $6A, $42, $59, $97, $1C, $1A, $2E, $D0 ; [LINK],⎵[be]cau[se]
 #_1CEC75: db $59, $C6, $59, $E3, $42, $59, $08, $59 ; ⎵[of]⎵[you],⎵I⎵
 #_1CEC7D: db $1C, $93 ; c[an]
@@ -8800,8 +8800,8 @@ Message_0137:
 ;---------------------------------------------------------------------------------------------------
 Message_0138:
 #_1CEDE5: db $7A, $02 ; set draw speed
-#_1CEDE7: db $6D, $01 ; set window position
-#_1CEDE9: db $6B, $02 ; set window border
+#_1CEDE7: db $6D, $01 ; set position
+#_1CEDE9: db $6B, $02 ; set border
 #_1CEDEB: db $08, $59, $1A, $29, $29, $CE, $1C, $22 ; I⎵app[re]ci
 #_1CEDF3: db $94, $1E, $59, $E3, $2B, $59, $9B, $B3 ; [at]e⎵[you]r⎵[com][ing ]
 #_1CEDFB: db $D2, $59, $1F, $1A, $2B ; [so]⎵far
@@ -8892,8 +8892,8 @@ Message_0138:
 ;---------------------------------------------------------------------------------------------------
 Message_0139:
 #_1CEF78: db $7A, $02 ; set draw speed
-#_1CEF7A: db $6D, $01 ; set window position
-#_1CEF7C: db $6B, $02 ; set window border
+#_1CEF7A: db $6D, $01 ; set position
+#_1CEF7C: db $6B, $02 ; set border
 #_1CEF7E: db $0C, $1A, $32, $59, $D8, $59, $DF, $32 ; May⎵[the]⎵[wa]y
 #_1CEF86: db $59, $C6, $59, $D8, $59, $E4, $28, $59 ; ⎵[of]⎵[the]⎵[Her]o⎵
 #_1CEF8E: db $25, $1E, $1A, $1D ; lead
@@ -8909,8 +8909,8 @@ Message_0139:
 ;---------------------------------------------------------------------------------------------------
 Message_013A:
 #_1CEF9F: db $7A, $02 ; set draw speed
-#_1CEFA1: db $6D, $01 ; set window position
-#_1CEFA3: db $6B, $02 ; set window border
+#_1CEFA1: db $6D, $01 ; set position
+#_1CEFA3: db $6B, $02 ; set border
 #_1CEFA5: db $03, $28, $59, $E3, $59, $2E, $27, $1D ; Do⎵[you]⎵und
 #_1CEFAD: db $A6, $D3, $90, $3F ; [er][st][and]?
 #_1CEFB1: db $75 ; line 2
@@ -8966,8 +8966,8 @@ Message_013B:
 ;---------------------------------------------------------------------------------------------------
 Message_013C:
 #_1CEFF0: db $7A, $02 ; set draw speed
-#_1CEFF2: db $6D, $01 ; set window position
-#_1CEFF4: db $6B, $02 ; set window border
+#_1CEFF2: db $6D, $01 ; set position
+#_1CEFF4: db $6B, $02 ; set border
 #_1CEFF6: db $08, $59, $1A, $29, $29, $CE, $1C, $22 ; I⎵app[re]ci
 #_1CEFFE: db $94, $1E, $59, $E3, $2B, $59, $9B, $B3 ; [at]e⎵[you]r⎵[com][ing ]
 #_1CF006: db $D2, $59, $1F, $1A, $2B ; [so]⎵far
@@ -10552,8 +10552,8 @@ Message_0172:
 ;---------------------------------------------------------------------------------------------------
 Message_0173:
 #_0EE2DE: db $7A, $02 ; set draw speed
-#_0EE2E0: db $6D, $00 ; set window position
-#_0EE2E2: db $6B, $02 ; set window border
+#_0EE2E0: db $6D, $00 ; set position
+#_0EE2E2: db $6B, $02 ; set border
 #_0EE2E4: db $16, $1E, $25, $9B, $1E, $42, $59, $6A ; Wel[com]e,⎵[LINK]
 #_0EE2EC: db $43 ; …
 #_0EE2ED: db $75 ; line 2
@@ -11211,7 +11211,7 @@ Message_0183:
 ;   Start From Sanctuary
 ;---------------------------------------------------------------------------------------------------
 Message_0184:
-#_0EEBE3: db $6D, $00 ; set window position
+#_0EEBE3: db $6D, $00 ; set position
 #_0EEBE5: db $7A, $00 ; set draw speed
 #_0EEBE7: db $44, $12, $2D, $1A, $2B, $2D, $59, $05 ; >Start⎵F
 #_0EEBEF: db $2B, $28, $26, $59, $6A, $8B, $07, $28 ; rom⎵[LINK]['s ]Ho
@@ -11229,7 +11229,7 @@ Message_0184:
 ;   Start From The Mountain Cave
 ;---------------------------------------------------------------------------------------------------
 Message_0185:
-#_0EEC10: db $6D, $00 ; set window position
+#_0EEC10: db $6D, $00 ; set position
 #_0EEC12: db $7A, $00 ; set draw speed
 #_0EEC14: db $44, $12, $2D, $1A, $2B, $2D, $59, $05 ; >Start⎵F
 #_0EEC1C: db $2B, $28, $26, $59, $6A, $8B, $07, $28 ; rom⎵[LINK]['s ]Ho

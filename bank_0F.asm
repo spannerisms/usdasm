@@ -3763,7 +3763,7 @@ NULL_0FF520:
 
 ;===================================================================================================
 
-Sprite_CancelHookshot:
+CancelHookshot:
 #_0FF540: PHB
 #_0FF541: PHK
 #_0FF542: PLB
@@ -3818,7 +3818,7 @@ Sprite_CancelHookshot:
 
 ;===================================================================================================
 
-Ancilla_CheckForAvailableSlot:
+FindAncillaSlot:
 #_0FF577: STY.b $0F
 
 #_0FF579: INY
@@ -3891,7 +3891,7 @@ Ancilla_CheckForAvailableSlot:
 
 ;===================================================================================================
 
-pool Link_SpinAndDie
+pool SpinAndDie
 
 .anim_step
 #_0FF5C3: db $00, $01, $02, $03, $00, $01, $02, $03
@@ -3908,7 +3908,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Link_SpinAndDie:
+SpinAndDie:
 #_0FF5E3: PHB
 #_0FF5E4: PHK
 #_0FF5E5: PLB
@@ -4031,7 +4031,7 @@ AncillaAdd_SwordBeam:
 #_0FF67D: PLB
 
 #_0FF67E: LDA.b #$0C ; ANCILLA 0C
-#_0FF680: JSL AncillaAdd_AddAncilla_Bank09
+#_0FF680: JSL AddAncilla_bank09
 #_0FF684: BCS EXIT_0FF64D
 
 #_0FF686: LDA.b $2F
@@ -4129,7 +4129,7 @@ AncillaAdd_SwordBeam:
 #_0FF72D: ADC.w .offset_x_high,Y
 #_0FF730: STA.w $0C18,X
 
-#_0FF733: JSL Ancilla_CalculateSFXPan
+#_0FF733: JSL CalculateAncillaSFXPan
 #_0FF737: ORA.b #$01 ; SFX3.01
 #_0FF739: STA.w $012F
 
@@ -4221,7 +4221,7 @@ Ancilla0C_SwordBeam:
 #_0FF7B4: AND.b #$0F
 #_0FF7B6: BNE .no_sfx
 
-#_0FF7B8: JSL Ancilla_CalculateSFXPan
+#_0FF7B8: JSL CalculateAncillaSFXPan
 #_0FF7BC: ORA.b #$01 ; SFX3.01
 #_0FF7BE: STA.w $012F
 
@@ -4284,6 +4284,8 @@ Ancilla0C_SwordBeam:
 #_0FF81E: LDY.b #$00
 #_0FF820: LDX.b #$03
 
+;---------------------------------------------------------------------------------------------------
+
 .next_object
 #_0FF822: STX.b $72
 
@@ -4295,8 +4297,6 @@ Ancilla0C_SwordBeam:
 #_0FF82D: ADC.b $76
 #_0FF82F: AND.b #$3F
 #_0FF831: STA.l $7F5800,X
-
-;---------------------------------------------------------------------------------------------------
 
 .no_rotation
 #_0FF835: PHX
@@ -4344,6 +4344,8 @@ Ancilla0C_SwordBeam:
 #_0FF86A: PLX
 #_0FF86B: DEX
 #_0FF86C: BPL .next_object
+
+;---------------------------------------------------------------------------------------------------
 
 #_0FF86E: PLX
 #_0FF86F: PHX
@@ -4415,6 +4417,9 @@ Ancilla0C_SwordBeam:
 .skip_extra
 #_0FF8D3: PLX
 #_0FF8D4: PHX
+
+;---------------------------------------------------------------------------------------------------
+
 #_0FF8D5: LDY.b #$01
 
 .check_next
@@ -4428,6 +4433,8 @@ Ancilla0C_SwordBeam:
 #_0FF8E0: INY
 #_0FF8E1: CPY.b #$11
 #_0FF8E3: BNE .check_next
+
+;---------------------------------------------------------------------------------------------------
 
 #_0FF8E5: STZ.w $0C4A,X
 
@@ -4793,7 +4800,7 @@ PrepareToDie:
 #_0FFA88: STA.l $7EF372
 #_0FFA8C: STA.l $7EF36D
 
-#_0FFA90: JSL Link_ResetProperties_C
+#_0FFA90: JSL ResetLinkProperties_C
 
 #_0FFA94: STZ.w $02F5
 #_0FFA97: STZ.w $0351
@@ -4820,7 +4827,7 @@ PrepareToDie:
 #_0FFAB9: STZ.w $03F5
 #_0FFABC: STZ.w $03F6
 
-#_0FFABF: JSL Link_CalculateSFXPan
+#_0FFABF: JSL CalculateLinkSFXPan
 #_0FFAC3: ORA.b #$27 ; SFX2.27
 #_0FFAC5: STA.w $012E
 
@@ -5042,7 +5049,7 @@ SomariaBlockFission:
 
 ;===================================================================================================
 
-Link_CheckIfBunny:
+CheckIfBunny:
 #_0FFD22: LDA.b $5D
 #_0FFD24: CMP.b #$02 ; LINKSTATE 02
 #_0FFD26: BNE .exit
@@ -5067,7 +5074,7 @@ Link_CheckIfBunny:
 
 ;===================================================================================================
 
-Ancilla_DeleteWaterfallSplashes:
+DeleteWaterfallSplashes:
 #_0FFD3C: LDA.b $8A
 #_0FFD3E: CMP.b #$0F ; OW 0F
 #_0FFD40: BNE .not_waterfall
@@ -5130,12 +5137,12 @@ Ancilla_TerminateOffScreen:
 
 ;===================================================================================================
 
-DeleteBoomAndByrnaSparks:
+PrepAndSetForcedYItem:
 #_0FFD86: PHX
 
 #_0FFD87: STA.w $03FC
 
-#_0FFD8A: JSL Link_ResetProperties_C
+#_0FFD8A: JSL ResetLinkProperties_C
 
 #_0FFD8E: LDX.b #$04
 
@@ -5166,7 +5173,7 @@ DeleteBoomAndByrnaSparks:
 
 ;===================================================================================================
 
-Interface_PrepAndDisplayMessage:
+PrepAndDisplayMessage:
 #_0FFDAA: LDA.b $10
 #_0FFDAC: CMP.b #$0E
 #_0FFDAE: BEQ .exit
@@ -5248,7 +5255,7 @@ AncillaDraw_BombExtraStuff:
 .set_sfx
 #_0FFE0E: STZ.w $012E
 
-#_0FFE11: JSL Ancilla_CalculateSFXPan
+#_0FFE11: JSL CalculateAncillaSFXPan
 #_0FFE15: ORA.b #$28 ; SFX2.28
 #_0FFE17: STA.w $012E
 

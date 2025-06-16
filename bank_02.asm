@@ -23,7 +23,7 @@ Intro_SetupScreen:
 #_02801B: LDA.b #$14
 #_02801D: STA.w $0AAA
 
-#_028020: JSL Graphics_LoadChrHalfSlot
+#_028020: JSL LoadChrHalfSlot
 
 #_028024: STZ.w $0AAA
 
@@ -207,8 +207,8 @@ Intro_LoadTextAndPalettes:
 
 ;---------------------------------------------------------------------------------------------------
 
-Overworld_LoadAllPalettes_long:
-#_02811A: JSR Overworld_LoadAllPalettes
+Intro_LoadAllPalettes_long:
+#_02811A: JSR Intro_LoadAllPalettes
 
 #_02811D: RTL
 
@@ -249,7 +249,7 @@ Module05_LoadFile:
 #_028164: JSL DecompressSwordGraphics
 #_028168: JSL DecompressShieldGraphics
 
-#_02816C: JSL Link_Initialize
+#_02816C: JSL InitializeLink
 
 #_028170: JSL LoadFollowerGraphics
 
@@ -328,8 +328,8 @@ Module05_LoadFile:
 
 #_0281F0: SEP #$10
 
-#_0281F2: JSL Interface_PrepAndDisplayMessage
-#_0281F6: JSR Underworld_LoadPalettes
+#_0281F2: JSL PrepAndDisplayMessage
+#_0281F6: JSR LoadUnderworldPalettes
 
 #_0281F9: LDA.b #$0F
 #_0281FB: STA.b $13
@@ -361,7 +361,7 @@ LoadUnderworldRoomRebuildHUD:
 Module06_UnderworldLoad:
 #_02821E: REP #$20
 
-#_028220: LDA.w #$0005
+#_028220: LDA.w #$0005 ; SFX1.05
 #_028223: STA.w $012D
 
 #_028226: STZ.b $A0
@@ -379,7 +379,7 @@ Module06_UnderworldLoad:
 
 #_028248: SEP #$20
 
-#_02824A: JSR Underworld_LoadEntrance
+#_02824A: JSR LoadUnderworldEntrance
 
 #_02824D: LDA.w $040C
 #_028250: CMP.b #$FF ; DUNGEON FF
@@ -402,8 +402,8 @@ Module06_UnderworldLoad:
 #_028264: STZ.w $045A
 #_028267: STZ.w $0458
 
-#_02826A: JSR Underworld_LoadAndDrawRoom
-#_02826D: JSL Underworld_LoadCustomTileTypes
+#_02826A: JSR LoadAndDrawRoom
+#_02826D: JSL LoadUnderworldTileTypes
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -413,7 +413,7 @@ Module06_UnderworldLoad:
 #_028278: TAY
 
 #_028279: JSL DecompressAnimatedUnderworldTiles
-#_02827D: JSL Underworld_LoadAttributeTable
+#_02827D: JSL LoadEveryObjectAttributeSet
 
 #_028281: LDA.b #$0A
 #_028283: STA.w $0AA4
@@ -423,13 +423,13 @@ Module06_UnderworldLoad:
 #_02828A: LDA.b #$0A
 #_02828C: STA.w $0AB1
 
-#_02828F: JSR Underworld_LoadPalettes
+#_02828F: JSR LoadUnderworldPalettes
 
 #_028292: LDA.w $02E0
 #_028295: ORA.b $56
 #_028297: BEQ .not_bunny
 
-#_028299: JSL RefreshLinkEquipmentPalettes_bunny
+#_028299: JSL RefreshEquipmentPalettes_bunny
 
 .not_bunny
 #_02829D: REP #$30
@@ -481,7 +481,6 @@ Module06_UnderworldLoad:
 #_0282E5: LDY.w $0414
 #_0282E8: BEQ .no_room_effect
 
-
 #_0282EA: LDA.b #$32
 #_0282EC: CPY.b #$07
 #_0282EE: BEQ .set_room_effect
@@ -520,8 +519,8 @@ Module06_UnderworldLoad:
 
 ;---------------------------------------------------------------------------------------------------
 
-#_028321: JSR Underworld_ResetTorchBackgroundAndPlayer
-#_028324: JSL Link_CheckIfBunny
+#_028321: JSR ResetLampconeAndLink
+#_028324: JSL CheckIfBunny
 #_028328: JSR ResetThenCacheRoomEntryProperties
 
 #_02832B: LDA.l $7EF3CC
@@ -533,14 +532,14 @@ Module06_UnderworldLoad:
 
 #_028339: STZ.w $04B4
 
-#_02833C: JSL HUD_HideBigNumbers
+#_02833C: JSL HideHUDTimer
 
 .not_superbomb
 #_028340: LDA.b #$09
 #_028342: STA.b $94
 
-#_028344: JSL Follower_Initialize
-#_028348: JSL Sprite_ResetAll
+#_028344: JSL InitializeFollower
+#_028348: JSL ResetAllSprites
 #_02834C: JSL Underworld_ResetSprites
 
 #_028350: STZ.w $02F0
@@ -567,7 +566,7 @@ Module06_UnderworldLoad:
 #_028372: STA.l $7EC005
 #_028376: STA.l $7EC006
 
-#_02837A: JSL Link_TuckIntoBed
+#_02837A: JSL TuckLinkIntoBed
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -579,7 +578,7 @@ Module06_UnderworldLoad:
 #_028385: LDA.b #$0F
 #_028387: STA.b $11
 
-#_028389: JSR Underworld_LoadSongBankIfNeeded
+#_028389: JSR LoadUnderworldSongBankIfNeeded
 
 ;===================================================================================================
 
@@ -596,8 +595,8 @@ UnderworldAdjustRainSFX:
 
 #_02839D: REP #$20
 
-#_02839F: LDA.b $A0 ; ROOM 0002
-#_0283A1: CMP.w #$0002
+#_02839F: LDA.b $A0
+#_0283A1: CMP.w #$0002 ; ROOM 0002
 #_0283A4: BEQ .exit
 
 #_0283A6: CMP.w #$0012 ; ROOM 0012
@@ -663,13 +662,15 @@ Module08_00_LoadProperties:
 .special_overworld_a
 #_0283DD: JSR LoadOverworldFromSpecialOverworld
 
+;---------------------------------------------------------------------------------------------------
+
 .continue_a
 #_0283E0: JSL AdjustOverworldAmbiance
 
 #_0283E4: LDA.b #$FF
 #_0283E6: STA.l $7EF36F
 
-#_0283EA: JSL RefillLogic_long
+#_0283EA: JSL HandleItemRefills
 
 #_0283EE: LDY.b #$58
 #_0283F0: LDX.b #$02 ; SONG 02
@@ -696,13 +697,11 @@ Module08_00_LoadProperties:
 #_02840C: CMP.b #$47 ; OW 47
 #_02840E: BEQ .death_mountain
 
-#_028410: LDY.b #$5A ; OW 5A
+#_028410: LDY.b #$5A
 
 #_028412: LDA.b $8A
 #_028414: CMP.b #$40
 #_028416: BCS .dark_world
-
-;---------------------------------------------------------------------------------------------------
 
 #_028418: LDX.b #$07 ; SONG 07
 
@@ -717,7 +716,7 @@ Module08_00_LoadProperties:
 #_028426: CMP.b #$E3 ; ROOM 00E3
 #_028428: BEQ .death_mountain
 
-#_02842A: CMP.b #$18 ; ROOM 0018
+#_02842A: CMP.b #$18 ; ROOM 0118
 #_02842C: BEQ .death_mountain
 
 #_02842E: CMP.b #$2F ; ROOM 002F
@@ -794,6 +793,8 @@ Module08_00_LoadProperties:
 .continue_with_music
 #_02848B: STX.w $0132
 
+;---------------------------------------------------------------------------------------------------
+
 #_02848E: JSL DecompressAnimatedOverworldTiles
 #_028492: JSL InitializeTilesets
 #_028496: JSR OverworldLoadScreensPaletteSet
@@ -805,7 +806,7 @@ Module08_00_LoadProperties:
 
 #_0284A1: LDA.l OverworldPalettesScreenToSet,X
 #_0284A5: JSL OverworldPalettesLoader
-#_0284A9: JSL Overworld_SetScreenBGColor
+#_0284A9: JSL SetOverworldBackgroundColor
 
 #_0284AD: LDA.b $10
 #_0284AF: CMP.b #$08
@@ -823,7 +824,7 @@ Module08_00_LoadProperties:
 #_0284BF: LDA.b #$00
 #_0284C1: STA.l $7EC017
 
-#_0284C5: JSL Follower_Initialize
+#_0284C5: JSL InitializeFollower
 
 #_0284C9: LDA.b $8A
 #_0284CB: AND.b #$3F ; OW 00, OW 40
@@ -836,7 +837,7 @@ Module08_00_LoadProperties:
 #_0284D5: LDA.b #$09
 #_0284D7: STA.w $010C
 
-#_0284DA: JSL Sprite_ReloadAll_Overworld
+#_0284DA: JSL ResetAndReloadOverworldSprites
 
 #_0284DE: LDA.b $8A
 #_0284E0: AND.b #$40
@@ -889,7 +890,7 @@ Module08_00_LoadProperties:
 #_028528: LDA.b #$17 ; LINKSTATE 17
 #_02852A: STA.b $5D
 
-#_02852C: JSL RefreshLinkEquipmentPalettes_bunny
+#_02852C: JSL RefreshEquipmentPalettes_bunny
 
 .dont_become_bunny
 #_028530: LDA.b #$09
@@ -958,7 +959,7 @@ AdjustLinkBunnyStatus:
 pool Module1B_SpawnSelect
 
 .spawns
-#_028583: db $00 ; Link's  house
+#_028583: db $00 ; Link's house
 #_028584: db $01 ; Sanctuary
 #_028585: db $06 ; Mountain cave
 
@@ -997,18 +998,18 @@ Module1B_SpawnSelect:
 
 ;===================================================================================================
 
-pool Credits_LoadScene_Overworld
+pool Credits_LoadOverworldScene
 
 .vectors
-#_0285B4: dw Credits_LoadScene_Overworld_PrepGFX
-#_0285B6: dw Credits_LoadScene_Overworld_Overlay
-#_0285B8: dw Credits_LoadScene_Overworld_LoadMap
+#_0285B4: dw Credits_LoadOverworldScene_PrepGFX
+#_0285B6: dw Credits_LoadOverworldScene_Overlay
+#_0285B8: dw Credits_LoadOverworldScene_LoadMap
 
 pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Credits_LoadScene_Overworld:
+Credits_LoadOverworldScene:
 #_0285BA: LDA.b $B0
 #_0285BC: ASL A
 #_0285BD: TAX
@@ -1019,7 +1020,7 @@ Credits_LoadScene_Overworld:
 
 ;===================================================================================================
 
-pool Credits_LoadScene_Overworld_PrepGFX Credits_LoadScene_Underworld
+pool Credits_LoadOverworldScene_PrepGFX Credits_LoadUnderworldScene
 
 .screen
 #_0285C2: dw $1000 ; Hyrule Castle
@@ -1083,7 +1084,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Credits_LoadScene_Overworld_PrepGFX:
+Credits_LoadOverworldScene_PrepGFX:
 #_028604: JSL EnableForceBlank
 #_028608: JSL EraseTilemaps_normal
 
@@ -1162,7 +1163,7 @@ Credits_LoadScene_Overworld_PrepGFX:
 #_02866E: LDA.b #$01
 #_028670: STA.w $0AB2
 
-#_028673: JSL Palettes_Load_HUD
+#_028673: JSL PaletteLoad_HUD
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -1179,7 +1180,7 @@ Credits_LoadScene_Overworld_PrepGFX:
 #_028688: CMP.b #$80 ; SPOW
 #_02868A: BCC .no_special_bg_color
 
-#_02868C: JSL Overworld_SetScreenBGColor
+#_02868C: JSL SetOverworldBackgroundColor
 
 .no_special_bg_color
 #_028690: LDA.b #$09
@@ -1191,8 +1192,8 @@ Credits_LoadScene_Overworld_PrepGFX:
 
 ;===================================================================================================
 
-Credits_LoadScene_Overworld_Overlay:
-#_028697: JSR Overworld_ReloadSubscreenOverlay
+Credits_LoadOverworldScene_Overlay:
+#_028697: JSR ReloadSubscreenOverlay
 
 #_02869A: STZ.w $012C
 #_02869D: STZ.w $012D
@@ -1205,8 +1206,8 @@ Credits_LoadScene_Overworld_Overlay:
 
 ;===================================================================================================
 
-Credits_LoadScene_Overworld_LoadMap:
-#_0286A5: JSR Overworld_LoadAndBuildScreen
+Credits_LoadOverworldScene_LoadMap:
+#_0286A5: JSR LoadAndBuildOverworldScreen
 #_0286A8: JSL Credits_PrepAndLoadSprites
 
 #_0286AC: STZ.b $C8
@@ -1254,9 +1255,9 @@ Credits_LoadCoolBackground:
 #_0286E3: LDA.b #$03
 #_0286E5: STA.w $0AB5
 
-#_0286E8: JSL Palettes_Load_OWBG2
+#_0286E8: JSL PaletteLoad_OWBG2
 #_0286EC: JSR Overworld_CopyPalettesToCache
-#_0286EF: JSR Overworld_ReloadSubscreenOverlay
+#_0286EF: JSR ReloadSubscreenOverlay
 
 #_0286F2: STZ.b $E6
 #_0286F4: STZ.b $E7
@@ -1269,7 +1270,7 @@ Credits_LoadCoolBackground:
 
 ;===================================================================================================
 
-Credits_LoadScene_Underworld:
+Credits_LoadUnderworldScene:
 #_0286FD: JSL EnableForceBlank
 #_028701: JSL EraseTilemaps_normal
 
@@ -1282,12 +1283,12 @@ Credits_LoadScene_Underworld:
 
 #_028710: SEP #$20
 
-#_028712: JSR Underworld_LoadEntrance
+#_028712: JSR LoadUnderworldEntrance
 
 #_028715: STZ.w $045A
 #_028718: STZ.w $0458
 
-#_02871B: JSR Underworld_LoadAndDrawRoom
+#_02871B: JSR LoadAndDrawRoom
 
 #_02871E: LDX.w $0AA1
 
@@ -1322,7 +1323,7 @@ Credits_LoadScene_Underworld:
 #_028753: LDA.b #$0A
 #_028755: STA.w $0AB1
 
-#_028758: JSR Underworld_LoadPalettes
+#_028758: JSR LoadUnderworldPalettes
 
 #_02875B: LDA.b #$09
 #_02875D: STA.b $94
@@ -1369,7 +1370,7 @@ pool Module07_Underworld
 #_02879A: dw Module07_17_PressurePlate                    ; 0x17
 #_02879C: dw Module07_18_RescuedMaiden                    ; 0x18
 #_02879E: dw Module07_19_MirrorFade                       ; 0x19
-#_0287A0: dw Module07_1A_RoomDraw_OpenTriforceDoor_bounce ; 0x1A
+#_0287A0: dw Module07_1A_OpenTriforceDoor                 ; 0x1A
 
 pool off
 
@@ -1378,7 +1379,7 @@ pool off
 Module07_Underworld:
 #_0287A2: SEP #$30
 
-#_0287A4: JSL Underworld_HandleLayerEffect
+#_0287A4: JSL HandleRoomLayerEffect
 
 #_0287A8: LDA.b $11
 #_0287AA: ASL A
@@ -1395,23 +1396,23 @@ Module07_Underworld:
 
 ;---------------------------------------------------------------------------------------------------
 
-#_0287BA: JSL Graphics_LoadChrHalfSlot
-#_0287BE: JSR Underworld_HandleCamera
+#_0287BA: JSL LoadChrHalfSlot
+#_0287BE: JSR HandleUnderworldCamera
 
 #_0287C1: LDA.b $11
 #_0287C3: BNE .continue
 
-#_0287C5: JSL Underworld_HandleRoomTags
+#_0287C5: JSL HandleRoomTags
 
 #_0287C9: LDA.b $11
 #_0287CB: BNE .continue
 
-#_0287CD: JSL Underworld_ProcessTorchesAndDoors
+#_0287CD: JSL ProcessTorchesAndDoors
 
 #_0287D1: LDA.w $0454
 #_0287D4: BEQ .no_blast_wall
 
-#_0287D6: JSL Underworld_ClearAwayExplodingWall
+#_0287D6: JSL ClearAwayExplodingWall
 
 .no_blast_wall
 #_0287DA: LDA.b $6C
@@ -1487,8 +1488,8 @@ Module07_Underworld:
 .keep_camera_coords
 #_028838: SEP #$20
 
-#_02883A: JSL Underworld_DrawAllPushBlocks
-#_02883E: JSL Sprite_Main
+#_02883A: JSL DrawAllPushBlocks
+#_02883E: JSL HandleAllSprites
 
 #_028842: REP #$20
 
@@ -1506,10 +1507,10 @@ Module07_Underworld:
 
 #_028850: SEP #$20
 
-#_028852: JSL LinkOAM_Main
+#_028852: JSL DrawLink
 
-#_028856: JSL RefillLogic_long
-#_02885A: JML HUD_HandleFloorIndicator
+#_028856: JSL HandleItemRefills
+#_02885A: JML HandleFloorIndicator
 
 ;===================================================================================================
 
@@ -1563,7 +1564,7 @@ Underworld_TryScreenEdgeTransition:
 .check_for_transition
 #_0288A2: SEP #$20
 
-#_0288A4: JSL Link_CheckForEdgeScreenTransition
+#_0288A4: JSL CheckForEdgeScreenTransition
 #_0288A8: BCS .exit
 
 #_0288AA: LDA.b $10
@@ -1687,7 +1688,7 @@ Module07_00_PlayerControl:
 #_028937: LDA.b $10
 #_028939: PHA
 
-#_02893A: JSL Interface_PrepAndDisplayMessage
+#_02893A: JSL PrepAndDisplayMessage
 
 #_02893E: PLA
 #_02893F: STA.b $10
@@ -1701,7 +1702,7 @@ Module07_00_PlayerControl:
 ;---------------------------------------------------------------------------------------------------
 
 .no_SELECTing
-#_028947: JSL Link_Main
+#_028947: JSL Link
 
 #_02894B: RTS
 
@@ -1735,14 +1736,14 @@ CrystalBossRooms:
 pool Module07_01_IntraroomTransition
 
 .subsubmodules
-#_02896C: dw UnderworldTransition_Intraroom_PrepTransition  ; 0x00
-#_02896E: dw UnderworldTransition_Intraroom_ApplyFilter     ; 0x01
-#_028970: dw UnderworldTransition_Intraroom_ResetShutters   ; 0x02
-#_028972: dw UnderworldTransition_ScrollRoom                ; 0x03
-#_028974: dw UnderworldTransition_FindTransitionLanding     ; 0x04
-#_028976: dw UnderworldTransition_HandleFinalMovements      ; 0x05
-#_028978: dw UnderworldTransition_Intraroom_ApplyFilter     ; 0x06
-#_02897A: dw UnderworldTransition_Intraroom_TriggerShutters ; 0x07
+#_02896C: dw IntraroomTransition_PrepTransition             ; 0x00
+#_02896E: dw IntraroomTransition_ApplyFilter                ; 0x01
+#_028970: dw IntraroomTransition_ResetShutters              ; 0x02
+#_028972: dw ScrollRoomDuringTransition                     ; 0x03
+#_028974: dw IntraroomTransition_FindTransitionLanding      ; 0x04
+#_028976: dw TransitionLinkOutOfDoor                        ; 0x05
+#_028978: dw IntraroomTransition_ApplyFilter                ; 0x06
+#_02897A: dw IntraroomTransition_TriggerShutters            ; 0x07
 
 pool off
 
@@ -1759,7 +1760,7 @@ Module07_01_IntraroomTransition:
 
 #_028988: SEP #$20
 
-#_02898A: JSL Link_HandleMovingAnimation_FullLongEntry
+#_02898A: JSL HandleLinkAnimation_FullLongEntry
 
 #_02898E: LDA.b $B0
 #_028990: ASL A
@@ -1769,7 +1770,7 @@ Module07_01_IntraroomTransition:
 
 ;===================================================================================================
 
-UnderworldTransition_Intraroom_ResetShutters:
+IntraroomTransition_ResetShutters:
 #_028995: STZ.w $0468
 
 #_028998: LDA.b #$07
@@ -1795,7 +1796,7 @@ UnderworldTransition_Intraroom_ResetShutters:
 
 ;===================================================================================================
 
-UnderworldTransition_Intraroom_PrepTransition:
+IntraroomTransition_PrepTransition:
 #_0289B6: REP #$20
 
 #_0289B8: LDA.w #$0000
@@ -1818,7 +1819,7 @@ UnderworldTransition_Intraroom_PrepTransition:
 
 ;===================================================================================================
 
-UnderworldTransition_Intraroom_ApplyFilter:
+IntraroomTransition_ApplyFilter:
 #_0289D8: LDA.l $7EC005
 #_0289DC: BEQ .advance
 
@@ -1839,7 +1840,7 @@ UnderworldTransition_Intraroom_ApplyFilter:
 
 ;===================================================================================================
 
-UnderworldTransition_Intraroom_TriggerShutters:
+IntraroomTransition_TriggerShutters:
 #_0289F0: JSR ResetThenCacheRoomEntryProperties
 
 #_0289F3: LDA.w $0468
@@ -1865,11 +1866,11 @@ pool Module07_02_InterroomTransition
 #_028A08: dw Module07_02_01_LoadNextRoom                 ; 0x01
 #_028A0A: dw Module07_02_FadedFilter                     ; 0x02
 #_028A0C: dw Module07_02_03                              ; 0x03
-#_028A0E: dw Underworld_PrepNextQuadrantUploadAndAdvance ; 0x04
-#_028A10: dw Underworld_PrepTilemapAndAdvance            ; 0x05
-#_028A12: dw Underworld_PrepNextQuadrantUploadAndAdvance ; 0x06
+#_028A0E: dw Underworld_BuildBG2AndAdvance               ; 0x04
+#_028A10: dw Underworld_BuildBG1AndAdvance               ; 0x05
+#_028A12: dw Underworld_BuildBG2AndAdvance               ; 0x06
 #_028A14: dw Module07_02_07                              ; 0x07
-#_028A16: dw UnderworldTransition_ScrollRoom             ; 0x08
+#_028A16: dw ScrollRoomDuringTransition                  ; 0x08
 #_028A18: dw Module07_02_09                              ; 0x09
 #_028A1A: dw Module07_02_0A                              ; 0x0A
 #_028A1C: dw Module07_02_09                              ; 0x0B
@@ -1899,13 +1900,13 @@ Module07_02_InterroomTransition:
 #_028A38: CMP.b #$07
 #_028A3A: BCC .skip_upload
 
-#_028A3C: JSL Graphics_IncrementalVRAMUpload
+#_028A3C: JSL IncrementalVRAMUpload
 
 .skip_upload
-#_028A40: JSL Underworld_LoadAttribute_Selectable
+#_028A40: JSL LoadNextObjectAttributeSet
 
 .run_subsubsub
-#_028A44: JSL Link_HandleMovingAnimation_FullLongEntry
+#_028A44: JSL HandleLinkAnimation_FullLongEntry
 
 #_028A48: LDA.b $B0
 #_028A4A: ASL A
@@ -1929,7 +1930,7 @@ Module07_02_00_InitializeTransition:
 ;===================================================================================================
 
 Module07_02_01_LoadNextRoom:
-#_028A5B: JSL Underworld_LoadRoom
+#_028A5B: JSL LoadAndBuildRoom
 #_028A5F: JSL ResetStarTileGraphics
 #_028A63: JSL LoadTransAuxGFX_sprite
 
@@ -1968,11 +1969,11 @@ Module07_02_03:
 #_028A91: STZ.b $1D
 
 .keep_subscreen_enable
-#_028A93: JSL Underworld_AdjustForRoomLayout
+#_028A93: JSL AdjustForRoomLayout
 #_028A97: JSL LoadNewSpriteGFXSet
 
 #_028A9B: JSR UnderworldSyncBG1and2Scroll
-#_028A9E: JSL WaterFlood_BuildOneQuadrantForVRAM
+#_028A9E: JSL BuildBG1QuadrantForUpload
 
 #_028AA2: INC.b $B0
 
@@ -1983,17 +1984,17 @@ Module07_02_03:
 Module07_02_0A:
 #_028AA5: LDA.l $7EC005
 #_028AA9: ORA.l $7EC006
-#_028AAD: BEQ Underworld_PrepTilemapAndAdvance
+#_028AAD: BEQ Underworld_BuildBG1AndAdvance
 
 ;===================================================================================================
 
-Underworld_FilterPrepTilemapAndAdvance:
+Underworld_FilterBuildBG1AndAdvance:
 #_028AAF: JSL ApplyPaletteFilter
 
 ;===================================================================================================
 
-Underworld_PrepTilemapAndAdvance:
-#_028AB3: JSL WaterFlood_BuildOneQuadrantForVRAM
+Underworld_BuildBG1AndAdvance:
+#_028AB3: JSL BuildBG1QuadrantForUpload
 
 #_028AB7: INC.b $B0
 
@@ -2004,17 +2005,17 @@ Underworld_PrepTilemapAndAdvance:
 Module07_02_09:
 #_028ABA: LDA.l $7EC005
 #_028ABE: ORA.l $7EC006
-#_028AC2: BEQ Underworld_PrepNextQuadrantUploadAndAdvance
+#_028AC2: BEQ Underworld_BuildBG2AndAdvance
 
 ;===================================================================================================
 
-Underworld_FilterUploadAndAdvance:
+Underworld_FilterBuildBG2AndAdvance:
 #_028AC4: JSL ApplyPaletteFilter
 
 ;===================================================================================================
 
-Underworld_PrepNextQuadrantUploadAndAdvance:
-#_028AC8: JSL Underworld_PrepareNextRoomQuadrantUpload
+Underworld_BuildBG2AndAdvance:
+#_028AC8: JSL BuildBG2QuadrantForUpload
 
 #_028ACC: INC.b $B0
 
@@ -2046,7 +2047,7 @@ Underworld_AdvanceAndReset:
 
 ;===================================================================================================
 
-Underworld_ResetTorchBackgroundAndPlayer:
+ResetLampconeAndLink:
 #_028AEF: LDY.b #$16
 #_028AF1: LDX.w $0414
 
@@ -2071,7 +2072,7 @@ Underworld_ResetTorchBackgroundAndPlayer:
 ;===================================================================================================
 
 DeleteCertainAncillaeStopDashing:
-#_028B0C: JSL Ancilla_TerminateSelectInteractives
+#_028B0C: JSL TerminateSelectInteractives
 
 #_028B10: LDA.w $0372
 #_028B13: BEQ EXIT_028B2D
@@ -2166,7 +2167,7 @@ UnderworldTransition_RunFiltering:
 #_028B8A: STA.l $7EC00B
 
 .no_filter
-#_028B8E: JSR Underworld_HandleTranslucencyAndPalettes
+#_028B8E: JSR HandleRoomTranslucencyAndPalettes
 
 #_028B91: RTS
 
@@ -2178,6 +2179,7 @@ Module07_02_FadedFilter:
 #_028B9A: BEQ .next_subsub
 
 #_028B9C: JSL ApplyPaletteFilter
+
 #_028BA0: LDA.l $7EC007
 #_028BA4: BEQ .exit
 
@@ -2197,7 +2199,7 @@ Module07_02_0F:
 #_028BAE: JSR ResetThenCacheRoomEntryProperties
 
 #_028BB1: LDA.w $0468
-#_028BB4: BNE Underworld_SetBossOrSancMusicUponEntry
+#_028BB4: BNE SetBossOrSancMusicUponEntry
 
 #_028BB6: LDA.b $A0
 
@@ -2210,7 +2212,7 @@ Module07_02_0F:
 
 #_028BC3: LDA.w $0403
 #_028BC6: AND.b #$10
-#_028BC8: BEQ Underworld_SetBossOrSancMusicUponEntry
+#_028BC8: BEQ SetBossOrSancMusicUponEntry
 
 .not_workable_blinds_room
 #_028BCA: INC.w $0468
@@ -2223,7 +2225,7 @@ Module07_02_0F:
 
 ;===================================================================================================
 
-Underworld_SetBossOrSancMusicUponEntry:
+SetBossOrSancMusicUponEntry:
 #_028BD7: REP #$20
 
 #_028BD9: LDX.b #$14 ; SONG 14
@@ -2270,14 +2272,14 @@ Underworld_SetBossOrSancMusicUponEntry:
 ;===================================================================================================
 
 Module07_03_OverlayChange:
-#_028C05: JSL Underworld_ApplyRoomOverlay
+#_028C05: JSL ApplyRoomHolesOverlay
 
 #_028C09: RTS
 
 ;===================================================================================================
 
 Module07_04_UnlockDoor:
-#_028C0A: JSL UnlockKeyDoor_Main
+#_028C0A: JSL UnlockKeyDoor
 
 #_028C0E: RTS
 
@@ -2295,14 +2297,14 @@ Module07_06_FatInterRoomStairs:
 #_028C16: CMP.b #$03
 #_028C18: BCC .dont_reload_tile_types
 
-#_028C1A: JSL Underworld_LoadAttribute_Selectable
+#_028C1A: JSL LoadNextObjectAttributeSet
 
 .dont_reload_tile_types
 #_028C1E: LDA.b $B0
 #_028C20: CMP.b #$0D
 #_028C22: BCC .skip_gfx_updates
 
-#_028C24: JSL Graphics_IncrementalVRAMUpload
+#_028C24: JSL IncrementalVRAMUpload
 
 #_028C28: LDA.w $0464
 #_028C2B: BEQ .run_subsubsub
@@ -2327,32 +2329,32 @@ Module07_06_FatInterRoomStairs:
 .going_up
 #_028C43: STX.b $67
 
-#_028C45: JSL Link_HandleVelocity
-#_028C49: JSR Underworld_HandleCamera
+#_028C45: JSL HandleLinkVelocity
+#_028C49: JSR HandleUnderworldCamera
 
 ;---------------------------------------------------------------------------------------------------
 
 .skip_gfx_updates
-#_028C4C: JSL Link_HandleMovingAnimation_FullLongEntry
+#_028C4C: JSL HandleLinkAnimation_FullLongEntry
 
 .run_subsubsub
 #_028C50: LDA.b $B0
 #_028C52: JSL JumpTableLocal
 #_028C56: dw ResetTransitionPropsAndAdvance_ResetInterface       ; 0x00
 #_028C58: dw UnderworldTransition_FatStairs_RunFade              ; 0x01
-#_028C5A: dw Underworld_InitializeRoomFromSpecial                ; 0x02
-#_028C5C: dw UnderworldTransition_TriggerBGC34UpdateAndAdvance   ; 0x03
-#_028C5E: dw UnderworldTransition_TriggerBGC56UpdateAndAdvance   ; 0x04
+#_028C5A: dw InitializeRoomFromSpecial                           ; 0x02
+#_028C5C: dw TriggerBGC34UpdateAndAdvance                        ; 0x03
+#_028C5E: dw TriggerBGC56UpdateAndAdvance                        ; 0x04
 #_028C60: dw UnderworldTransition_LoadSpriteGFX                  ; 0x05
 #_028C62: dw UnderworldTransition_AdjustForFatStairScroll        ; 0x06
-#_028C64: dw Underworld_PrepNextQuadrantUploadAndAdvance         ; 0x07
-#_028C66: dw Underworld_PrepTilemapAndAdvance                    ; 0x08
-#_028C68: dw Underworld_PrepNextQuadrantUploadAndAdvance         ; 0x09
-#_028C6A: dw Underworld_FilterPrepTilemapAndAdvance              ; 0x0A
-#_028C6C: dw Underworld_FilterUploadAndAdvance                   ; 0x0B
-#_028C6E: dw Underworld_FilterPrepTilemapAndAdvance              ; 0x0C
-#_028C70: dw Underworld_FilterUploadAndAdvance                   ; 0x0D
-#_028C72: dw Underworld_DoubleApplyAndIncrementGrayscale         ; 0x0E
+#_028C64: dw Underworld_BuildBG2AndAdvance                       ; 0x07
+#_028C66: dw Underworld_BuildBG1AndAdvance                       ; 0x08
+#_028C68: dw Underworld_BuildBG2AndAdvance                       ; 0x09
+#_028C6A: dw Underworld_FilterBuildBG1AndAdvance                 ; 0x0A
+#_028C6C: dw Underworld_FilterBuildBG2AndAdvance                 ; 0x0B
+#_028C6E: dw Underworld_FilterBuildBG1AndAdvance                 ; 0x0C
+#_028C70: dw Underworld_FilterBuildBG2AndAdvance                 ; 0x0D
+#_028C72: dw DoubleApplyAndIncrementGrayscale                    ; 0x0E
 #_028C74: dw Underworld_AdvanceAndReset                          ; 0x0F
 #_028C76: dw UnderworldTransition_FatStairsEntryCache            ; 0x10
 
@@ -2437,19 +2439,19 @@ ResetTransitionPropsAndAdvanceSubmodule:
 
 ;===================================================================================================
 
-Underworld_InitializeRoomFromSpecial:
-#_028CE2: JSR Underworld_AdjustCameraArbitrary
+InitializeRoomFromSpecial:
+#_028CE2: JSR AdjustUnderworldCameraArbitrarily
 
-#_028CE5: JSL Underworld_LoadRoom
+#_028CE5: JSL LoadAndBuildRoom
 #_028CE9: JSL ResetStarTileGraphics
 
 #_028CED: JSL LoadTransAuxGFX
-#_028CF1: JSL Underworld_LoadCustomTileTypes
+#_028CF1: JSL LoadUnderworldTileTypes
 
 #_028CF5: LDA.b $A0
 #_028CF7: STA.w $048E
 
-#_028CFA: JSL Follower_Initialize
+#_028CFA: JSL InitializeFollower
 
 #_028CFE: INC.b $B0
 
@@ -2480,7 +2482,7 @@ UnderworldTransition_LoadSpriteGFX:
 
 UnderworldTransition_AdjustForFatStairScroll:
 #_028D1B: JSR UnderworldSyncBG1and2Scroll
-#_028D1E: JSL Underworld_AdjustForRoomLayout
+#_028D1E: JSL AdjustForRoomLayout
 
 #_028D22: LDY.b #$16
 #_028D24: LDX.w $0414
@@ -2523,9 +2525,9 @@ UnderworldTransition_AdjustForFatStairScroll:
 #_028D54: LDA.b #$24 ; SFX3.24
 #_028D56: STA.w $012F
 
-#_028D59: JSR Underworld_PlayBlipAndCacheQuadrantVisits
+#_028D59: JSR BlipAndCacheQuadrants
 
-#_028D5C: JMP.w Underworld_PrepTilemapAndAdvance
+#_028D5C: JMP.w Underworld_BuildBG1AndAdvance
 
 ;===================================================================================================
 
@@ -2628,7 +2630,7 @@ CacheRoomEntryProperties:
 
 ;===================================================================================================
 
-UnderworldTransition_TriggerBGC34UpdateAndAdvance:
+TriggerBGC34UpdateAndAdvance:
 #_028E0F: JSL PrepTransAuxGfx
 
 #_028E13: LDA.b #$09
@@ -2641,7 +2643,7 @@ UnderworldTransition_TriggerBGC34UpdateAndAdvance:
 
 ;===================================================================================================
 
-UnderworldTransition_TriggerBGC56UpdateAndAdvance:
+TriggerBGC56UpdateAndAdvance:
 #_028E1D: LDA.b #$0A
 #_028E1F: STA.b $17
 #_028E21: STA.w $0710
@@ -2657,8 +2659,8 @@ Module07_07_FallingTransition:
 #_028E29: CMP.b #$06
 #_028E2B: BCC .run_subsubsub
 
-#_028E2D: JSL Graphics_IncrementalVRAMUpload
-#_028E31: JSL Underworld_LoadAttribute_Selectable
+#_028E2D: JSL IncrementalVRAMUpload
+#_028E31: JSL LoadNextObjectAttributeSet
 #_028E35: JSL ApplyGrayscaleFixed_Incremental
 
 .run_subsubsub
@@ -2666,18 +2668,18 @@ Module07_07_FallingTransition:
 #_028E3B: JSL JumpTableLocal
 #_028E3F: dw Module07_07_00_HandleMusicAndResetRoom            ; 0x00
 #_028E41: dw ApplyPaletteFilter_bounce                         ; 0x01
-#_028E43: dw Underworld_InitializeRoomFromSpecial              ; 0x02
-#_028E45: dw UnderworldTransition_TriggerBGC34UpdateAndAdvance ; 0x03
-#_028E47: dw UnderworldTransition_TriggerBGC56UpdateAndAdvance ; 0x04
+#_028E43: dw InitializeRoomFromSpecial                         ; 0x02
+#_028E45: dw TriggerBGC34UpdateAndAdvance                      ; 0x03
+#_028E47: dw TriggerBGC56UpdateAndAdvance                      ; 0x04
 #_028E49: dw UnderworldTransition_LoadSpriteGFX                ; 0x05
 #_028E4B: dw Module07_07_06_SyncBG1and2                        ; 0x06
-#_028E4D: dw Underworld_PrepNextQuadrantUploadAndAdvance       ; 0x07
-#_028E4F: dw Underworld_PrepTilemapAndAdvance                  ; 0x08
-#_028E51: dw Underworld_PrepNextQuadrantUploadAndAdvance       ; 0x09
-#_028E53: dw Underworld_PrepTilemapAndAdvance                  ; 0x0A
-#_028E55: dw Underworld_PrepNextQuadrantUploadAndAdvance       ; 0x0B
-#_028E57: dw Underworld_PrepTilemapAndAdvance                  ; 0x0C
-#_028E59: dw Underworld_PrepNextQuadrantUploadAndAdvance       ; 0x0D
+#_028E4D: dw Underworld_BuildBG2AndAdvance                     ; 0x07
+#_028E4F: dw Underworld_BuildBG1AndAdvance                     ; 0x08
+#_028E51: dw Underworld_BuildBG2AndAdvance                     ; 0x09
+#_028E53: dw Underworld_BuildBG1AndAdvance                     ; 0x0A
+#_028E55: dw Underworld_BuildBG2AndAdvance                     ; 0x0B
+#_028E57: dw Underworld_BuildBG1AndAdvance                     ; 0x0C
+#_028E59: dw Underworld_BuildBG2AndAdvance                     ; 0x0D
 #_028E5B: dw Underworld_AdvanceAndReset                        ; 0x0E
 #_028E5D: dw Module07_07_0F_FallingFadeIn                      ; 0x0F
 #_028E5F: dw Module07_07_10_LandLinkFromFalling                ; 0x10
@@ -2712,7 +2714,7 @@ Module07_07_00_HandleMusicAndResetRoom:
 
 Module07_07_06_SyncBG1and2:
 #_028E80: JSR UnderworldSyncBG1and2Scroll
-#_028E83: JSL Underworld_AdjustForRoomLayout
+#_028E83: JSL AdjustForRoomLayout
 
 #_028E87: LDY.b #$16
 #_028E89: LDX.w $0414
@@ -2727,7 +2729,7 @@ Module07_07_06_SyncBG1and2:
 #_028E96: STY.b $1C
 #_028E98: STA.b $1D
 
-#_028E9A: JSL WaterFlood_BuildOneQuadrantForVRAM
+#_028E9A: JSL BuildBG1QuadrantForUpload
 
 #_028E9E: INC.b $B0
 
@@ -2752,7 +2754,7 @@ Module07_07_0F_FallingFadeIn:
 .at_target
 #_028EB4: STA.b $52
 
-#_028EB6: JSR Underworld_SetBossMusicUnorthodox
+#_028EB6: JSR SetBossMusic
 
 #_028EB9: LDA.b $A0
 
@@ -2769,7 +2771,7 @@ Module07_07_0F_FallingFadeIn:
 
 ;===================================================================================================
 
-#Underworld_PlayBlipAndCacheQuadrantVisits:
+#BlipAndCacheQuadrants:
 #_028EC9: LDA.b #$01
 #_028ECB: STA.w $04A0
 
@@ -2808,7 +2810,7 @@ Module07_07_10_LandLinkFromFalling:
 #_028EF0: LDA.b #$01
 #_028EF2: STA.w $0AAA
 
-#_028EF5: JSL Graphics_LoadChrHalfSlot
+#_028EF5: JSL LoadChrHalfSlot
 
 .exit
 #_028EF9: RTS
@@ -2821,8 +2823,8 @@ Module07_07_11_CacheRoomAndSetMusic:
 #_028EFF: BNE .exit
 
 #_028F01: JSR ResetThenCacheRoomEntryProperties
-#_028F04: JSR Underworld_SetBossOrSancMusicUponEntry
-#_028F07: JSL Graphics_LoadChrHalfSlot
+#_028F04: JSR SetBossOrSancMusicUponEntry
+#_028F07: JSL LoadChrHalfSlot
 
 .exit
 #_028F0B: RTS
@@ -2842,12 +2844,12 @@ Module07_08_NorthIntraRoomStairs:
 #_028F1A: STA.b $57
 
 .skip_stair_drag
-#_028F1C: JSL Link_HandleVelocity
+#_028F1C: JSL HandleLinkVelocity
 
 #_028F20: JSL ApplyLinksMovementToCamera
-#_028F24: JSR Underworld_HandleCamera
+#_028F24: JSR HandleUnderworldCamera
 
-#_028F27: JSL Link_HandleMovingAnimation_FullLongEntry
+#_028F27: JSL HandleLinkAnimation_FullLongEntry
 
 .run_subsubsub
 #_028F2B: LDA.b $B0
@@ -2938,10 +2940,10 @@ Module07_10_SouthIntraRoomStairs:
 #_028F96: STA.b $57
 
 .skip_stair_drag
-#_028F98: JSL Link_HandleVelocity
+#_028F98: JSL HandleLinkVelocity
 #_028F9C: JSL ApplyLinksMovementToCamera
-#_028FA0: JSR Underworld_HandleCamera
-#_028FA3: JSL Link_HandleMovingAnimation_FullLongEntry
+#_028FA0: JSR HandleUnderworldCamera
+#_028FA3: JSL HandleLinkAnimation_FullLongEntry
 
 .run_subsubsub
 #_028FA7: LDA.b $B0
@@ -3062,22 +3064,22 @@ Module07_0B_DrainSwampPool:
 #_029034: JSL JumpTableLong
 #_029038: dl IncrementallyDrainSwampPool            ; 0x00
 #_02903B: dl DeleteSwampPoolWaterOverlay            ; 0x01
-#_02903E: dl Underworld_FloodSwampWater_PrepTilemap ; 0x02
-#_029041: dl Underworld_FloodSwampWater_PrepTilemap ; 0x03
-#_029044: dl Underworld_FloodSwampWater_PrepTilemap ; 0x04
-#_029047: dl Underworld_FloodSwampWater_PrepTilemap ; 0x05
+#_02903E: dl FloodSwampWater_PrepTilemap            ; 0x02
+#_029041: dl FloodSwampWater_PrepTilemap            ; 0x03
+#_029044: dl FloodSwampWater_PrepTilemap            ; 0x04
+#_029047: dl FloodSwampWater_PrepTilemap            ; 0x05
 
 ;===================================================================================================
 
 Module07_0C_FloodSwampWater:
-#_02904A: JSL Underworld_FloodSwampWater
+#_02904A: JSL FloodSwampWater
 
 #_02904E: RTS
 
 ;===================================================================================================
 
 Module07_0D_FloodDam:
-#_02904F: JSL Underworld_FloodDam
+#_02904F: JSL FloodDam
 
 #_029053: RTS
 
@@ -3088,8 +3090,8 @@ Module07_0E_SpiralStairs:
 #_029056: CMP.b #$07
 #_029058: BCC .skip_upload
 
-#_02905A: JSL Graphics_IncrementalVRAMUpload
-#_02905E: JSL Underworld_LoadAttribute_Selectable
+#_02905A: JSL IncrementalVRAMUpload
+#_02905E: JSL LoadNextObjectAttributeSet
 
 .skip_upload
 #_029062: JSL HandleLinkOnSpiralStairs
@@ -3099,27 +3101,27 @@ Module07_0E_SpiralStairs:
 #_02906C: dw Module07_0E_00_InitPriorityAndScreens             ; 0x00
 #_02906E: dw Module07_0E_01_HandleMusicAndResetProps           ; 0x01
 #_029070: dw Module07_0E_02_ApplyFilterIf                      ; 0x02
-#_029072: dw Underworld_InitializeRoomFromSpecial              ; 0x03
-#_029074: dw UnderworldTransition_TriggerBGC34UpdateAndAdvance ; 0x04
-#_029076: dw UnderworldTransition_TriggerBGC56UpdateAndAdvance ; 0x05
+#_029072: dw InitializeRoomFromSpecial                         ; 0x03
+#_029074: dw TriggerBGC34UpdateAndAdvance                      ; 0x04
+#_029076: dw TriggerBGC56UpdateAndAdvance                      ; 0x05
 #_029078: dw UnderworldTransition_LoadSpriteGFX                ; 0x06
-#_02907A: dw Underworld_SyncBackgroundsFromSpiralStairs        ; 0x07
-#_02907C: dw Underworld_PrepNextQuadrantUploadAndAdvance       ; 0x08
-#_02907E: dw Underworld_PrepTilemapAndAdvance                  ; 0x09
-#_029080: dw Underworld_PrepNextQuadrantUploadAndAdvance       ; 0x0A
-#_029082: dw Underworld_FilterPrepTilemapAndAdvance            ; 0x0B
-#_029084: dw Underworld_FilterUploadAndAdvance                 ; 0x0C
-#_029086: dw Underworld_FilterPrepTilemapAndAdvance            ; 0x0D
-#_029088: dw Underworld_FilterUploadAndAdvance                 ; 0x0E
-#_02908A: dw Underworld_DoubleApplyAndIncrementGrayscale       ; 0x0F
-#_02908C: dw Underworld_AdvanceThenSetBossMusicUnorthodox      ; 0x10
+#_02907A: dw SyncBackgroundsFromSpiralStairs                   ; 0x07
+#_02907C: dw Underworld_BuildBG2AndAdvance                     ; 0x08
+#_02907E: dw Underworld_BuildBG1AndAdvance                     ; 0x09
+#_029080: dw Underworld_BuildBG2AndAdvance                     ; 0x0A
+#_029082: dw Underworld_FilterBuildBG1AndAdvance               ; 0x0B
+#_029084: dw Underworld_FilterBuildBG2AndAdvance               ; 0x0C
+#_029086: dw Underworld_FilterBuildBG1AndAdvance               ; 0x0D
+#_029088: dw Underworld_FilterBuildBG2AndAdvance               ; 0x0E
+#_02908A: dw DoubleApplyAndIncrementGrayscale                  ; 0x0F
+#_02908C: dw AdvanceThenSetBossMusic                           ; 0x10
 #_02908E: dw Module07_0E_11                                    ; 0x11
 #_029090: dw Module07_0E_12                                    ; 0x12
 #_029092: dw Module07_0E_13_SetRoomAndLayerAndCache            ; 0x13
 
 ;===================================================================================================
 
-Underworld_DoubleApplyAndIncrementGrayscale:
+DoubleApplyAndIncrementGrayscale:
 #_029094: JSL ApplyPaletteFilter
 #_029098: JSL ApplyPaletteFilter
 
@@ -3157,7 +3159,7 @@ Module07_0E_02_ApplyFilterIf:
 
 ;===================================================================================================
 
-Underworld_SyncBackgroundsFromSpiralStairs:
+SyncBackgroundsFromSpiralStairs:
 #_0290C7: LDA.l $7EF3CC
 #_0290CB: CMP.b #$06 ; FOLLOWER 06
 #_0290CD: BNE .not_blind_in_attic
@@ -3200,7 +3202,7 @@ Underworld_SyncBackgroundsFromSpiralStairs:
 #_0290FA: LDA.l LayerOfDestination_for_EE,X
 #_0290FE: STA.b $EE
 
-#_029100: JSR SpiralStairs_MakeNearbyWallsHighPriority_Exiting
+#_029100: JSR MakeNearbyWallsHighPriority_Exiting
 
 #_029103: PLA
 #_029104: STA.b $EE
@@ -3229,7 +3231,7 @@ Underworld_SyncBackgroundsFromSpiralStairs:
 
 #_029120: SEP #$30
 
-#_029122: JSL Underworld_AdjustForRoomLayout
+#_029122: JSL AdjustForRoomLayout
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -3265,14 +3267,14 @@ Underworld_SyncBackgroundsFromSpiralStairs:
 #_02914C: LDX.b #$18
 #_02914E: STX.w $0464
 
-#_029151: JSR Underworld_PlayBlipAndCacheQuadrantVisits
+#_029151: JSR BlipAndCacheQuadrants
 #_029154: JSL RestoreTorchBackground
 
-#_029158: JMP.w Underworld_PrepTilemapAndAdvance
+#_029158: JMP.w Underworld_BuildBG1AndAdvance
 
 ;===================================================================================================
 
-Underworld_AdvanceThenSetBossMusicUnorthodox:
+AdvanceThenSetBossMusic:
 #_02915B: JSR DeleteCertainAncillaeStopDashing
 
 #_02915E: LDA.b #$38
@@ -3282,7 +3284,7 @@ Underworld_AdvanceThenSetBossMusicUnorthodox:
 
 ;===================================================================================================
 
-Underworld_SetBossMusicUnorthodox:
+SetBossMusic:
 #_029165: REP #$20
 
 #_029167: LDX.b #$1C ; SONG 1C
@@ -3326,7 +3328,7 @@ Underworld_SetBossMusicUnorthodox:
 ;===================================================================================================
 
 Module07_0E_11:
-#_02919B: JSL SpiralStairs_FindLandingSpot
+#_02919B: JSL FindSpiralStairsLandingSpot
 
 #_02919F: DEC.w $0464
 #_0291A2: BNE .exit
@@ -3350,7 +3352,7 @@ Module07_0E_11:
 ;===================================================================================================
 
 Module07_0E_12:
-#_0291B5: JSL SpiralStairs_FindLandingSpot
+#_0291B5: JSL FindSpiralStairsLandingSpot
 
 #_0291B9: DEC.w $0464
 #_0291BC: BNE .exit
@@ -3365,7 +3367,7 @@ Module07_0E_12:
 ;===================================================================================================
 
 Module07_0E_00_InitPriorityAndScreens:
-#_0291C4: JSL SpiralStairs_MakeNearbyWallsHighPriority_Entering
+#_0291C4: JSL MakeNearbyWallsHighPriority_Entering
 
 #_0291C8: LDA.b $EE
 #_0291CA: BEQ .dont_set_screendes_and_priority
@@ -3407,7 +3409,7 @@ Module07_0E_13_SetRoomAndLayerAndCache:
 #_0291FA: AND.b #$04
 #_0291FC: BNE .going_down
 
-#_0291FE: JSL SpiralStairs_MakeNearbyWallsLowPriority
+#_0291FE: JSL MakeNearbyWallsLowPriority
 
 .going_down
 #_029202: LDA.b $A0
@@ -3417,7 +3419,7 @@ Module07_0E_13_SetRoomAndLayerAndCache:
 
 ;===================================================================================================
 
-pool RepositionLinkAfterSpiralStairs
+pool RepositionAfterSpiralStairs
 
 .offset_x
 #_02920A: dw -28
@@ -3435,7 +3437,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-RepositionLinkAfterSpiralStairs:
+RepositionAfterSpiralStairs:
 #_02921A: SEP #$20
 
 #_02921C: STZ.b $4B
@@ -3510,7 +3512,7 @@ RepositionLinkAfterSpiralStairs:
 .reset_follower_a
 #_02927D: SEP #$20
 
-#_02927F: JSL Follower_Initialize
+#_02927F: JSL InitializeFollower
 
 #_029283: REP #$20
 
@@ -3544,7 +3546,7 @@ RepositionLinkAfterSpiralStairs:
 .reset_follower_b
 #_0292A8: SEP #$20
 
-#_0292AA: JSL Follower_Initialize
+#_0292AA: JSL InitializeFollower
 
 #_0292AE: REP #$20
 
@@ -3552,7 +3554,7 @@ RepositionLinkAfterSpiralStairs:
 
 ;===================================================================================================
 
-SpiralStairs_MakeNearbyWallsHighPriority_Exiting:
+MakeNearbyWallsHighPriority_Exiting:
 #_0292B1: LDA.w $0462
 #_0292B4: AND.b #$04
 #_0292B6: BNE .exit
@@ -3640,8 +3642,8 @@ Module07_0F_LandingWipe:
 
 #_029321: JSR (.vectors,X)
 
-#_029324: JSL Link_HandleMovingAnimation_FullLongEntry
-#_029328: JSL LinkOAM_Main
+#_029324: JSL HandleLinkAnimation_FullLongEntry
+#_029328: JSL DrawLink
 
 #_02932C: RTS
 
@@ -3657,7 +3659,7 @@ Module07_0F_00_InitSpotlight:
 ;===================================================================================================
 
 Module07_0F_01_OperateSpotlight:
-#_029334: JSL Sprite_Main
+#_029334: JSL HandleAllSprites
 #_029338: JSL IrisSpotlight_ConfigureTable
 
 #_02933C: LDA.b $11
@@ -3688,14 +3690,14 @@ Module07_11_StraightInterroomStairs:
 #_029359: CMP.b #$03
 #_02935B: BCC .skip_attributes
 
-#_02935D: JSL Underworld_LoadAttribute_Selectable
+#_02935D: JSL LoadNextObjectAttributeSet
 
 .skip_attributes
 #_029361: LDA.b $B0
 #_029363: CMP.b #$0D
 #_029365: BCC .skip_gfx_upload
 
-#_029367: JSL Graphics_IncrementalVRAMUpload
+#_029367: JSL IncrementalVRAMUpload
 
 .skip_gfx_upload
 #_02936B: LDA.w $0464
@@ -3721,12 +3723,12 @@ Module07_11_StraightInterroomStairs:
 .move_up
 #_029385: STX.b $67
 
-#_029387: JSL Link_HandleVelocity
+#_029387: JSL HandleLinkVelocity
 
 ;---------------------------------------------------------------------------------------------------
 
 .run_subsubsub
-#_02938B: JSL Link_HandleMovingAnimation_FullLongEntry
+#_02938B: JSL HandleLinkAnimation_FullLongEntry
 
 #_02938F: LDA.b $B0
 #_029391: JSL JumpTableLocal
@@ -3735,17 +3737,17 @@ Module07_11_StraightInterroomStairs:
 #_029399: dw Module07_11_02_LoadAndPrepRoom              ; 0x02
 #_02939B: dw Module07_11_03_FilterAndLoadBGChars         ; 0x03
 #_02939D: dw Module07_11_04_FilterDoBGAndResetSprites    ; 0x04
-#_02939F: dw Underworld_FilterPrepTilemapAndAdvance      ; 0x05
-#_0293A1: dw Underworld_FilterUploadAndAdvance           ; 0x06
-#_0293A3: dw Underworld_FilterPrepTilemapAndAdvance      ; 0x07
-#_0293A5: dw Underworld_FilterUploadAndAdvance           ; 0x08
+#_02939F: dw Underworld_FilterBuildBG1AndAdvance         ; 0x05
+#_0293A1: dw Underworld_FilterBuildBG2AndAdvance         ; 0x06
+#_0293A3: dw Underworld_FilterBuildBG1AndAdvance         ; 0x07
+#_0293A5: dw Underworld_FilterBuildBG2AndAdvance         ; 0x08
 #_0293A7: dw Module07_11_09_LoadSpriteGraphics           ; 0x09
 #_0293A9: dw Module07_11_0A_ScrollCamera                 ; 0x0A
 #_0293AB: dw Module07_11_0B_PrepDestination              ; 0x0B
-#_0293AD: dw Underworld_PrepNextQuadrantUploadAndAdvance ; 0x0C
-#_0293AF: dw Underworld_PrepTilemapAndAdvance            ; 0x0D
-#_0293B1: dw Underworld_PrepNextQuadrantUploadAndAdvance ; 0x0E
-#_0293B3: dw Underworld_DoubleApplyAndIncrementGrayscale ; 0x0F
+#_0293AD: dw Underworld_BuildBG2AndAdvance               ; 0x0C
+#_0293AF: dw Underworld_BuildBG1AndAdvance               ; 0x0D
+#_0293B1: dw Underworld_BuildBG2AndAdvance               ; 0x0E
+#_0293B3: dw DoubleApplyAndIncrementGrayscale            ; 0x0F
 #_0293B5: dw Module07_11_19_SetSongAndFilter             ; 0x10
 #_0293B7: dw Module07_11_11_KeepSliding                  ; 0x11
 #_0293B9: dw ResetThenCacheRoomEntryProperties           ; 0x12
@@ -3817,14 +3819,14 @@ Module07_11_01_FadeOut:
 Module07_11_02_LoadAndPrepRoom:
 #_029403: JSL ApplyPaletteFilter
 
-#_029407: JSL Underworld_LoadRoom
+#_029407: JSL LoadAndBuildRoom
 
 #_02940B: JSL ToggleStarTileGraphics
 #_02940F: JSL LoadTransAuxGFX
-#_029413: JSL Underworld_LoadCustomTileTypes
+#_029413: JSL LoadUnderworldTileTypes
 
-#_029417: JSL Underworld_AdjustForRoomLayout
-#_02941B: JSL Follower_Initialize
+#_029417: JSL AdjustForRoomLayout
+#_02941B: JSL InitializeFollower
 
 #_02941F: INC.b $B0
 
@@ -3835,7 +3837,7 @@ Module07_11_02_LoadAndPrepRoom:
 Module07_11_03_FilterAndLoadBGChars:
 #_029422: JSL ApplyPaletteFilter
 
-#_029426: JSR UnderworldTransition_TriggerBGC34UpdateAndAdvance
+#_029426: JSR TriggerBGC34UpdateAndAdvance
 
 #_029429: RTS
 
@@ -3843,7 +3845,7 @@ Module07_11_03_FilterAndLoadBGChars:
 
 Module07_11_04_FilterDoBGAndResetSprites:
 #_02942A: JSL ApplyPaletteFilter
-#_02942E: JSR UnderworldTransition_TriggerBGC56UpdateAndAdvance
+#_02942E: JSR TriggerBGC56UpdateAndAdvance
 
 #_029431: LDA.b $A0
 #_029433: STA.w $048E
@@ -3986,10 +3988,10 @@ Module07_11_0B_PrepDestination:
 #_0294D4: SEP #$30
 
 .skip_extra_y_adjust
-#_0294D6: JSR Underworld_PlayBlipAndCacheQuadrantVisits
+#_0294D6: JSR BlipAndCacheQuadrants
 #_0294D9: JSL RestoreTorchBackground
 
-#_0294DD: JMP.w Underworld_PrepTilemapAndAdvance
+#_0294DD: JMP.w Underworld_BuildBG1AndAdvance
 
 ;===================================================================================================
 
@@ -4000,7 +4002,7 @@ Module07_11_09_LoadSpriteGraphics:
 
 #_0294E6: JSL LoadNewSpriteGFXSet
 
-#_0294EA: JMP.w Underworld_HandleTranslucencyAndPalettes
+#_0294EA: JMP.w HandleRoomTranslucencyAndPalettes
 
 ;===================================================================================================
 
@@ -4235,15 +4237,15 @@ RecoverPositionAfterDrowning:
 #_02962E: LDA.b #$90
 #_029630: STA.w $031F
 
-#_029633: JSR Underworld_PlayBlipAndCacheQuadrantVisits
+#_029633: JSR BlipAndCacheQuadrants
 
 #_029636: STZ.w $037B
 
-#_029639: JSL Link_ResetStateAfterDamagingPit
+#_029639: JSL ResetStateAfterDamagingPit
 
 #_02963D: STZ.w $02F9
 
-#_029640: JSL Follower_Initialize
+#_029640: JSL InitializeFollower
 
 #_029644: STZ.w $0642
 
@@ -4286,24 +4288,24 @@ Module07_15_WarpPad:
 #_02967C: CMP.b #$03
 #_02967E: BCC .skip_upload
 
-#_029680: JSL Graphics_IncrementalVRAMUpload
-#_029684: JSL Underworld_LoadAttribute_Selectable
+#_029680: JSL IncrementalVRAMUpload
+#_029684: JSL LoadNextObjectAttributeSet
 
 .skip_upload
 #_029688: LDA.b $B0
 #_02968A: JSL JumpTableLocal
 #_02968E: dw ResetTransitionPropsAndAdvance_ResetInterface ; 0x00
 #_029690: dw Module07_15_01_ApplyMosaicAndFilter           ; 0x01
-#_029692: dw Underworld_InitializeRoomFromSpecial          ; 0x02
+#_029692: dw InitializeRoomFromSpecial                     ; 0x02
 #_029694: dw UnderworldTransition_LoadSpriteGFX            ; 0x03
 #_029696: dw Module07_15_04_SyncRoomPropsAndBuildOverlay   ; 0x04
-#_029698: dw Underworld_PrepNextQuadrantUploadAndAdvance   ; 0x05
-#_02969A: dw Underworld_PrepTilemapAndAdvance              ; 0x06
-#_02969C: dw Underworld_PrepNextQuadrantUploadAndAdvance   ; 0x07
-#_02969E: dw Underworld_PrepTilemapAndAdvance              ; 0x08
-#_0296A0: dw Underworld_PrepNextQuadrantUploadAndAdvance   ; 0x09
-#_0296A2: dw Underworld_PrepTilemapAndAdvance              ; 0x0A
-#_0296A4: dw Underworld_PrepNextQuadrantUploadAndAdvance   ; 0x0B
+#_029698: dw Underworld_BuildBG2AndAdvance                 ; 0x05
+#_02969A: dw Underworld_BuildBG1AndAdvance                 ; 0x06
+#_02969C: dw Underworld_BuildBG2AndAdvance                 ; 0x07
+#_02969E: dw Underworld_BuildBG1AndAdvance                 ; 0x08
+#_0296A0: dw Underworld_BuildBG2AndAdvance                 ; 0x09
+#_0296A2: dw Underworld_BuildBG1AndAdvance                 ; 0x0A
+#_0296A4: dw Underworld_BuildBG2AndAdvance                 ; 0x0B
 #_0296A6: dw Underworld_AdvanceAndReset                    ; 0x0C
 #_0296A8: dw Module07_15_0E_FadeInFromWarp                 ; 0x0D
 #_0296AA: dw Module07_15_0F_FinalizeAndCacheEntry          ; 0x0E
@@ -4335,7 +4337,7 @@ Module07_15_04_SyncRoomPropsAndBuildOverlay:
 
 .not_hera_5F
 #_0296CB: JSR UnderworldSyncBG1and2Scroll
-#_0296CE: JSL Underworld_AdjustForRoomLayout
+#_0296CE: JSL AdjustForRoomLayout
 
 #_0296D2: LDY.b #$16
 
@@ -4350,7 +4352,7 @@ Module07_15_04_SyncRoomPropsAndBuildOverlay:
 #_0296E1: STY.b $1C
 #_0296E3: STA.b $1D
 
-#_0296E5: JSL WaterFlood_BuildOneQuadrantForVRAM
+#_0296E5: JSL BuildBG1QuadrantForUpload
 
 #_0296E9: INC.b $B0
 
@@ -4442,7 +4444,7 @@ Module07_16_UpdatePegs_Step1:
 #_029748: LDY.w #$0100
 
 .blue_pegs_up
-#_02974B: BRA Underworld_UpdatePegGFXBuffer
+#_02974B: BRA UpdatePegGFXBuffer
 
 ;===================================================================================================
 
@@ -4460,7 +4462,7 @@ Module07_16_UpdatePegs_Step2:
 #_02975C: LDY.w #$0080
 
 .blue_pegs_up
-#_02975F: BRA Underworld_UpdatePegGFXBuffer
+#_02975F: BRA UpdatePegGFXBuffer
 
 ;===================================================================================================
 
@@ -4471,7 +4473,7 @@ Module07_16_UpdatePegs_Step3:
 #_029766: LDY.w #$0180
 
 #_029769: LDA.l $7EC172
-#_02976D: BEQ Underworld_UpdatePegGFXBuffer
+#_02976D: BEQ UpdatePegGFXBuffer
 
 #_02976F: TYX
 
@@ -4479,7 +4481,7 @@ Module07_16_UpdatePegs_Step3:
 
 ;===================================================================================================
 
-Underworld_UpdatePegGFXBuffer:
+UpdatePegGFXBuffer:
 #_029773: STY.b $0E
 
 #_029775: PHB
@@ -4536,7 +4538,7 @@ Underworld_UpdatePegGFXBuffer:
 ;===================================================================================================
 
 Module07_16_UpdatePegs_FinishUp:
-#_0297A9: JSL Underworld_FlipCrystalPegAttribute
+#_0297A9: JSL FlipCrystalPegAttributes
 
 #_0297AD: STZ.b $B0
 #_0297AF: STZ.b $11
@@ -4559,7 +4561,7 @@ RecoverPegGFXFromMapping:
 #_0297C1: LDY.w #$0000
 
 .blue_pegs_up
-#_0297C4: JSR Underworld_UpdatePegGFXBuffer
+#_0297C4: JSR UpdatePegGFXBuffer
 
 #_0297C7: RTL
 
@@ -4593,7 +4595,7 @@ Module07_17_PressurePlate:
 #_0297EC: SEP #$30
 
 #_0297EE: LDY.b #$0E
-#_0297F0: JSL Underworld_UpdateTilemapWithCommonTile
+#_0297F0: JSL UpdateTilemapWithCommonObject
 
 #_0297F4: LDA.w $010C
 #_0297F7: STA.b $11
@@ -4614,14 +4616,14 @@ Module07_18_RescuedMaiden:
 #_02980C: JSL JumpTableLocal
 #_029810: dw PrepareForCrystalCutscene                   ; 0x00
 #_029812: dw BuildCrystalCutsceneTilemap                 ; 0x01
-#_029814: dw Underworld_PrepTilemapAndAdvance            ; 0x02
-#_029816: dw Underworld_PrepNextQuadrantUploadAndAdvance ; 0x03
-#_029818: dw Underworld_PrepTilemapAndAdvance            ; 0x04
-#_02981A: dw Underworld_PrepNextQuadrantUploadAndAdvance ; 0x05
-#_02981C: dw Underworld_PrepTilemapAndAdvance            ; 0x06
-#_02981E: dw Underworld_PrepNextQuadrantUploadAndAdvance ; 0x07
-#_029820: dw Underworld_PrepTilemapAndAdvance            ; 0x08
-#_029822: dw Underworld_PrepNextQuadrantUploadAndAdvance ; 0x09
+#_029814: dw Underworld_BuildBG1AndAdvance               ; 0x02
+#_029816: dw Underworld_BuildBG2AndAdvance               ; 0x03
+#_029818: dw Underworld_BuildBG1AndAdvance               ; 0x04
+#_02981A: dw Underworld_BuildBG2AndAdvance               ; 0x05
+#_02981C: dw Underworld_BuildBG1AndAdvance               ; 0x06
+#_02981E: dw Underworld_BuildBG2AndAdvance               ; 0x07
+#_029820: dw Underworld_BuildBG1AndAdvance               ; 0x08
+#_029822: dw Underworld_BuildBG2AndAdvance               ; 0x09
 #_029824: dw StartCrystalCutscene                        ; 0x0A
 
 ;===================================================================================================
@@ -4793,15 +4795,15 @@ Module07_19_MirrorFade:
 #_02990C: LDA.w $0ABD
 #_02990F: BEQ .exit
 
-#_029911: JSL Palette_RevertTranslucencySwap
+#_029911: JSL RevertTranslucencySwap
 
 .exit
 #_029915: RTS
 
 ;===================================================================================================
 
-Module07_1A_RoomDraw_OpenTriforceDoor_bounce:
-#_029916: JSL RoomDraw_OpenTriforceDoor
+Module07_1A_OpenTriforceDoor:
+#_029916: JSL OpenTriforceDoor
 
 #_02991A: RTS
 
@@ -4896,7 +4898,7 @@ pool Module0F_SpotlightClose
 #_02997D: db $01
 
 .submodules
-#_02997E: dw Underworld_PrepExitWithSpotlight
+#_02997E: dw PrepExitWithSpotlight
 #_029980: dw Spotlight_ConfigureTableAndControl
 
 pool off
@@ -4904,7 +4906,7 @@ pool off
 ;---------------------------------------------------------------------------------------------------
 
 Module0F_SpotlightClose:
-#_029982: JSL Sprite_Main
+#_029982: JSL HandleAllSprites
 
 #_029986: LDA.b $11
 #_029988: ASL A
@@ -4918,7 +4920,7 @@ Module0F_SpotlightClose:
 #_02998F: BNE .indoors
 
 #_029991: LDA.b $8A
-#_029993: CMP.b #$0F ; ROOM 010F
+#_029993: CMP.b #$0F ; OW 0F
 #_029995: BNE .not_waterfall_of_wishing
 
 #_029997: LDA.b #$01
@@ -4928,7 +4930,7 @@ Module0F_SpotlightClose:
 #_02999C: LDA.b #$06
 #_02999E: STA.b $5E
 
-#_0299A0: JSL Link_HandleVelocity
+#_0299A0: JSL HandleLinkVelocity
 
 #_0299A4: STZ.b $31
 #_0299A6: STZ.b $30
@@ -4954,19 +4956,19 @@ Module0F_SpotlightClose:
 #_0299BE: STA.b $26
 #_0299C0: STA.b $67
 
-#_0299C2: JSL Link_HandleMovingAnimation_FullLongEntry
-#_0299C6: JML LinkOAM_Main
+#_0299C2: JSL HandleLinkAnimation_FullLongEntry
+#_0299C6: JML DrawLink
 
 ;===================================================================================================
 
-Underworld_PrepExitWithSpotlight:
+PrepExitWithSpotlight:
 #_0299CA: STZ.w $012A
 #_0299CD: STZ.w $1F0C
 
 #_0299D0: LDA.b $1B
 #_0299D2: BNE .indoors
 
-#_0299D4: JSL Ancilla_DeleteWaterfallSplashes
+#_0299D4: JSL DeleteWaterfallSplashes
 
 #_0299D8: REP #$20
 
@@ -5010,7 +5012,7 @@ Underworld_PrepExitWithSpotlight:
 .rain_state
 #_029A09: STZ.w $04A0
 
-#_029A0C: JSL HUD_HandleFloorIndicator
+#_029A0C: JSL HandleFloorIndicator
 
 #_029A10: INC.b $16
 
@@ -5053,7 +5055,7 @@ Spotlight_ConfigureTableAndControl:
 #_029A3B: BEQ .dont_reset
 
 #_029A3D: JSL EnableForceBlank
-#_029A41: JSL Link_ItemReset_FromOverworldThings
+#_029A41: JSL ResetBasicActions
 
 .dont_reset
 #_029A45: LDA.b $10
@@ -5174,7 +5176,7 @@ pool off
 ;---------------------------------------------------------------------------------------------------
 
 Module10_SpotlightOpen:
-#_029AD7: JSL Sprite_Main
+#_029AD7: JSL HandleAllSprites
 
 #_029ADB: LDA.b $11
 #_029ADD: ASL A
@@ -5182,7 +5184,7 @@ Module10_SpotlightOpen:
 
 #_029ADF: JSR (.submodules,X)
 
-#_029AE2: JML LinkOAM_Main
+#_029AE2: JML DrawLink
 
 ;===================================================================================================
 
@@ -5246,7 +5248,7 @@ Module11_02_LoadEntrance:
 #_029B20: LDA.b #$02
 #_029B22: STA.b $99
 
-#_029B24: JSR Underworld_LoadEntrance
+#_029B24: JSR LoadUnderworldEntrance
 
 #_029B27: LDA.w $040C
 #_029B2A: CMP.b #$FF ; DUNGEON FF
@@ -5319,8 +5321,8 @@ Module11_02_LoadEntrance:
 #_029B7C: STZ.w $045A
 #_029B7F: STZ.w $0458
 
-#_029B82: JSR Underworld_LoadAndDrawRoom
-#_029B85: JSL Underworld_LoadCustomTileTypes
+#_029B82: JSR LoadAndDrawRoom
+#_029B85: JSL LoadUnderworldTileTypes
 
 #_029B89: LDX.w $0AA1
 
@@ -5328,7 +5330,7 @@ Module11_02_LoadEntrance:
 #_029B90: TAY
 
 #_029B91: JSL DecompressAnimatedUnderworldTiles
-#_029B95: JSL Underworld_LoadAttributeTable
+#_029B95: JSL LoadEveryObjectAttributeSet
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -5347,7 +5349,7 @@ Module11_02_LoadEntrance:
 #_029BAB: LDA.b #$0A
 #_029BAD: STA.w $0AB1
 
-#_029BB0: JSR Underworld_LoadPalettes
+#_029BB0: JSR LoadUnderworldPalettes
 #_029BB3: JSL RestoreTorchBackground
 
 #_029BB7: STZ.b $3A
@@ -5355,18 +5357,18 @@ Module11_02_LoadEntrance:
 
 ;---------------------------------------------------------------------------------------------------
 
-#_029BBB: JSR Underworld_ResetTorchBackgroundAndPlayer
+#_029BBB: JSR ResetLampconeAndLink
 
 #_029BBE: LDA.w $02E0
 #_029BC1: BEQ .not_bunny
 
-#_029BC3: JSL RefreshLinkEquipmentPalettes_bunny
+#_029BC3: JSL RefreshEquipmentPalettes_bunny
 
 .not_bunny
 #_029BC7: LDA.b #$80
 #_029BC9: STA.b $9B
 
-#_029BCB: JSL RefillLogic_long
+#_029BCB: JSL HandleItemRefills
 #_029BCF: JSL UnderworldAdjustRainSFX
 
 #_029BD3: LDA.b #$07
@@ -5374,7 +5376,7 @@ Module11_02_LoadEntrance:
 
 ;===================================================================================================
 
-Underworld_LoadSongBankIfNeeded:
+LoadUnderworldSongBankIfNeeded:
 #_029BD7: LDA.w $0132
 #_029BDA: CMP.b #$FF ; SONG FF - transfer
 #_029BDC: BEQ .exit
@@ -5442,7 +5444,7 @@ Module11_05_LoadQuadrants:
 
 #_029C28: INC.w $04C7
 
-#_029C2B: JSR Underworld_PlayBlipAndCacheQuadrantVisits
+#_029C2B: JSR BlipAndCacheQuadrants
 #_029C2E: JSR ResetThenCacheRoomEntryProperties
 
 #_029C31: LDA.w $0132
@@ -5456,40 +5458,40 @@ Module11_05_LoadQuadrants:
 
 ;===================================================================================================
 
-pool Module13_BossVictory_Pendant
+pool Module13_PendantBossVictory
 
 .submodules
-#_029C3E: dw BossVictory_Heal                   ; 0x00
-#_029C40: dw Underworld_StartVictorySpin        ; 0x01
-#_029C42: dw Underworld_RunVictorySpin          ; 0x02
-#_029C44: dw Underworld_CloseVictorySpin        ; 0x03
-#_029C46: dw Underworld_PrepExitWithSpotlight   ; 0x04
+#_029C3E: dw VictoriousHeal                     ; 0x00
+#_029C40: dw StartVictorySpin                   ; 0x01
+#_029C42: dw RunVictorySpin                     ; 0x02
+#_029C44: dw FinishVictorySpin                  ; 0x03
+#_029C46: dw PrepExitWithSpotlight              ; 0x04
 #_029C48: dw Spotlight_ConfigureTableAndControl ; 0x05
 
 pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Module13_BossVictory_Pendant:
+Module13_PendantBossVictory:
 #_029C4A: LDA.b $11
 #_029C4C: ASL A
 #_029C4D: TAX
 
 #_029C4E: JSR (.submodules,X)
 
-#_029C51: JSL Sprite_Main
-#_029C55: JML LinkOAM_Main
+#_029C51: JSL HandleAllSprites
+#_029C55: JML DrawLink
 
 ;===================================================================================================
 
-BossVictory_Heal:
-#_029C59: JSL AnimatedRefill_Magic
+VictoriousHeal:
+#_029C59: JSL FullyRefillMagic
 #_029C5D: BCS .still_restoring_magic
 
 #_029C5F: INC.w $0200
 
 .still_restoring_magic
-#_029C62: JSL AnimatedRefill_Health
+#_029C62: JSL FullyRefillHealth
 #_029C66: BCS .still_healing_hp
 
 #_029C68: INC.w $0200
@@ -5525,13 +5527,13 @@ BossVictory_Heal:
 .reset_subsub
 #_029C8B: STZ.w $0200
 
-#_029C8E: JSL RefillLogic_long
+#_029C8E: JSL HandleItemRefills
 
 #_029C92: RTS
 
 ;===================================================================================================
 
-Underworld_StartVictorySpin:
+StartVictorySpin:
 #_029C93: DEC.b $B0
 #_029C95: BNE .exit
 
@@ -5540,9 +5542,9 @@ Underworld_StartVictorySpin:
 #_029C9A: LDA.b #$02
 #_029C9C: STA.b $2F
 
-#_029C9E: JSL Link_AnimateVictorySpin_long
-#_029CA2: JSL Ancilla_TerminateSelectInteractives
-#_029CA6: JSL AncillaAdd_VictorySpin
+#_029C9E: JSL AnimateVictorySpin_long
+#_029CA2: JSL TerminateSelectInteractives
+#_029CA6: JSL AncillaAdd_SwordUpSparkle
 
 #_029CAA: INC.b $11
 
@@ -5551,8 +5553,8 @@ Underworld_StartVictorySpin:
 
 ;===================================================================================================
 
-Underworld_RunVictorySpin:
-#_029CAD: JSL Link_Main
+RunVictorySpin:
+#_029CAD: JSL Link
 
 #_029CB1: LDA.b $5D
 #_029CB3: CMP.b #$00 ; LINKSTATE 00
@@ -5580,7 +5582,7 @@ Underworld_RunVictorySpin:
 
 ;===================================================================================================
 
-Underworld_CloseVictorySpin:
+FinishVictorySpin:
 #_029CD1: DEC.b $B0
 #_029CD3: BNE .exit
 
@@ -5609,9 +5611,9 @@ pool Module15_MirrorWarpFromAga
 #_029CEE: dw Module15_06                     ; 0x06
 #_029CF0: dw Module15_07                     ; 0x07
 #_029CF2: dw Module15_08                     ; 0x08
-#_029CF4: dw BossVictory_Heal                ; 0x09
-#_029CF6: dw Underworld_StartVictorySpin     ; 0x0A
-#_029CF8: dw Underworld_RunVictorySpin       ; 0x0B
+#_029CF4: dw VictoriousHeal                  ; 0x09
+#_029CF6: dw StartVictorySpin                ; 0x0A
+#_029CF8: dw RunVictorySpin                  ; 0x0B
 #_029CFA: dw Module15_0C                     ; 0x0C
 
 pool off
@@ -5633,8 +5635,8 @@ Module15_MirrorWarpFromAga:
 #_029D0B: BCC .exit
 
 .draw_link
-#_029D0D: JSL Sprite_Main
-#_029D11: JSL LinkOAM_Main
+#_029D0D: JSL HandleAllSprites
+#_029D11: JSL DrawLink
 
 .exit
 #_029D15: RTL
@@ -5664,7 +5666,7 @@ Module15_01_SetTheScene:
 
 #_029D31: JSL PaletteFilter_InitializeWhiteFilter
 
-#_029D35: JSR Overworld_LoadGFXAndScreenSize
+#_029D35: JSR LoadGraphicsAndScreenSize
 
 #_029D38: INC.b $11
 
@@ -5730,10 +5732,10 @@ Module15_05:
 
 #_029D97: SEP #$10
 
-#_029D99: JSL Interface_PrepAndDisplayMessage
+#_029D99: JSL PrepAndDisplayMessage
 
 #_029D9D: JSL ReloadPreviouslyLoadedSheets
-#_029DA1: JSL RebuildHUD_ZeroKeys
+#_029DA1: JSL RebuildHUD_HideKeys
 
 #_029DA5: LDA.b #$80
 #_029DA7: STA.b $9B
@@ -5790,7 +5792,7 @@ Module15_07:
 
 #_029DE2: SEP #$20
 
-#_029DE4: JSL Interface_PrepAndDisplayMessage
+#_029DE4: JSL PrepAndDisplayMessage
 
 #_029DE8: STZ.w $012D
 
@@ -5917,7 +5919,7 @@ SetTargetOverworldWarpToPyramid:
 ;===================================================================================================
 
 #ResetAncillaAndCutscene:
-#_029E6E: JSL Ancilla_TerminateSelectInteractives
+#_029E6E: JSL TerminateSelectInteractives
 
 #_029E72: STZ.w $037B
 
@@ -5932,28 +5934,28 @@ SetTargetOverworldWarpToPyramid:
 
 ;===================================================================================================
 
-pool Module16_BossVictory_Crystal
+pool Module16_CrystalBossVictory
 
 .submodules
-#_029E80: dw BossVictory_Heal            ; 0x00
-#_029E82: dw Underworld_StartVictorySpin ; 0x01
-#_029E84: dw Underworld_RunVictorySpin   ; 0x02
-#_029E86: dw Underworld_CloseVictorySpin ; 0x03
+#_029E80: dw VictoriousHeal              ; 0x00
+#_029E82: dw StartVictorySpin            ; 0x01
+#_029E84: dw RunVictorySpin              ; 0x02
+#_029E86: dw FinishVictorySpin           ; 0x03
 #_029E88: dw Module16_04_FadeAndEnd      ; 0x04
 
 pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Module16_BossVictory_Crystal:
+Module16_CrystalBossVictory:
 #_029E8A: LDA.b $11
 #_029E8C: ASL A
 #_029E8D: TAX
 
 #_029E8E: JSR (.submodules,X)
 
-#_029E91: JSL Sprite_Main
-#_029E95: JML LinkOAM_Main
+#_029E91: JSL HandleAllSprites
+#_029E95: JML DrawLink
 
 ;===================================================================================================
 
@@ -5977,7 +5979,7 @@ Module16_04_FadeAndEnd:
 
 #_029EAA: STZ.w $02E4
 
-#_029EAD: JSL Palette_RevertTranslucencySwap
+#_029EAD: JSL RevertTranslucencySwap
 
 #_029EB1: LDA.b #$00 ; LINKSTATE 00
 #_029EB3: STA.b $5D
@@ -6051,7 +6053,7 @@ Module18_GanonEmerges:
 
 #_029F0D: SEP #$20
 
-#_029F0F: JSL Sprite_Main
+#_029F0F: JSL HandleAllSprites
 
 #_029F13: REP #$20
 
@@ -6078,12 +6080,12 @@ Module18_GanonEmerges:
 #_029F27: TAX
 
 #_029F28: JSR (.submodules,X)
-#_029F2B: JML LinkOAM_Main
+#_029F2B: JML DrawLink
 
 ;===================================================================================================
 
 Module18_00:
-#_029F2F: JSL Underworld_HandleLayerEffect
+#_029F2F: JSL HandleRoomLayerEffect
 #_029F33: JSL CallForDuckIndoors
 #_029F37: JSL SaveDungeonKeys
 
@@ -6095,13 +6097,13 @@ Module18_00:
 ;===================================================================================================
 
 Module18_01:
-#_029F42: JSL Underworld_HandleLayerEffect
+#_029F42: JSL HandleRoomLayerEffect
 
 #_029F46: LDA.b $11
 #_029F48: CMP.b #$0A
 #_029F4A: BNE .exit
 
-#_029F4C: LDA.b #$5B
+#_029F4C: LDA.b #$5B ; OW 5B
 #_029F4E: STA.b $8A
 
 #_029F50: STZ.b $1B
@@ -6119,7 +6121,7 @@ Module18_01:
 ;===================================================================================================
 
 Module18_02:
-#_029F5E: JSL Underworld_HandleLayerEffect
+#_029F5E: JSL HandleRoomLayerEffect
 
 #_029F62: DEC.b $13
 #_029F64: BNE .exit
@@ -6128,7 +6130,7 @@ Module18_02:
 
 #_029F6A: INC.w $0200
 
-#_029F6D: JSL RebuildHUD_ZeroKeys
+#_029F6D: JSL RebuildHUD_HideKeys
 
 #_029F71: STZ.b $30
 #_029F73: STZ.b $31
@@ -6176,7 +6178,7 @@ Module18_05:
 
 #_029FA2: STZ.w $0FC1
 
-#_029FA5: JSL Sprite_SpawnBatCrashCutscene
+#_029FA5: JSL SpawnBatCrashCutscene
 
 #_029FA9: LDA.b #$02
 #_029FAB: STA.b $2F
@@ -6276,16 +6278,16 @@ Module19_TriforceRoom:
 #_02A013: BCC .dont_move_link
 
 .move_link
-#_02A015: JSL Link_HandleVelocity
-#_02A019: JSL Link_HandleMovingAnimation_FullLongEntry
+#_02A015: JSL HandleLinkVelocity
+#_02A019: JSL HandleLinkAnimation_FullLongEntry
 
 .dont_move_link
-#_02A01D: JML LinkOAM_Main
+#_02A01D: JML DrawLink
 
 ;===================================================================================================
 
 Module19_00_ResetAndInit:
-#_02A021: JSL Link_ResetProperties_A
+#_02A021: JSL ResetLinkProperties_A
 
 #_02A025: STZ.b $66
 
@@ -6325,10 +6327,10 @@ Module19_02_LoadMusicAndScreen:
 #_02A051: STA.b $A1
 
 #_02A053: JSL EraseTilemaps_normal
-#_02A057: JSL Palette_RevertTranslucencySwap
+#_02A057: JSL RevertTranslucencySwap
 #_02A05B: JSR LoadSpecialOverworld
 
-#_02A05E: JSR Overworld_ReloadSubscreenOverlay
+#_02A05E: JSR ReloadSubscreenOverlay
 
 #_02A061: INC.b $B0
 
@@ -6470,7 +6472,7 @@ Module19_07_PrepMessage:
 
 #_02A10C: SEP #$20
 
-#_02A10E: JSL Interface_PrepAndDisplayMessage
+#_02A10E: JSL PrepAndDisplayMessage
 
 #_02A112: JSL RenderText
 
@@ -6530,7 +6532,7 @@ Module19_TriforceExpansionControl:
 
 Module19_0B_ApproachTriforce:
 #_02A151: JSL AdvancePolyhedral
-#_02A155: JSL TriforceRoom_LinkApproachTriforce
+#_02A155: JSL ApproachTheTriforce
 
 #_02A159: LDA.b $B0
 #_02A15B: CMP.b #$0C
@@ -6615,7 +6617,7 @@ RoomTagPrizeChecks:
 
 ;===================================================================================================
 
-Mirror_SaveRoomData:
+MirrorAndSaveRoomFlags:
 #_02A1B1: LDA.w $040C
 #_02A1B4: CMP.b #$FF ; DUNGEON FF
 #_02A1B6: BEQ .play_beep
@@ -6627,7 +6629,7 @@ Mirror_SaveRoomData:
 #_02A1BE: LDA.b #$33 ; SFX2.33
 #_02A1C0: STA.w $012E
 
-#_02A1C3: JSL Underworld_FlagRoomData_Quadrants
+#_02A1C3: JSL FullyUpdateRoomFlags
 
 ;===================================================================================================
 
@@ -6666,11 +6668,11 @@ RoomEffectFixedColors:
 
 ;===================================================================================================
 
-Underworld_HandleTranslucencyAndPalettes:
+HandleRoomTranslucencyAndPalettes:
 #_02A1E9: LDA.w $0ABD
 #_02A1EC: BEQ .dont_undo_translucency
 
-#_02A1EE: JSL Palette_RevertTranslucencySwap
+#_02A1EE: JSL RevertTranslucencySwap
 
 .dont_undo_translucency
 #_02A1F2: LDA.b #$02
@@ -6707,7 +6709,7 @@ Underworld_HandleTranslucencyAndPalettes:
 
 #_02A21E: PHX
 
-#_02A21F: JSL Palette_AssertTranslucencySwap
+#_02A21F: JSL AssertTranslucencySwap
 
 #_02A223: PLX
 
@@ -6727,7 +6729,7 @@ Underworld_HandleTranslucencyAndPalettes:
 
 #_02A247: SEP #$20
 
-#_02A249: JSL Palettes_LoadAgahnim
+#_02A249: JSL PaletteLoadAgahnim
 
 .not_aga_2
 #_02A24D: LDA.b #$70
@@ -6752,10 +6754,10 @@ Underworld_HandleTranslucencyAndPalettes:
 
 #_02A26B: STZ.w $0AA9
 
-#_02A26E: JSL Palettes_Load_UnderworldSet
-#_02A272: JSL Palettes_Load_SpritePal0Left
-#_02A276: JSL Palettes_Load_SpriteAux1
-#_02A27A: JSL Palettes_Load_SpriteAux2
+#_02A26E: JSL PaletteLoad_UnderworldSet
+#_02A272: JSL PaletteLoad_SpritePal0Left
+#_02A276: JSL PaletteLoad_SpriteAux1
+#_02A27A: JSL PaletteLoad_SpriteAux2
 
 #_02A27E: INC.b $B0
 
@@ -6804,8 +6806,8 @@ ResetTransitionPropsAndAdvance_ResetInterface_long:
 
 ;===================================================================================================
 
-Underworld_HandleTranslucencyAndPalettes_long:
-#_02A2A9: JSR Underworld_HandleTranslucencyAndPalettes
+HandleRoomTranslucencyAndPalettes_long:
+#_02A2A9: JSR HandleRoomTranslucencyAndPalettes
 
 #_02A2AC: RTL
 
@@ -6857,7 +6859,7 @@ UNREACHABLE_02A2B1:
 
 ;===================================================================================================
 
-Underworld_AdjustCameraArbitrary:
+AdjustUnderworldCameraArbitrarily:
 #_02A2F0: LDA.b $A2
 #_02A2F2: AND.b #$0F
 #_02A2F4: STA.b $00
@@ -6958,7 +6960,7 @@ Underworld_AdjustCameraArbitrary:
 
 ;===================================================================================================
 
-Underworld_AdjustForTeleportDoors:
+AdjustForTeleportDoors:
 #_02A37C: STY.b $00
 
 #_02A37E: STA.w $048E
@@ -7076,25 +7078,25 @@ pool Module09_Overworld
 #_02A411: dw Module09_TriggerTilemapUpdate          ; 0x02
 #_02A413: dw Module09_LoadNewMapAndGFX              ; 0x03
 #_02A415: dw Module09_LoadNewSprites                ; 0x04
-#_02A417: dw Overworld_StartScrollTransition        ; 0x05
-#_02A419: dw Overworld_RunScrollTransition          ; 0x06
+#_02A417: dw StartOverworldScrollTransition         ; 0x05
+#_02A419: dw RunScrollOverworldTransition           ; 0x06
 #_02A41B: dw Overworld_EaseOffScrollTransition      ; 0x07
 #_02A41D: dw Overworld_FinalizeEntryOntoScreen      ; 0x08
 #_02A41F: dw Module09_09_OpenBigDoorFromExiting     ; 0x09
 #_02A421: dw Module09_0A_WalkFromExiting_FacingDown ; 0x0A
 #_02A423: dw Module09_0B_WalkFromExiting_FacingUp   ; 0x0B
 #_02A425: dw Module09_0C_OpenBigDoor                ; 0x0C
-#_02A427: dw Overworld_StartMosaicTransition        ; 0x0D
+#_02A427: dw StartOverworldMosaicTransition         ; 0x0D
 #_02A429: dw Overworld_LoadSubscreenAndSilenceSFX1  ; 0x0E
 #_02A42B: dw Module09_LoadAuxGFX                    ; 0x0F
 #_02A42D: dw Module09_TriggerTilemapUpdate          ; 0x10
 #_02A42F: dw Module09_LoadNewMapAndGFX              ; 0x11
 #_02A431: dw Module09_LoadNewSprites                ; 0x12
-#_02A433: dw Overworld_StartScrollTransition        ; 0x13
-#_02A435: dw Overworld_RunScrollTransition          ; 0x14
+#_02A433: dw StartOverworldScrollTransition         ; 0x13
+#_02A435: dw RunScrollOverworldTransition           ; 0x14
 #_02A437: dw Overworld_EaseOffScrollTransition      ; 0x15
 #_02A439: dw Module09_FadeBackInFromMosaic          ; 0x16
-#_02A43B: dw Overworld_StartMosaicTransition        ; 0x17
+#_02A43B: dw StartOverworldMosaicTransition         ; 0x17
 #_02A43D: dw Module09_18                            ; 0x18
 #_02A43F: dw Module09_19                            ; 0x19
 #_02A441: dw Module09_LoadAuxGFX                    ; 0x1A
@@ -7103,15 +7105,15 @@ pool Module09_Overworld
 #_02A447: dw Module09_1D                            ; 0x1D
 #_02A449: dw Module09_1E                            ; 0x1E
 #_02A44B: dw Module09_1F                            ; 0x1F
-#_02A44D: dw Overworld_ReloadSubscreenOverlay       ; 0x20
+#_02A44D: dw ReloadSubscreenOverlay                 ; 0x20
 #_02A44F: dw Module09_21                            ; 0x21
 #_02A451: dw Module09_22                            ; 0x22
 #_02A453: dw Module09_MirrorWarp                    ; 0x23
-#_02A455: dw Overworld_StartMosaicTransition        ; 0x24
+#_02A455: dw StartOverworldMosaicTransition         ; 0x24
 #_02A457: dw Module09_25                            ; 0x25
 #_02A459: dw Module09_LoadAuxGFX                    ; 0x26
 #_02A45B: dw Module09_TriggerTilemapUpdate          ; 0x27
-#_02A45D: dw Overworld_LoadAndBuildScreen           ; 0x28
+#_02A45D: dw LoadAndBuildOverworldScreen            ; 0x28
 #_02A45F: dw Module09_FadeBackInFromMosaic          ; 0x29
 #_02A461: dw Module09_2A_RecoverFromDrowning        ; 0x2A
 #_02A463: dw Module09_2B                            ; 0x2B
@@ -7177,7 +7179,7 @@ Module09_Overworld:
 
 #_02A4AF: SEP #$20
 
-#_02A4B1: JSL Sprite_Main
+#_02A4B1: JSL HandleAllSprites
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -7199,8 +7201,8 @@ Module09_Overworld:
 
 #_02A4C3: SEP #$20
 
-#_02A4C5: JSL LinkOAM_Main
-#_02A4C9: JSL RefillLogic_long
+#_02A4C5: JSL DrawLink
+#_02A4C9: JSL HandleItemRefills
 
 ;===================================================================================================
 
@@ -7355,7 +7357,7 @@ Module09_00_PlayerControl:
 #_02A587: LDA.b $10
 #_02A589: PHA
 
-#_02A58A: JSL Interface_PrepAndDisplayMessage
+#_02A58A: JSL PrepAndDisplayMessage
 
 #_02A58E: PLA
 #_02A58F: STA.b $10
@@ -7371,20 +7373,20 @@ Module09_00_PlayerControl:
 #_02A597: LDA.w $04C6
 #_02A59A: BEQ .not_entrance_cutscene
 
-#_02A59C: JSL Overworld_AnimateEntrance
+#_02A59C: JSL EntranceCutscene
 
 ;---------------------------------------------------------------------------------------------------
 
 .not_entrance_cutscene
 #_02A5A0: SEP #$30
 
-#_02A5A2: JSL Link_Main
+#_02A5A2: JSL Link
 
 #_02A5A6: LDA.w $04B4
 #_02A5A9: CMP.b #$FF
 #_02A5AB: BEQ .no_countdown
 
-#_02A5AD: JSL HUD_HandleBigTimer
+#_02A5AD: JSL HandleHUDTimer
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -7409,7 +7411,7 @@ Module09_00_PlayerControl:
 
 #_02A5CA: SEP #$20
 
-#_02A5CC: JSL Graphics_LoadChrHalfSlot
+#_02A5CC: JSL LoadChrHalfSlot
 #_02A5D0: JSR Overworld_OperateCameraScroll
 
 #_02A5D3: LDA.b $10
@@ -7418,9 +7420,9 @@ Module09_00_PlayerControl:
 
 ;---------------------------------------------------------------------------------------------------
 
-#_02A5D9: JSL Overworld_UseEntrance
+#_02A5D9: JSL UseOverworldEntrance
 #_02A5DD: JSL FlashGanonTowerPalette
-#_02A5E1: JSR OverworldHandleTransitions
+#_02A5E1: JSR HandleOverworldTransitions
 
 #_02A5E4: BRA .exit
 
@@ -7436,7 +7438,7 @@ Module09_00_PlayerControl:
 
 ;===================================================================================================
 
-Overworld_ActualScreenID:
+ActualOverworldScreenID:
 #_02A5EC: db $00, $00, $02, $03, $03, $05, $05, $07
 #_02A5F4: db $00, $00, $0A, $03, $03, $05, $05, $0F
 #_02A5FC: db $10, $11, $12, $13, $14, $15, $16, $17
@@ -7588,7 +7590,7 @@ OverworldTransitionPositionX:
 
 ;===================================================================================================
 
-OverworldHandleTransitions:
+HandleOverworldTransitions:
 #_02A9C4: LDA.w $0416
 #_02A9C7: BEQ .not_scrolling
 
@@ -7661,7 +7663,7 @@ OverworldHandleTransitions:
 #_02AA2C: BEQ .some_transition_was_hit
 
 .check_special_triggers
-#_02AA2E: JSL Overworld_CheckForSpecialOverworldTrigger
+#_02AA2E: JSL CheckForSpecialOverworldTrigger
 
 #_02AA32: RTS
 
@@ -7670,7 +7672,7 @@ OverworldHandleTransitions:
 .some_transition_was_hit
 #_02AA33: SEP #$20
 
-#_02AA35: JSL Link_CheckForEdgeScreenTransition
+#_02AA35: JSL CheckForEdgeScreenTransition
 #_02AA39: BCS .check_special_triggers
 
 #_02AA3B: STY.b $02
@@ -7728,7 +7730,7 @@ OverworldHandleTransitions:
 #_02AA7A: STA.w $012D
 
 .not_haunted_grove
-#_02AA7D: LDA.l Overworld_ActualScreenID,X
+#_02AA7D: LDA.l ActualOverworldScreenID,X
 #_02AA81: ORA.l $7EF3CA
 #_02AA85: STA.b $8A
 #_02AA87: STA.w $040A
@@ -7763,7 +7765,7 @@ OverworldHandleTransitions:
 ;---------------------------------------------------------------------------------------------------
 
 .dont_restore_dw_music
-#_02AAB6: JSR Overworld_LoadGFXAndScreenSize
+#_02AAB6: JSR LoadGraphicsAndScreenSize
 
 #_02AAB9: LDA.b #$01
 #_02AABB: STA.b $11
@@ -7788,13 +7790,13 @@ OverworldHandleTransitions:
 
 #_02AADA: PLA
 #_02AADB: AND.b #$3F ; OW 00, OW 40
-#_02AADD: BEQ .skip_palettes
+#_02AADD: BEQ .mosaic_transition
 
 #_02AADF: LDA.b $8A ; OW 00, OW 80
 #_02AAE1: AND.b #$BF
-#_02AAE3: BNE .change_palettes
+#_02AAE3: BNE .normal_transition
 
-.skip_palettes
+.mosaic_transition
 #_02AAE5: STZ.b $B0
 
 #_02AAE7: LDA.b #$0D
@@ -7808,7 +7810,7 @@ OverworldHandleTransitions:
 
 ;---------------------------------------------------------------------------------------------------
 
-.change_palettes
+.normal_transition
 #_02AAF4: LDX.b $8A
 
 #_02AAF6: LDA.l $7EFD40,X
@@ -7822,7 +7824,7 @@ OverworldHandleTransitions:
 
 ;===================================================================================================
 
-Overworld_LoadGFXAndScreenSize:
+LoadGraphicsAndScreenSize:
 #_02AB08: LDX.b $8A
 
 #_02AB0A: STZ.w $0412
@@ -7908,7 +7910,7 @@ ScrollAndCheckForSOWExit:
 #_02AB80: JSR OverworldHandleMapScroll
 
 .no_scroll
-#_02AB83: JSL SpecialOverworld_CheckForReturnTrigger
+#_02AB83: JSL CheckForReturnTrigger
 
 #_02AB87: RTS
 
@@ -7969,9 +7971,9 @@ Module09_LoadNewMapAndGFX:
 
 ;===================================================================================================
 
-Overworld_RunScrollTransition:
-#_02ABDA: JSL Link_HandleMovingAnimation_FullLongEntry
-#_02ABDE: JSL Graphics_IncrementalVRAMUpload
+RunScrollOverworldTransition:
+#_02ABDA: JSL HandleLinkAnimation_FullLongEntry
+#_02ABDE: JSL IncrementalVRAMUpload
 
 #_02ABE2: JSR OverworldScrollTransition
 #_02ABE5: AND.b #$0F
@@ -8008,7 +8010,7 @@ Module09_LoadNewSprites:
 ;---------------------------------------------------------------------------------------------------
 
 .dont_adjust_y
-#_02AC08: JSL Sprite_LoadAll_Overworld
+#_02AC08: JSL ReloadOverworldSprites
 
 #_02AC0C: STZ.w $04AC
 #_02AC0F: STZ.w $04AD
@@ -8018,7 +8020,7 @@ Module09_LoadNewSprites:
 #_02AC18: BCS .not_raining
 
 .dont_set_fixed_color
-#_02AC1A: JMP.w Overworld_StartScrollTransition
+#_02AC1A: JMP.w StartOverworldScrollTransition
 
 .not_raining
 #_02AC1D: LDA.b $11
@@ -8029,7 +8031,7 @@ Module09_LoadNewSprites:
 
 ;===================================================================================================
 
-Overworld_StartScrollTransition:
+StartOverworldScrollTransition:
 #_02AC27: INC.b $11
 
 #_02AC29: LDX.w $0410
@@ -8090,7 +8092,7 @@ Overworld_EaseOffScrollTransition:
 #_02AC6A: LDX.b $8A
 
 #_02AC6C: LDA.l OverworldScreenSize,X
-#_02AC70: BEQ .dont_recover_map16
+#_02AC70: BEQ .dont_recover_params
 
 #_02AC72: REP #$20
 
@@ -8105,10 +8107,10 @@ Overworld_EaseOffScrollTransition:
 
 #_02AC86: SEP #$20
 
-.dont_recover_map16
+.dont_recover_params
 #_02AC88: INC.b $11
 
-#_02AC8A: JSL Follower_Disable
+#_02AC8A: JSL RemoveKikiAndLocksmith
 
 .exit
 #_02AC8E: RTS
@@ -8116,7 +8118,7 @@ Overworld_EaseOffScrollTransition:
 ;===================================================================================================
 
 Module09_0A_WalkFromExiting_FacingDown:
-#_02AC8F: JSL Link_HandleMovingAnimation_SetFacingDown
+#_02AC8F: JSL HandleLinkAnimation_SetFacingDown
 
 #_02AC93: REP #$20
 
@@ -8161,7 +8163,7 @@ Module09_0A_WalkFromExiting_FacingDown:
 ;===================================================================================================
 
 Module09_0B_WalkFromExiting_FacingUp:
-#_02ACC2: JSL Link_HandleMovingAnimation_FullLongEntry
+#_02ACC2: JSL HandleLinkAnimation_FullLongEntry
 
 #_02ACC6: REP #$20
 
@@ -8203,10 +8205,9 @@ Map32UpdateTiles:
 Module09_09_OpenBigDoorFromExiting:
 #_02AD4A: LDA.w $0690
 #_02AD4D: CMP.b #$03
-#_02AD4F: BNE Overworld_DoMapUpdate32x32_conditional
+#_02AD4F: BNE DoMap32Update_conditional
 
 #_02AD51: LDA.b #$24
-
 #_02AD53: STA.w $069A
 
 #_02AD56: STZ.w $0416
@@ -8217,8 +8218,8 @@ Module09_09_OpenBigDoorFromExiting:
 
 ;===================================================================================================
 
-Overworld_DoMapUpdate32x32_long:
-#_02AD5C: JSR Overworld_DoMapUpdate32x32
+DoMap32Update_long:
+#_02AD5C: JSR DoMap32Update
 
 #_02AD5F: STZ.w $0692
 
@@ -8229,7 +8230,7 @@ Overworld_DoMapUpdate32x32_long:
 UNREACHABLE_02AD63:
 #_02AD63: REP #$30
 
-#_02AD65: JSR Overworld_DoMapUpdate32x32_16bit_already
+#_02AD65: JSR DoMap32Update_16bit_already
 
 #_02AD68: STZ.w $0692
 
@@ -8240,7 +8241,7 @@ UNREACHABLE_02AD63:
 Module09_0C_OpenBigDoor:
 #_02AD6C: LDA.w $0690
 #_02AD6F: CMP.b #$03
-#_02AD71: BNE Overworld_DoMapUpdate32x32_conditional
+#_02AD71: BNE DoMap32Update_conditional
 
 #_02AD73: STZ.b $B0
 #_02AD75: STZ.b $11
@@ -8250,21 +8251,21 @@ Module09_0C_OpenBigDoor:
 
 ;===================================================================================================
 
-Overworld_DoMapUpdate32x32_conditional:
+DoMap32Update_conditional:
 #_02AD7B: LDA.w $0692
 #_02AD7E: AND.b #$07
-#_02AD80: BEQ Overworld_DoMapUpdate32x32
+#_02AD80: BEQ DoMap32Update
 
 #_02AD82: JMP.w NoMap32Update
 
 ;===================================================================================================
 
-Overworld_DoMapUpdate32x32:
+DoMap32Update:
 #_02AD85: REP #$30
 
 ;---------------------------------------------------------------------------------------------------
 
-#Overworld_DoMapUpdate32x32_16bit_already:
+#DoMap32Update_16bit_already:
 #_02AD87: PHB
 #_02AD88: PHK
 #_02AD89: PLB
@@ -8288,7 +8289,7 @@ Overworld_DoMapUpdate32x32:
 
 #_02ADA6: LDY.w #$0000
 #_02ADA9: LDX.w $0698
-#_02ADAC: JSL Overworld_DrawMap16_Anywhere
+#_02ADAC: JSL DrawMap16Anywhere
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -8310,7 +8311,7 @@ Overworld_DoMapUpdate32x32:
 
 #_02ADD0: LDY.w #$0002
 #_02ADD3: LDX.w $0698
-#_02ADD6: JSL Overworld_DrawMap16_Anywhere
+#_02ADD6: JSL DrawMap16Anywhere
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -8333,7 +8334,7 @@ Overworld_DoMapUpdate32x32:
 
 #_02ADFC: LDY.w #$0080
 #_02ADFF: LDX.w $0698
-#_02AE02: JSL Overworld_DrawMap16_Anywhere
+#_02AE02: JSL DrawMap16Anywhere
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -8356,7 +8357,7 @@ Overworld_DoMapUpdate32x32:
 
 #_02AE28: LDY.w #$0082
 #_02AE2B: LDX.w $0698
-#_02AE2E: JSL Overworld_DrawMap16_Anywhere
+#_02AE2E: JSL DrawMap16Anywhere
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -8395,7 +8396,7 @@ NoMap32Update:
 
 ;===================================================================================================
 
-Overworld_StartMosaicTransition:
+StartOverworldMosaicTransition:
 #_02AE5E: JSR ConditionalMosaicControl
 
 #_02AE61: LDA.b $B0
@@ -8539,8 +8540,8 @@ Module09_1E_02_FBlankAndLoadSPOW:
 ;===================================================================================================
 
 Module09_25:
-#_02AF0B: JSL Sprite_InitializeSlots
-#_02AF0F: JSL Sprite_ReloadAll_Overworld
+#_02AF0B: JSL InitializeSpriteSlots
+#_02AF0F: JSL ResetAndReloadOverworldSprites
 
 #_02AF13: STZ.w $0308
 #_02AF16: STZ.w $0309
@@ -8553,7 +8554,7 @@ Overworld_LoadSubscreenAndSilenceSFX1:
 
 ;===================================================================================================
 
-Overworld_ReloadSubscreenOverlay:
+ReloadSubscreenOverlay:
 #_02AF1E: REP #$30
 
 #_02AF20: LDA.b $8A
@@ -8998,7 +8999,7 @@ OverworldMosaicTransition_LoadSpriteGraphicsAndSetMosaic:
 ;===================================================================================================
 
 OverworldMosaicTransition_FilterAndLoadGraphics:
-#_02B195: JSL Graphics_IncrementalVRAMUpload
+#_02B195: JSL IncrementalVRAMUpload
 #_02B199: JSL ApplyPaletteFilter
 
 #_02B19D: RTS
@@ -9088,15 +9089,15 @@ Module09_19:
 
 ;===================================================================================================
 
-Overworld_LoadAndBuildScreen_long:
-#_02B1F0: JSR Overworld_LoadAndBuildScreen
+LoadAndBuildOverworldScreen_long:
+#_02B1F0: JSR LoadAndBuildOverworldScreen
 
 #_02B1F3: RTL
 
 ;===================================================================================================
 
-Overworld_ReloadSubscreenOverlayAndAdvance_long:
-#_02B1F4: JSR Overworld_ReloadSubscreenOverlay
+ReloadSubscreenOverlayAndAdvance_long:
+#_02B1F4: JSR ReloadSubscreenOverlay
 
 #_02B1F7: DEC.b $11
 
@@ -9105,13 +9106,13 @@ Overworld_ReloadSubscreenOverlayAndAdvance_long:
 ;===================================================================================================
 
 Module09_MirrorWarp:
-#_02B1FA: JSL MirrorWarp_Main
+#_02B1FA: JSL .main
 
 #_02B1FE: RTS
 
-;===================================================================================================
+;---------------------------------------------------------------------------------------------------
 
-MirrorWarp_Main:
+.main
 #_02B1FF: INC.w $0710
 
 #_02B202: LDA.b $B0
@@ -9163,7 +9164,7 @@ MirrorWarp_Initialize:
 #_02B253: STZ.w $0200
 
 #_02B256: JSL PaletteFilter_InitializeWhiteFilter
-#_02B25A: JSR Overworld_LoadGFXAndScreenSize
+#_02B25A: JSR LoadGraphicsAndScreenSize
 
 #_02B25D: INC.b $B0
 
@@ -9263,7 +9264,7 @@ MirrorWarp_HandleCastlePyramidSubscreen:
 
 ;===================================================================================================
 
-Overworld_DrawScreenAtCurrentMirrorPosition:
+DrawScreenAtCurrentMirrorPosition:
 #_02B2E6: REP #$20
 
 #_02B2E8: LDA.b $84
@@ -9303,13 +9304,13 @@ Overworld_DrawScreenAtCurrentMirrorPosition:
 .no_adjustment
 #_02B318: SEP #$20
 
-#_02B31A: JSR Overworld_DrawQuadrantsAndOverlays
+#_02B31A: JSR DrawOverworldQuadrantsAndOverlays
 
 #_02B31D: LDA.b $11
 #_02B31F: CMP.b #$2C
 #_02B321: BNE .not_mirror_bonk
 
-#_02B323: JSR MirrorBonk_RecoverChangedTiles
+#_02B323: JSR RecoverTilesFromMirrorBonk
 
 .not_mirror_bonk
 #_02B326: REP #$20
@@ -9380,7 +9381,7 @@ MirrorWarp_LoadSpritesAndColors:
 .no_adjustment
 #_02B374: SEP #$20
 
-#_02B376: JSR BuildOverworldMapFromMap16
+#_02B376: JSR BuildOverworldFromMap16
 
 #_02B379: REP #$20
 
@@ -9407,7 +9408,7 @@ MirrorWarp_LoadSpritesAndColors:
 #_02B391: LDA.l OverworldPalettesScreenToSet,X
 #_02B395: JSL OverworldPalettesLoader
 
-#_02B399: JSL Overworld_SetScreenBGColorCacheOnly
+#_02B399: JSL SetOverworldBackgroundColorCacheOnly
 #_02B39D: JSL Overworld_SetFixedColAndScroll
 
 #_02B3A1: LDA.b $8A
@@ -9460,10 +9461,10 @@ MirrorWarp_LoadSpritesAndColors:
 .not_pyramid_b
 #_02B3EA: SEP #$20
 
-#_02B3EC: JSL Sprite_ResetAll
-#_02B3F0: JSL Sprite_ReloadAll_Overworld
+#_02B3EC: JSL ResetAllSprites
+#_02B3F0: JSL ResetAndReloadOverworldSprites
 
-#_02B3F4: JSL Link_ItemReset_FromOverworldThings
+#_02B3F4: JSL ResetBasicActions
 
 #_02B3F8: JSR DeleteCertainAncillaeStopDashing
 
@@ -9546,7 +9547,7 @@ Module09_2E_01_MoreBlue:
 ;===================================================================================================
 
 Module09_2E_0B:
-#_02B456: JSL Graphics_IncrementalVRAMUpload
+#_02B456: JSL IncrementalVRAMUpload
 #_02B45A: JSL PaletteFilter_WhirlpoolRestoreBlue
 
 #_02B45E: RTS
@@ -9567,7 +9568,7 @@ Module09_2E_0A:
 ;===================================================================================================
 
 Module09_2E_03_FindDestination:
-#_02B46E: LDA.b #$9F ; Max green
+#_02B46E: LDA.b #$9F ; max blue
 #_02B470: STA.b $9E
 
 #_02B472: STZ.w $0AA9
@@ -9577,14 +9578,14 @@ Module09_2E_03_FindDestination:
 
 #_02B47C: STZ.b $B2
 
-#_02B47E: JSL Overworld_ReloadSubscreenOverlayAndAdvance_long
+#_02B47E: JSL ReloadSubscreenOverlayAndAdvance_long
 
 #_02B482: LDA.b #$0C
 #_02B484: STA.b $17
 
 #_02B486: STZ.b $15
 
-#_02B488: BRA Whirlpool_SetFixedColor
+#_02B488: BRA BlueRemoval
 
 ;===================================================================================================
 
@@ -9592,7 +9593,7 @@ Module09_2E_04:
 #_02B48A: LDA.b #$0D
 #_02B48C: STA.b $17
 
-#_02B48E: BRA Whirlpool_Advance
+#_02B48E: BRA AdvanceWhirlpooling
 
 ;===================================================================================================
 
@@ -9602,14 +9603,14 @@ Module09_2E_05_LoadDestinationMap:
 #_02B494: LDA.b #$0C
 #_02B496: STA.b $17
 
-#_02B498: BRA Whirlpool_SetBrightness
+#_02B498: BRA EnableWhirlpoolScreen
 
 ;===================================================================================================
 
 Module09_2E_07_LoadAuxGraphics:
 #_02B49A: JSR Module09_LoadAuxGFX
 
-#_02B49D: BRA Whirlpool_ToSubmod2D
+#_02B49D: BRA DecrementWhirlpoolSubmodule
 
 ;===================================================================================================
 
@@ -9623,7 +9624,7 @@ Module09_2E_08_TriggerTilemapUpdate:
 
 ;===================================================================================================
 
-Whirlpool_ToSubmod2D:
+DecrementWhirlpoolSubmodule:
 #_02B4A9: DEC.b $11
 
 #_02B4AB: INC.b $B0
@@ -9635,11 +9636,11 @@ Whirlpool_ToSubmod2D:
 Module09_2E_09_LoadPalettes:
 #_02B4AE: STZ.w $0AA9
 
-#_02B4B1: JSL Palettes_Load_SpriteMain
-#_02B4B5: JSL Palettes_Load_SpriteEnvironment
-#_02B4B9: JSL Palettes_Load_SpritePal0Left
-#_02B4BD: JSL Palettes_Load_HUD
-#_02B4C1: JSL Palettes_Load_OWBGMain
+#_02B4B1: JSL PaletteLoad_SpriteMain
+#_02B4B5: JSL PaletteLoad_SpriteEnvironment
+#_02B4B9: JSL PaletteLoad_SpritePal0Left
+#_02B4BD: JSL PaletteLoad_HUD
+#_02B4C1: JSL PaletteLoad_OWBGMain
 
 #_02B4C5: LDX.b $8A
 
@@ -9648,25 +9649,25 @@ Module09_2E_09_LoadPalettes:
 
 #_02B4CD: LDA.l OverworldPalettesScreenToSet,X
 #_02B4D1: JSL OverworldPalettesLoader
-#_02B4D5: JSL Overworld_SetScreenBGColor
+#_02B4D5: JSL SetOverworldBackgroundColor
 #_02B4D9: JSL Overworld_SetFixedColAndScroll
 #_02B4DD: JSL LoadNewSpriteGFXSet
 
 ;===================================================================================================
 
-Whirlpool_SetFixedColor:
-#_02B4E1: LDA.b #$80 ; No green
+BlueRemoval:
+#_02B4E1: LDA.b #$80
 #_02B4E3: STA.b $9E
 
 ;===================================================================================================
 
-Whirlpool_SetBrightness:
+EnableWhirlpoolScreen:
 #_02B4E5: LDA.b #$0F
 #_02B4E7: STA.b $13
 
 ;===================================================================================================
 
-Whirlpool_Advance:
+AdvanceWhirlpooling:
 #_02B4E9: INC.w $0710
 #_02B4EC: INC.b $B0
 
@@ -9713,7 +9714,7 @@ Module09_2E_0C_FinalizeWarp:
 ;===================================================================================================
 
 Module09_2F:
-#_02B521: JSL Overworld_CreateTRPortal
+#_02B521: JSL CreateTurtleRockPortal
 
 #_02B525: STZ.b $11
 
@@ -9752,8 +9753,6 @@ Module09_2A_00_ScrollToLand:
 
 #_02B54E: BRA .set_x
 
-;---------------------------------------------------------------------------------------------------
-
 .x_low
 #_02B550: INC.b $02
 
@@ -9785,8 +9784,6 @@ Module09_2A_00_ScrollToLand:
 #_02B573: DEC A
 
 #_02B574: BRA .set_y
-
-;---------------------------------------------------------------------------------------------------
 
 .y_low
 #_02B576: INC.b $00
@@ -9877,14 +9874,14 @@ QuadrantLayoutFlagBitfield:
 
 ;===================================================================================================
 
-Underworld_AdjustForRoomLayout:
+AdjustForRoomLayout:
 #_02B5DC: PHB
 #_02B5DD: PHK
 #_02B5DE: PLB
 
 #_02B5DF: SEP #$30
 
-#_02B5E1: JSR Underworld_AdjustQuadrant
+#_02B5E1: JSR AdjustQuadrant
 
 #_02B5E4: STZ.b $A6
 
@@ -9954,7 +9951,7 @@ Underworld_AdjustForRoomLayout:
 
 ;===================================================================================================
 
-HandleEdgeTransitionMovementEast_RightBy8:
+HandleEdgeTransitionMovementEast_Right8:
 #_02B62E: REP #$20
 
 #_02B630: LDA.b $22
@@ -9975,18 +9972,18 @@ HandleEdgeTransitionMovementEast:
 #_02B63F: EOR.b #$01
 #_02B641: STA.b $A9
 
-#_02B643: JSR Underworld_AdjustQuadrant
+#_02B643: JSR AdjustQuadrant
 
 #_02B646: LDX.b #$08
 
-#_02B648: JSR AdjustCameraBoundaries_DownOrRightQuadrant
-#_02B64B: JSR Underworld_SaveRoomData
+#_02B648: JSR AdjustCameraBoundariesDownOrRightQuadrant
+#_02B64B: JSR SaveRoomFlags
 
 #_02B64E: LDA.b $A9
-#_02B650: JSR UnderworldTransition_AdjustCamera_Horizontal
+#_02B650: JSR AdjustUnderworldCamera_Horizontal
 
 #_02B653: LDY.b #$02
-#_02B655: JSR HandleEdgeTransition_AdjustCameraBoundaries
+#_02B655: JSR AdjustCameraBoundariesAfterTransition
 
 #_02B658: INC.b $11
 
@@ -9994,7 +9991,7 @@ HandleEdgeTransitionMovementEast:
 #_02B65C: BNE .continue
 
 #_02B65E: LDX.b #$08
-#_02B660: JSR AdjustCameraBoundaries_DownOrRightWholeRoom
+#_02B660: JSR AdjustCameraBoundariesDownOrRightWholeRoom
 
 #_02B663: LDA.b $A0
 #_02B665: STA.b $A2
@@ -10010,7 +10007,7 @@ HandleEdgeTransitionMovementEast:
 #_02B676: DEC A
 
 #_02B677: LDY.b #$01
-#_02B679: JSR Underworld_AdjustForTeleportDoors
+#_02B679: JSR AdjustForTeleportDoors
 
 #_02B67C: BRA .continue_from_tele
 
@@ -10023,7 +10020,7 @@ HandleEdgeTransitionMovementEast:
 
 #_02B685: STA.b $A2
 
-#_02B687: JSR Underworld_AdjustCameraArbitrary
+#_02B687: JSR AdjustUnderworldCameraArbitrarily
 
 .room_id_matches
 #_02B68A: INC.b $A0
@@ -10088,7 +10085,7 @@ HandleEdgeTransitionMovementEast:
 
 ;===================================================================================================
 
-HandleEdgeTransitionMovementWest_LeftBy8:
+HandleEdgeTransitionMovementWest_Left8:
 #_02B6CD: REP #$20
 
 #_02B6CF: LDA.b $22
@@ -10109,19 +10106,19 @@ HandleEdgeTransitionMovementWest:
 #_02B6DE: EOR.b #$01
 #_02B6E0: STA.b $A9
 
-#_02B6E2: JSR Underworld_AdjustQuadrant
+#_02B6E2: JSR AdjustQuadrant
 
 #_02B6E5: LDX.b #$08
-#_02B6E7: JSR AdjustCameraBoundaries_UpOrLeftQuadrant
+#_02B6E7: JSR AdjustCameraBoundariesUpOrLeftQuadrant
 
-#_02B6EA: JSR Underworld_SaveRoomData
+#_02B6EA: JSR SaveRoomFlags
 
 #_02B6ED: LDA.b $A9
 #_02B6EF: EOR.b #$01
-#_02B6F1: JSR UnderworldTransition_AdjustCamera_Horizontal
+#_02B6F1: JSR AdjustUnderworldCamera_Horizontal
 
 #_02B6F4: LDY.b #$03
-#_02B6F6: JSR HandleEdgeTransition_AdjustCameraBoundaries
+#_02B6F6: JSR AdjustCameraBoundariesAfterTransition
 
 #_02B6F9: INC.b $11
 
@@ -10129,7 +10126,7 @@ HandleEdgeTransitionMovementWest:
 #_02B6FD: BEQ .continue
 
 #_02B6FF: LDX.b #$08
-#_02B701: JSR AdjustCameraBoundaries_UpOrLeftWholeRoom
+#_02B701: JSR AdjustCameraBoundariesUpOrLeftWholeRoom
 
 #_02B704: LDA.b $A0
 #_02B706: STA.b $A2
@@ -10145,7 +10142,7 @@ HandleEdgeTransitionMovementWest:
 #_02B717: INC A
 
 #_02B718: LDY.b #$FF
-#_02B71A: JSR Underworld_AdjustForTeleportDoors
+#_02B71A: JSR AdjustForTeleportDoors
 
 #_02B71D: BRA .continue_from_tele
 
@@ -10158,7 +10155,7 @@ HandleEdgeTransitionMovementWest:
 
 #_02B726: STA.b $A2
 
-#_02B728: JSR Underworld_AdjustCameraArbitrary
+#_02B728: JSR AdjustUnderworldCameraArbitrarily
 
 .room_id_matches
 #_02B72B: DEC.b $A0
@@ -10222,7 +10219,7 @@ HandleEdgeTransitionMovementWest:
 
 ;===================================================================================================
 
-HandleEdgeTransitionMovementSouth_DownBy16:
+HandleEdgeTransitionMovementSouth_Down16:
 #_02B76E: REP #$20
 
 #_02B770: LDA.b $20
@@ -10243,18 +10240,18 @@ HandleEdgeTransitionMovementSouth:
 #_02B77F: EOR.b #$02
 #_02B781: STA.b $AA
 
-#_02B783: JSR Underworld_AdjustQuadrant
+#_02B783: JSR AdjustQuadrant
 
 #_02B786: LDX.b #$00
-#_02B788: JSR AdjustCameraBoundaries_DownOrRightQuadrant
+#_02B788: JSR AdjustCameraBoundariesDownOrRightQuadrant
 
-#_02B78B: JSR Underworld_SaveRoomData
+#_02B78B: JSR SaveRoomFlags
 
 #_02B78E: LDA.b $AA
-#_02B790: JSR UnderworldTransition_AdjustCamera_Vertical
+#_02B790: JSR AdjustUnderworldCamera_Vertical
 
 #_02B793: LDY.b #$00
-#_02B795: JSR HandleEdgeTransition_AdjustCameraBoundaries
+#_02B795: JSR AdjustCameraBoundariesAfterTransition
 
 #_02B798: INC.b $11
 
@@ -10262,7 +10259,7 @@ HandleEdgeTransitionMovementSouth:
 #_02B79C: BNE .continue
 
 #_02B79E: LDX.b #$00
-#_02B7A0: JSR AdjustCameraBoundaries_DownOrRightWholeRoom
+#_02B7A0: JSR AdjustCameraBoundariesDownOrRightWholeRoom
 
 #_02B7A3: LDA.b $A0
 #_02B7A5: STA.b $A2
@@ -10301,7 +10298,7 @@ HandleEdgeTransitionMovementSouth:
 
 #_02B7CF: STA.b $A2
 
-#_02B7D1: JSR Underworld_AdjustCameraArbitrary
+#_02B7D1: JSR AdjustUnderworldCameraArbitrarily
 
 .room_id_matches
 #_02B7D4: LDA.b $A0
@@ -10371,19 +10368,19 @@ HandleEdgeTransitionMovementNorth:
 #_02B821: EOR.b #$02
 #_02B823: STA.b $AA
 
-#_02B825: JSR Underworld_AdjustQuadrant
+#_02B825: JSR AdjustQuadrant
 
 #_02B828: LDX.b #$00
-#_02B82A: JSR AdjustCameraBoundaries_UpOrLeftQuadrant
+#_02B82A: JSR AdjustCameraBoundariesUpOrLeftQuadrant
 
-#_02B82D: JSR Underworld_SaveRoomData
+#_02B82D: JSR SaveRoomFlags
 
 #_02B830: LDA.b $AA
 #_02B832: EOR.b #$02
-#_02B834: JSR UnderworldTransition_AdjustCamera_Vertical
+#_02B834: JSR AdjustUnderworldCamera_Vertical
 
 #_02B837: LDY.b #$01
-#_02B839: JSR HandleEdgeTransition_AdjustCameraBoundaries
+#_02B839: JSR AdjustCameraBoundariesAfterTransition
 
 #_02B83C: INC.b $11
 
@@ -10391,7 +10388,7 @@ HandleEdgeTransitionMovementNorth:
 #_02B840: BEQ .continue
 
 #_02B842: LDX.b #$00
-#_02B844: JSR AdjustCameraBoundaries_UpOrLeftWholeRoom
+#_02B844: JSR AdjustCameraBoundariesUpOrLeftWholeRoom
 
 #_02B847: LDA.b $A0
 #_02B849: STA.b $A2
@@ -10428,7 +10425,7 @@ HandleEdgeTransitionMovementNorth:
 
 #_02B870: STA.b $A2
 
-#_02B872: JSR Underworld_AdjustCameraArbitrary
+#_02B872: JSR AdjustUnderworldCameraArbitrarily
 
 .room_id_matches
 #_02B875: LDA.b $A0
@@ -10494,10 +10491,10 @@ AdjustQuadrantAndCamera_right:
 #_02B8BF: EOR.b #$01
 #_02B8C1: STA.b $A9
 
-#_02B8C3: JSR Underworld_AdjustQuadrant
+#_02B8C3: JSR AdjustQuadrant
 
 #_02B8C6: LDX.b #$08
-#_02B8C8: JSR AdjustCameraBoundaries_DownOrRightQuadrant
+#_02B8C8: JSR AdjustCameraBoundariesDownOrRightQuadrant
 
 ;===================================================================================================
 
@@ -10542,10 +10539,10 @@ AdjustQuadrantAndCamera_left:
 #_02B8FB: EOR.b #$01
 #_02B8FD: STA.b $A9
 
-#_02B8FF: JSR Underworld_AdjustQuadrant
+#_02B8FF: JSR AdjustQuadrant
 
 #_02B902: LDX.b #$08
-#_02B904: JSR AdjustCameraBoundaries_UpOrLeftQuadrant
+#_02B904: JSR AdjustCameraBoundariesUpOrLeftQuadrant
 
 #_02B907: BRA SetAndSaveVisitedQuadrantFlags
 
@@ -10556,10 +10553,10 @@ AdjustQuadrantAndCamera_down:
 #_02B90B: EOR.b #$02
 #_02B90D: STA.b $AA
 
-#_02B90F: JSR Underworld_AdjustQuadrant
+#_02B90F: JSR AdjustQuadrant
 
 #_02B912: LDX.b #$00
-#_02B914: JSR AdjustCameraBoundaries_DownOrRightQuadrant
+#_02B914: JSR AdjustCameraBoundariesDownOrRightQuadrant
 
 #_02B917: BRA SetAndSaveVisitedQuadrantFlags
 
@@ -10570,16 +10567,16 @@ AdjustQuadrantAndCamera_up:
 #_02B91B: EOR.b #$02
 #_02B91D: STA.b $AA
 
-#_02B91F: JSR Underworld_AdjustQuadrant
+#_02B91F: JSR AdjustQuadrant
 
 #_02B922: LDX.b #$00
-#_02B924: JSR AdjustCameraBoundaries_UpOrLeftQuadrant
+#_02B924: JSR AdjustCameraBoundariesUpOrLeftQuadrant
 
 #_02B927: BRA SetAndSaveVisitedQuadrantFlags
 
 ;===================================================================================================
 
-Underworld_FlagRoomData_Quadrants:
+FullyUpdateRoomFlags:
 #_02B929: LDA.b $A7
 #_02B92B: ASL A
 #_02B92C: ASL A
@@ -10596,13 +10593,13 @@ Underworld_FlagRoomData_Quadrants:
 #_02B93D: ORA.w $0408
 #_02B940: STA.w $0408
 
-#_02B943: JSR Underworld_SaveRoomData
+#_02B943: JSR SaveRoomFlags
 
 #_02B946: RTL
 
 ;===================================================================================================
 
-Underworld_SaveRoomData:
+SaveRoomFlags:
 #_02B947: REP #$30
 
 #_02B949: LDA.b $A0
@@ -10630,7 +10627,7 @@ Underworld_SaveRoomData:
 
 ;===================================================================================================
 
-AdjustCameraBoundaries_DownOrRightQuadrant:
+AdjustCameraBoundariesDownOrRightQuadrant:
 #_02B968: REP #$20
 
 #_02B96A: LDA.w $0600,X
@@ -10649,7 +10646,7 @@ AdjustCameraBoundaries_DownOrRightQuadrant:
 
 ;===================================================================================================
 
-AdjustCameraBoundaries_DownOrRightWholeRoom:
+AdjustCameraBoundariesDownOrRightWholeRoom:
 #_02B981: REP #$20
 
 #_02B983: LDA.w $0602,X
@@ -10668,7 +10665,7 @@ AdjustCameraBoundaries_DownOrRightWholeRoom:
 
 ;===================================================================================================
 
-AdjustCameraBoundaries_UpOrLeftQuadrant:
+AdjustCameraBoundariesUpOrLeftQuadrant:
 #_02B99A: REP #$20
 
 #_02B99C: LDA.w $0600,X
@@ -10687,7 +10684,7 @@ AdjustCameraBoundaries_UpOrLeftQuadrant:
 
 ;===================================================================================================
 
-AdjustCameraBoundaries_UpOrLeftWholeRoom:
+AdjustCameraBoundariesUpOrLeftWholeRoom:
 #_02B9B3: REP #$20
 
 #_02B9B5: LDA.w $0602,X
@@ -10706,7 +10703,7 @@ AdjustCameraBoundaries_UpOrLeftWholeRoom:
 
 ;===================================================================================================
 
-pool HandleEdgeTransition_AdjustCameraBoundaries
+pool AdjustCameraBoundariesAfterTransition
 
 .vertical_boundaries
 #_02B9CC: dw $0078
@@ -10724,12 +10721,12 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-HandleEdgeTransition_AdjustCameraBoundaries:
+AdjustCameraBoundariesAfterTransition:
 #_02B9DC: STY.w $0418
 
 #_02B9DF: LDA.b $67
 #_02B9E1: AND.b #$03
-#_02B9E3: BEQ .nothorizontal
+#_02B9E3: BEQ .not_horizontal
 
 #_02B9E5: REP #$20
 
@@ -10762,7 +10759,7 @@ HandleEdgeTransition_AdjustCameraBoundaries:
 
 ;---------------------------------------------------------------------------------------------------
 
-.nothorizontal
+.not_horizontal
 #_02BA06: REP #$20
 
 #_02BA08: LDX.b #$04
@@ -10794,7 +10791,7 @@ HandleEdgeTransition_AdjustCameraBoundaries:
 
 ;===================================================================================================
 
-Underworld_AdjustQuadrant:
+AdjustQuadrant:
 #_02BA27: LDA.w $040E
 #_02BA2A: ORA.b $AA
 #_02BA2C: ORA.b $A9
@@ -10804,7 +10801,7 @@ Underworld_AdjustQuadrant:
 
 ;===================================================================================================
 
-Underworld_HandleCamera:
+HandleUnderworldCamera:
 #_02BA31: REP #$20
 
 #_02BA33: LDA.w #$0001
@@ -10838,7 +10835,7 @@ Underworld_HandleCamera:
 #_02BA5B: AND.w #$00FF
 #_02BA5E: BEQ .no_vertical_movement
 
-#_02BA60: LDX.b $A7
+#_02BA60: LDX.b $A7 ; !USELESS
 #_02BA62: CMP.w #$0080
 #_02BA65: BCC .moving_down_a
 
@@ -10999,8 +10996,6 @@ Underworld_HandleCamera:
 #_02BB38: BCC .dont_invert_horizontally
 
 #_02BB3A: ORA.w #$F000
-
-;---------------------------------------------------------------------------------------------------
 
 .dont_invert_horizontally
 #_02BB3D: STA.b $06
@@ -11488,7 +11483,7 @@ OverworldCameraBoundaryCheck:
 
 ;===================================================================================================
 
-pool UnderworldTransition_AdjustCamera_Horizontal
+pool AdjustUnderworldCamera_Horizontal
 
 .boundary
 #_02BDC0: dw $0000
@@ -11500,7 +11495,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-UnderworldTransition_AdjustCamera_Horizontal:
+AdjustUnderworldCamera_Horizontal:
 #_02BDC8: ASL A
 #_02BDC9: ASL A
 #_02BDCA: TAY
@@ -11521,7 +11516,7 @@ UnderworldTransition_AdjustCamera_Horizontal:
 
 ;===================================================================================================
 
-pool UnderworldTransition_AdjustCamera_Vertical
+pool AdjustUnderworldCamera_Vertical
 
 .boundary
 #_02BDDA: dw $0000
@@ -11533,7 +11528,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-UnderworldTransition_AdjustCamera_Vertical:
+AdjustUnderworldCamera_Vertical:
 #_02BDE2: ASL A
 #_02BDE3: TAY
 
@@ -11553,7 +11548,7 @@ UnderworldTransition_AdjustCamera_Vertical:
 
 ;===================================================================================================
 
-pool UnderworldTransition_ScrollRoom
+pool ScrollRoomDuringTransition
 
 .camera_scroll
 #_02BDF3: dw   4
@@ -11571,7 +11566,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-UnderworldTransition_ScrollRoom:
+ScrollRoomDuringTransition:
 #_02BE03: PHB
 #_02BE04: PHK
 #_02BE05: PLB
@@ -11641,7 +11636,7 @@ UnderworldTransition_ScrollRoom:
 #_02BE60: CMP.b #$02
 #_02BE62: BNE .clean_exit
 
-#_02BE64: JSL WaterFlood_BuildOneQuadrantForVRAM
+#_02BE64: JSL BuildBG1QuadrantForUpload
 
 #_02BE68: RTS
 
@@ -11686,7 +11681,7 @@ Module07_11_0A_ScrollCamera:
 
 #_02BE86: LDA.b $E8
 #_02BE88: CLC
-#_02BE89: ADC.w UnderworldTransition_ScrollRoom_camera_scroll,X
+#_02BE89: ADC.w ScrollRoomDuringTransition_camera_scroll,X
 #_02BE8C: AND.w #$FFFC
 #_02BE8F: STA.b $E8
 #_02BE91: STA.b $E6
@@ -11731,15 +11726,21 @@ Module07_11_0A_ScrollCamera:
 
 ;===================================================================================================
 
-pool OverworldScrollTransition Overworld_SetCameraBoundaries
+pool OverworldScrollTransition SetOverworldCameraBoundaries
 
 .coordinate_camera_adjust
 #_02BEBA: dw $FFF8, $0008, $FFF8, $0008
+
+.unused_a
 #_02BEC2: dw $FFE8, $0018, $FFD8, $0018
 
 .boundary_delta
 #_02BECA: dw $FF90, $0070, $FF90, $0070
+
+.unused_b
 #_02BED2: dw $FE00, $0200, $FE00, $0200
+
+.unused_c
 #_02BEDA: dw $0018, $00E8, $0008, $00E8
 
 .transition_target_north
@@ -11943,7 +11944,7 @@ OverworldScrollTransition:
 #_02C098: ADC.w OverworldMixedCoordsChange,Y
 #_02C09B: TAY
 
-#_02C09C: JSR Overworld_SetCameraBoundaries
+#_02C09C: JSR SetOverworldCameraBoundaries
 
 #_02C09F: PLX
 
@@ -11971,7 +11972,7 @@ OverworldScrollTransition:
 #_02C0BA: PHA
 #_02C0BB: PHX
 
-#_02C0BC: JSL Sprite_InitializeSlots
+#_02C0BC: JSL InitializeSpriteSlots
 
 #_02C0C0: PLX
 #_02C0C1: PLA
@@ -11980,7 +11981,7 @@ OverworldScrollTransition:
 
 ;===================================================================================================
 
-Overworld_SetCameraBoundaries:
+SetOverworldCameraBoundaries:
 #_02C0C3: LDA.w OverworldTransitionPositionY,Y
 #_02C0C6: STA.w $0600
 
@@ -12029,7 +12030,7 @@ UnderworldTransitionLandingCoordinate:
 
 ;===================================================================================================
 
-UnderworldTransition_FindTransitionLanding:
+IntraroomTransition_FindTransitionLanding:
 #_02C110: JSR DeleteCertainAncillaeStopDashing
 #_02C113: JSR IntraroomTransitionCalculateLanding
 
@@ -12102,16 +12103,16 @@ IntraroomTransitionCalculateLanding:
 Module07_02_0D:
 #_02C162: LDA.l $7EC005
 #_02C166: ORA.l $7EC006
-#_02C16A: BEQ UnderworldTransition_HandleFinalMovements
+#_02C16A: BEQ TransitionLinkOutOfDoor
 
 #_02C16C: JSL ApplyPaletteFilter
 
 ;===================================================================================================
 
-UnderworldTransition_HandleFinalMovements:
-#_02C170: JSL Link_HandleMovingAnimation_FullLongEntry
+TransitionLinkOutOfDoor:
+#_02C170: JSL HandleLinkAnimation_FullLongEntry
 
-#_02C174: JSR UnderworldTransition_MoveLinkOutDoor
+#_02C174: JSR WalkOutOfDoor
 #_02C177: BCC .exit
 
 #_02C179: LDX.b $4E
@@ -12138,7 +12139,7 @@ UnderworldTransition_HandleFinalMovements:
 
 ;===================================================================================================
 
-UnderworldTransition_MoveLinkOutDoor:
+WalkOutOfDoor:
 #_02C191: LDX.w $0418
 
 #_02C194: LDA.b $4E
@@ -12298,7 +12299,7 @@ CalculateTransitionLanding:
 
 pool Overworld_FinalizeEntryOntoScreen
 
-.song_change_directions
+.landing_point
 #_02C23E: db $E0
 #_02C23F: db $08
 #_02C240: db $E0
@@ -12309,7 +12310,7 @@ pool off
 ;---------------------------------------------------------------------------------------------------
 
 Overworld_FinalizeEntryOntoScreen:
-#_02C242: JSL Link_HandleMovingAnimation_FullLongEntry
+#_02C242: JSL HandleLinkAnimation_FullLongEntry
 
 #_02C246: LDY.b #$02
 
@@ -12351,7 +12352,7 @@ Overworld_FinalizeEntryOntoScreen:
 #_02C26C: LDX.w $069C
 
 #_02C26F: AND.b #$FE
-#_02C271: CMP.l .song_change_directions,X
+#_02C271: CMP.l .landing_point,X
 
 #_02C275: BNE .not_fade
 
@@ -12391,7 +12392,7 @@ Overworld_FinalizeEntryOntoScreen:
 ;===================================================================================================
 
 Module09_1F:
-#_02C2A4: JSL Link_HandleMovingAnimation_FullLongEntry
+#_02C2A4: JSL HandleLinkAnimation_FullLongEntry
 
 #_02C2A8: LDY.b #$01
 
@@ -12523,6 +12524,8 @@ DarkWorldAmbiance:
 #_02C42B: db $09, $09, $09, $09, $09, $09, $09, $09
 #_02C433: db $09, $09, $09, $09, $09, $09, $09, $09
 #_02C43B: db $09, $09, $09, $09, $09, $09, $09, $09
+
+; Special overworld
 #_02C443: db $05, $02, $02, $02, $02, $02, $02, $02
 #_02C44B: db $02, $02, $02, $02, $02, $02, $02, $02
 #_02C453: db $02, $02, $02, $02, $02, $02, $02, $02
@@ -12653,22 +12656,22 @@ Intro_InitializeBackgroundSettings:
 
 ;===================================================================================================
 
-Underworld_LoadAndDrawEntranceRoom:
+LoadRoomForAttract:
 #_02C533: STA.w $010E
 
-#_02C536: JSR Underworld_LoadEntrance
+#_02C536: JSR LoadUnderworldEntrance
 
 #_02C539: STZ.w $045A
 #_02C53C: STZ.w $0458
 
-#_02C53F: JSR Underworld_LoadAndDrawRoom
-#_02C542: JSR Underworld_ResetTorchBackgroundAndPlayer
+#_02C53F: JSR LoadAndDrawRoom
+#_02C542: JSR ResetLampconeAndLink
 
 #_02C545: RTL
 
 ;===================================================================================================
 
-Underworld_SaveAndLoadLoadAllPalettes:
+SaveAndLoadAttractPalettes:
 #_02C546: STX.w $0AA3
 
 #_02C549: STA.w $0AA1
@@ -12685,27 +12688,27 @@ Underworld_SaveAndLoadLoadAllPalettes:
 
 ;---------------------------------------------------------------------------------------------------
 
-Underworld_LoadAllPalettes:
-#_02C55E: JSL Palettes_Load_SpritePal0Left
-#_02C562: JSL Palettes_Load_SpriteMain
-#_02C566: JSL Palettes_Load_SpriteAux1
-#_02C56A: JSL Palettes_Load_SpriteAux2
-#_02C56E: JSL Palettes_Load_SpriteEnvironment_Underworld
-#_02C572: JSL Palettes_Load_HUD
-#_02C576: JSL Palettes_Load_UnderworldSet
+LoadAttractAltarPalettes:
+#_02C55E: JSL PaletteLoad_SpritePal0Left
+#_02C562: JSL PaletteLoad_SpriteMain
+#_02C566: JSL PaletteLoad_SpriteAux1
+#_02C56A: JSL PaletteLoad_SpriteAux2
+#_02C56E: JSL PaletteLoad_SpriteEnvironment_Underworld
+#_02C572: JSL PaletteLoad_HUD
+#_02C576: JSL PaletteLoad_UnderworldSet
 
 #_02C57A: RTL
 
 ;===================================================================================================
 
-Underworld_LoadAndDrawRoom:
+LoadAndDrawRoom:
 #_02C57B: LDA.b $9B
 #_02C57D: PHA
 
 #_02C57E: STZ.w HDMAEN
 #_02C581: STZ.b $9B
 
-#_02C583: JSL Underworld_LoadRoom
+#_02C583: JSL LoadAndBuildRoom
 
 #_02C587: STZ.w $0418
 #_02C58A: STZ.w $045C
@@ -12717,7 +12720,7 @@ Underworld_LoadAndDrawRoom:
 #_02C590: JSL TilemapPrep_NotWaterOnTag
 #_02C594: JSL NMI_UploadTilemap_long
 
-#_02C598: JSL Underworld_PrepareNextRoomQuadrantUpload
+#_02C598: JSL BuildBG2QuadrantForUpload
 #_02C59C: JSL NMI_UploadTilemap_long
 
 #_02C5A0: LDA.w $045C
@@ -12737,7 +12740,7 @@ Underworld_LoadAndDrawRoom:
 
 ;===================================================================================================
 
-Overworld_LoadAllPalettes:
+Intro_LoadAllPalettes:
 #_02C5B2: REP #$20
 
 #_02C5B4: LDX.b #$00
@@ -12781,17 +12784,17 @@ Overworld_LoadAllPalettes:
 
 #_02C5F7: JSL SetBGandFixedColorBlack
 
-#_02C5FB: JSL Palettes_Load_SpritePal0Left
-#_02C5FF: JSL Palettes_Load_SpriteMain
-#_02C603: JSL Palettes_Load_OWBGMain
+#_02C5FB: JSL PaletteLoad_SpritePal0Left
+#_02C5FF: JSL PaletteLoad_SpriteMain
+#_02C603: JSL PaletteLoad_OWBGMain
 
-#_02C607: JSL Palettes_Load_OWBG1
-#_02C60B: JSL Palettes_Load_OWBG2
-#_02C60F: JSL Palettes_Load_OWBG3
+#_02C607: JSL PaletteLoad_OWBG1
+#_02C60B: JSL PaletteLoad_OWBG2
+#_02C60F: JSL PaletteLoad_OWBG3
 
-#_02C613: JSL Palettes_Load_SpriteEnvironment_Underworld
+#_02C613: JSL PaletteLoad_SpriteEnvironment_Underworld
 
-#_02C617: JSL Palettes_Load_HUD
+#_02C617: JSL PaletteLoad_HUD
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -12814,24 +12817,24 @@ Overworld_LoadAllPalettes:
 
 ;===================================================================================================
 
-Underworld_LoadPalettes:
+LoadUnderworldPalettes:
 #_02C630: STZ.w $0AA9
 
 #_02C633: JSL SetBGandFixedColorBlack
 
-#_02C637: JSL Palettes_Load_SpritePal0Left
-#_02C63B: JSL Palettes_Load_SpriteMain
-#_02C63F: JSL Palettes_Load_SpriteAux1
-#_02C643: JSL Palettes_Load_SpriteAux2
+#_02C637: JSL PaletteLoad_SpritePal0Left
+#_02C63B: JSL PaletteLoad_SpriteMain
+#_02C63F: JSL PaletteLoad_SpriteAux1
+#_02C643: JSL PaletteLoad_SpriteAux2
 
-#_02C647: JSL Palettes_Load_Sword
-#_02C64B: JSL Palettes_Load_Shield
+#_02C647: JSL PaletteLoad_Sword
+#_02C64B: JSL PaletteLoad_Shield
 
-#_02C64F: JSL Palettes_Load_SpriteEnvironment
-#_02C653: JSL Palettes_Load_LinkArmorAndGloves
+#_02C64F: JSL PaletteLoad_SpriteEnvironment
+#_02C653: JSL PaletteLoad_LinkArmorAndGloves
 
-#_02C657: JSL Palettes_Load_HUD
-#_02C65B: JSL Palettes_Load_UnderworldSet
+#_02C657: JSL PaletteLoad_HUD
+#_02C65B: JSL PaletteLoad_UnderworldSet
 
 ;===================================================================================================
 
@@ -12896,15 +12899,15 @@ OverworldLoadScreensPaletteSet_Preloaded:
 #_02C6AD: STX.w $0AB3
 #_02C6B0: STZ.w $0AA9
 
-#_02C6B3: JSL Palettes_Load_SpriteMain
-#_02C6B7: JSL Palettes_Load_SpriteEnvironment
+#_02C6B3: JSL PaletteLoad_SpriteMain
+#_02C6B7: JSL PaletteLoad_SpriteEnvironment
 
-#_02C6BB: JSL Palettes_Load_SpriteAux1
-#_02C6BF: JSL Palettes_Load_SpriteAux2
+#_02C6BB: JSL PaletteLoad_SpriteAux1
+#_02C6BF: JSL PaletteLoad_SpriteAux2
 
-#_02C6C3: JSL Palettes_Load_Sword
-#_02C6C7: JSL Palettes_Load_Shield
-#_02C6CB: JSL Palettes_Load_LinkArmorAndGloves
+#_02C6C3: JSL PaletteLoad_Sword
+#_02C6C7: JSL PaletteLoad_Shield
+#_02C6CB: JSL PaletteLoad_LinkArmorAndGloves
 
 #_02C6CF: LDX.b #$01
 
@@ -12917,9 +12920,9 @@ OverworldLoadScreensPaletteSet_Preloaded:
 .light_world
 #_02C6DB: STX.w $0AAC
 
-#_02C6DE: JSL Palettes_Load_SpritePal0Left
-#_02C6E2: JSL Palettes_Load_HUD
-#_02C6E6: JSL Palettes_Load_OWBGMain
+#_02C6DE: JSL PaletteLoad_SpritePal0Left
+#_02C6E2: JSL PaletteLoad_HUD
+#_02C6E6: JSL PaletteLoad_OWBGMain
 
 #_02C6EA: RTS
 
@@ -13056,7 +13059,7 @@ CleanUpAndPrepDesertPrayerHDMA:
 ;---------------------------------------------------------------------------------------------------
 
 #_02C7C6: LDA.b #$00
-#_02C7C8: STA.w HDMA7INDIRECTB
+#_02C7C8: STA.w HDMA7ITBLB
 
 #_02C7CB: LDA.b #$33
 #_02C7CD: STA.b $96
@@ -15454,7 +15457,7 @@ EntranceData:
 
 ;===================================================================================================
 
-Underworld_LoadEntrance:
+LoadUnderworldEntrance:
 #_02D8B3: PHB
 #_02D8B4: PHK
 #_02D8B5: PLB
@@ -15567,14 +15570,14 @@ Underworld_LoadEntrance:
 #_02D984: STZ.w $010A
 
 #_02D987: LDA.l $7EF3CC
-#_02D98B: CMP.w #$04 ; FOLLOWER 04
+#_02D98B: CMP.w #$0004 ; FOLLOWER 04
 #_02D98E: BEQ .have_old_man
 
 #_02D990: LDA.w $04AA
 #_02D993: BEQ .not_a_respawn
 
 .have_old_man
-#_02D995: JMP.w Underworld_LoadSpawnEntrance
+#_02D995: JMP.w LoadSpawnEntrance
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -15699,14 +15702,14 @@ Underworld_LoadEntrance:
 #_02DA64: LDA.b #$02
 
 #_02DA66: CPX.w #$0000
-#_02DA69: BEQ .face_up
+#_02DA69: BEQ .face_down
 
 #_02DA6B: CPX.w #$0043
-#_02DA6E: BEQ .face_up
+#_02DA6E: BEQ .face_down
 
 #_02DA70: LDA.b #$00
 
-.face_up
+.face_down
 #_02DA72: STA.b $2F
 
 #_02DA74: LDA.w EntranceData_main_GFX,X
@@ -15770,13 +15773,13 @@ Underworld_LoadEntrance:
 
 #_02DAD2: LDX.b $A0
 #_02DAD4: CPX.w #$0100
-#_02DAD7: BCC Underworld_LoadEntrance_DoPotsBlocksTorches
+#_02DAD7: BCC PullBlocksTorchesFromROM
 
 #_02DAD9: STZ.b $A4
 
 ;===================================================================================================
 
-Underworld_LoadEntrance_DoPotsBlocksTorches:
+PullBlocksTorchesFromROM:
 #_02DADB: LDA.b #$80
 #_02DADD: STA.b $45
 #_02DADF: STA.b $44
@@ -15805,25 +15808,25 @@ Underworld_LoadEntrance_DoPotsBlocksTorches:
 #_02DAF7: LDX.b #$00
 
 .next_block_torch
-#_02DAF9: LDA.l SpecialUnderworldObjects_pushable_block+0*128,X
+#_02DAF9: LDA.l PushableBlocks+0*128,X
 #_02DAFD: STA.w $7EF940,X
 
-#_02DB00: LDA.l SpecialUnderworldObjects_pushable_block+1*128,X
+#_02DB00: LDA.l PushableBlocks+1*128,X
 #_02DB04: STA.w $7EF9C0,X
 
-#_02DB07: LDA.l SpecialUnderworldObjects_pushable_block+2*128,X
+#_02DB07: LDA.l PushableBlocks+2*128,X
 #_02DB0B: STA.w $7EFA40,X
 
-#_02DB0E: LDA.l SpecialUnderworldObjects_pushable_block+3*128,X
+#_02DB0E: LDA.l PushableBlocks+3*128,X
 #_02DB12: STA.w $7EFAC0,X
 
-#_02DB15: LDA.l SpecialUnderworldObjects_torch+0*128,X
+#_02DB15: LDA.l LightableTorches+0*128,X
 #_02DB19: STA.w $7EFB40,X
 
-#_02DB1C: LDA.l SpecialUnderworldObjects_torch+1*128,X
+#_02DB1C: LDA.l LightableTorches+1*128,X
 #_02DB20: STA.w $7EFBC0,X
 
-#_02DB23: LDA.l SpecialUnderworldObjects_torch+2*128,X
+#_02DB23: LDA.l LightableTorches+2*128,X
 #_02DB27: STA.w $7EFC40,X
 
 #_02DB2A: INX
@@ -15831,8 +15834,9 @@ Underworld_LoadEntrance_DoPotsBlocksTorches:
 #_02DB2C: CPX.b #$80
 #_02DB2E: BNE .next_block_torch
 
-;---------------------------------------------------------------------------------------------------
+;===================================================================================================
 
+ResetPotTracking:
 #_02DB30: LDX.b #$3E
 #_02DB32: LDA.w #$0000
 
@@ -16061,7 +16065,7 @@ SpawnPointData:
 
 ;===================================================================================================
 
-Underworld_LoadSpawnEntrance:
+LoadSpawnEntrance:
 #_02DC55: LDA.l $7EF3C8
 #_02DC59: AND.w #$00FF
 #_02DC5C: ASL A
@@ -16244,7 +16248,7 @@ Underworld_LoadSpawnEntrance:
 .dont_lower_song_volume
 #_02DD84: STZ.w $04AA
 
-#_02DD87: JMP.w Underworld_LoadEntrance_DoPotsBlocksTorches
+#_02DD87: JMP.w PullBlocksTorchesFromROM
 
 ;===================================================================================================
 
@@ -17348,7 +17352,6 @@ LoadOverworldFromUnderworld:
 #_02E4BA: STZ.w $04AC
 
 #_02E4BD: LDA.b $A0
-
 #_02E4BF: CMP.w #$0104 ; ROOM 0104
 #_02E4C2: BEQ .custom_exit
 
@@ -17359,7 +17362,8 @@ LoadOverworldFromUnderworld:
 #_02E4CC: BCC .custom_exit
 
 #_02E4CE: JSR LoadCachedEntranceProperties
-#_02E4D1: JMP.w Overworld_LoadNewScreenProperties_pre
+
+#_02E4D1: JMP.w LoadOverworldScreenProperties_pre
 
 .custom_exit
 #_02E4D4: LDX.b #$9E
@@ -17482,12 +17486,12 @@ LoadOverworldFromUnderworld:
 
 ;===================================================================================================
 
-Overworld_LoadNewScreenProperties_pre:
+LoadOverworldScreenProperties_pre:
 #_02E58A: PLB
 
 ;===================================================================================================
 
-Overworld_LoadNewScreenProperties:
+LoadOverworldScreenProperties:
 #_02E58B: LDA.w #$FFF8
 #_02E58E: STA.b $EC
 
@@ -17497,7 +17501,7 @@ Overworld_LoadNewScreenProperties:
 #_02E593: PHK
 #_02E594: PLB
 
-#_02E595: JSR Overworld_LoadGFXAndScreenSize
+#_02E595: JSR LoadGraphicsAndScreenSize
 
 #_02E598: LDA.b #$E4
 #_02E59A: STA.w $0716
@@ -17520,7 +17524,7 @@ Overworld_LoadNewScreenProperties:
 #_02E5B0: INX
 
 .smaller_screen
-#_02E5B1: JSR Overworld_SetCameraBoundaries
+#_02E5B1: JSR SetOverworldCameraBoundaries
 
 #_02E5B4: SEP #$20
 
@@ -17991,7 +17995,7 @@ LoadSpecialOverworld:
 
 #_02E9B6: PLB
 
-#_02E9B7: JSL Overworld_SetScreenBGColorCacheOnly
+#_02E9B7: JSL SetOverworldBackgroundColorCacheOnly
 
 #_02E9BB: RTS
 
@@ -18121,7 +18125,7 @@ LoadOverworldFromSpecialOverworld:
 
 #_02EAAB: LDA.l OverworldPalettesScreenToSet,X
 #_02EAAF: JSL OverworldPalettesLoader
-#_02EAB3: JSL Overworld_SetScreenBGColorCacheOnly
+#_02EAB3: JSL SetOverworldBackgroundColorCacheOnly
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -18146,8 +18150,8 @@ LoadOverworldFromSpecialOverworld:
 
 #_02EAD3: SEP #$30
 
-#_02EAD5: JSL Link_ResetSwimmingState
-#_02EAD9: JSR Overworld_LoadGFXAndScreenSize
+#_02EAD5: JSL ResetSwimmingState
+#_02EAD9: JSR LoadGraphicsAndScreenSize
 
 #_02EADC: LDA.b #$E4
 #_02EADE: STA.w $0716
@@ -18354,7 +18358,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-FluteMenu_LoadTransport:
+LoadFluteSpot:
 #_02EC39: PHB
 #_02EC3A: PHK
 #_02EC3B: PLB
@@ -18445,10 +18449,10 @@ LoadTransport:
 
 #_02ECCB: PLB
 
-#_02ECCC: JSR Overworld_LoadNewScreenProperties
+#_02ECCC: JSR LoadOverworldScreenProperties
 
-#_02ECCF: JSL Sprite_ResetAll
-#_02ECD3: JSL Sprite_ReloadAll_Overworld
+#_02ECCF: JSL ResetAllSprites
+#_02ECD3: JSL ResetAndReloadOverworldSprites
 
 #_02ECD7: STZ.b $6C
 
@@ -18458,7 +18462,7 @@ LoadTransport:
 
 ;===================================================================================================
 
-FluteMenu_LoadSelectedScreenPalettes:
+LoadLandingScreenPalettes:
 #_02ECDD: JSR OverworldLoadScreensPaletteSet
 
 #_02ECE0: LDX.b $8A
@@ -18469,7 +18473,7 @@ FluteMenu_LoadSelectedScreenPalettes:
 #_02ECE8: LDA.l OverworldPalettesScreenToSet,X
 
 #_02ECEC: JSL OverworldPalettesLoader
-#_02ECF0: JSL Overworld_SetScreenBGColor
+#_02ECF0: JSL SetOverworldBackgroundColor
 #_02ECF4: JSR Overworld_CopyPalettesToCache_WithPrep
 
 #_02ECF7: RTL
@@ -18562,7 +18566,7 @@ Module09_21:
 
 ;===================================================================================================
 
-Overworld_LoadAndBuildScreen:
+LoadAndBuildOverworldScreen:
 #_02ED59: REP #$20
 
 #_02ED5B: LDA.b $84
@@ -18600,7 +18604,7 @@ Overworld_LoadAndBuildScreen:
 .big_screen
 #_02ED8B: SEP #$20
 
-#_02ED8D: JSR Overworld_DrawQuadrantsAndOverlays
+#_02ED8D: JSR DrawOverworldQuadrantsAndOverlays
 
 ;===================================================================================================
 
@@ -18615,7 +18619,7 @@ OverworldBuildMapAndTrigger:
 
 #_02ED9B: SEP #$20
 
-#_02ED9D: JSR BuildOverworldMapFromMap16
+#_02ED9D: JSR BuildOverworldFromMap16
 
 #_02EDA0: REP #$20
 
@@ -18643,7 +18647,7 @@ OverworldBuildMapAndTrigger:
 ;===================================================================================================
 
 Module08_02_LoadAndAdvance:
-#_02EDB9: JSR Overworld_LoadAndBuildScreen
+#_02EDB9: JSR LoadAndBuildOverworldScreen
 
 #_02EDBC: LDA.b #$10
 #_02EDBE: STA.b $10
@@ -18680,7 +18684,7 @@ pool off
 
 ;===================================================================================================
 
-Overworld_DrawQuadrantsAndOverlays:
+DrawOverworldQuadrantsAndOverlays:
 #_02EEC5: REP #$30
 
 #_02EEC7: JSR Overworld_DecompressAndDrawAllQuadrants
@@ -18715,7 +18719,7 @@ Overworld_DrawQuadrantsAndOverlays:
 #_02EEF7: LDA.w #$0DA4
 #_02EEFA: STA.l $7E2000,X
 
-#_02EEFE: JSL Overworld_MemorizeMap16Change
+#_02EEFE: JSL MemorizeMap16Change
 
 #_02EF02: LDA.w #$0DA6
 #_02EF05: BRA .just_one
@@ -18726,7 +18730,7 @@ Overworld_DrawQuadrantsAndOverlays:
 #_02EF0B: TAX
 
 #_02EF0C: LDA.w #$0DB4
-#_02EF0F: JSL Overworld_MemorizeMap16Change
+#_02EF0F: JSL MemorizeMap16Change
 #_02EF13: STA.l $7E2000,X
 
 #_02EF17: LDA.w #$0DB5
@@ -18737,7 +18741,7 @@ Overworld_DrawQuadrantsAndOverlays:
 #_02EF1E: INX
 #_02EF1F: INX
 
-#_02EF20: JSL Overworld_MemorizeMap16Change
+#_02EF20: JSL MemorizeMap16Change
 
 #_02EF24: DEX
 #_02EF25: DEX
@@ -20208,7 +20212,7 @@ Overworld_DecompressAndDrawOneQuadrant:
 #_02F619: ASL A
 
 #_02F61A: LDY.b $06
-#_02F61C: JSR Overworld_ParseMap32Definition
+#_02F61C: JSR ParseMap32Definition
 
 #_02F61F: STY.b $06
 
@@ -20323,7 +20327,7 @@ BlockMoveMap32Chunks_High:
 
 ;===================================================================================================
 
-Overworld_ParseMap32Definition:
+ParseMap32Definition:
 #_02F691: PHA
 
 #_02F692: AND.w #$FFF8
@@ -20537,7 +20541,7 @@ Overworld_ParseMap32Definition:
 
 ;===================================================================================================
 
-OverworldLoad_LoadSubOverlayMap32:
+LoadSubOverlayMap32:
 #_02F7CB: LDA.b $8A
 #_02F7CD: ASL A
 #_02F7CE: ADC.b $8A
@@ -20666,7 +20670,7 @@ OverworldLoad_LoadSubOverlayMap32:
 #_02F860: TAX
 
 #_02F861: LDY.b $06
-#_02F863: JSR Overworld_ParseMap32Definition
+#_02F863: JSR ParseMap32Definition
 
 #_02F866: STY.b $06
 
@@ -21156,7 +21160,7 @@ OverworldLoad_Map32LPointers:
 LoadOverworldOverlay:
 #_02FD0D: REP #$30
 
-#_02FD0F: JSR OverworldLoad_LoadSubOverlayMap32
+#_02FD0F: JSR LoadSubOverlayMap32
 
 #_02FD12: LDA.w #$1000
 #_02FD15: STA.b $CC
@@ -21193,7 +21197,7 @@ BuildBGOverlayFromMap16:
 
 ;===================================================================================================
 
-#BuildOverworldMapFromMap16:
+#BuildOverworldFromMap16:
 #_02FD37: PHB
 
 #_02FD38: LDA.b #Map16Definitions>>16
@@ -21226,7 +21230,7 @@ BuildBGOverlayFromMap16:
 ;---------------------------------------------------------------------------------------------------
 
 .next
-#_02FD59: JSR OverworldCopyMap16ToBuffer
+#_02FD59: JSR CopyMap16ToBuffer
 
 #_02FD5C: LDA.b $84
 #_02FD5E: SEC
@@ -21238,7 +21242,7 @@ BuildBGOverlayFromMap16:
 #_02FD67: AND.w #$001F
 #_02FD6A: STA.b $88
 
-#_02FD6C: JSR OverworldCopyMap16ToBuffer
+#_02FD6C: JSR CopyMap16ToBuffer
 
 #_02FD6F: LDA.b $84
 #_02FD71: SEC
@@ -21263,7 +21267,7 @@ BuildBGOverlayFromMap16:
 
 ;===================================================================================================
 
-OverworldCopyMap16ToBuffer:
+CopyMap16ToBuffer:
 #_02FD87: LDA.b $84
 #_02FD89: SEC
 #_02FD8A: SBC.w #$0410
@@ -21296,8 +21300,6 @@ OverworldCopyMap16ToBuffer:
 #_02FDA8: TYA
 #_02FDA9: AND.w #$1FFF
 #_02FDAC: TAY
-
-;---------------------------------------------------------------------------------------------------
 
 #_02FDAD: LDA.b [$04],Y
 #_02FDAF: STA.w $0500,X
@@ -21348,7 +21350,7 @@ OverworldCopyMap16ToBuffer:
 #_02FDE2: STA.b $00
 
 #_02FDE4: LDA.l Map16BufferOffsetLow
-#_02FDE8: JSR OverworldCopyOneMap16Segment
+#_02FDE8: JSR CopyOneMap16Segment
 
 #_02FDEB: LDA.b $00
 #_02FDED: CLC
@@ -21359,7 +21361,7 @@ OverworldCopyMap16ToBuffer:
 
 ;===================================================================================================
 
-OverworldCopyOneMap16Segment:
+CopyOneMap16Segment:
 #_02FDF7: STA.b $02
 
 #_02FDF9: LDX.b $0A
@@ -21425,7 +21427,7 @@ OverworldCopyOneMap16Segment:
 
 ;===================================================================================================
 
-MirrorBonk_RecoverChangedTiles:
+RecoverTilesFromMirrorBonk:
 #_02FE47: REP #$30
 
 #_02FE49: LDA.w $04AC
@@ -21591,7 +21593,7 @@ Decompress_bank02:
 #_02FEF1: SEP #$20
 
 #_02FEF3: PLA
-#_02FEF4: BEQ .nonrepeating
+#_02FEF4: BEQ .raw_copy
 #_02FEF6: BMI .copy
 
 #_02FEF8: ASL A
@@ -21619,8 +21621,7 @@ Decompress_bank02:
 
 ;---------------------------------------------------------------------------------------------------
 
-.nonrepeating
-.next_nonrepeating
+.raw_copy
 #_02FF0C: JSR .read_next_byte
 
 #_02FF0F: STA.b [$00],Y
@@ -21630,7 +21631,7 @@ Decompress_bank02:
 #_02FF14: DEX
 #_02FF15: STX.b $CB
 
-#_02FF17: BNE .next_nonrepeating
+#_02FF17: BNE .raw_copy
 
 #_02FF19: BRA .next_byte
 

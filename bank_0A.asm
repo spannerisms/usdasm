@@ -353,8 +353,8 @@ FluteMenu_LoadSelectedScreen:
 #_0AB8E7: AND.b #$FE
 #_0AB8E9: STA.l $7EF051
 
-#_0AB8ED: JSL FluteMenu_LoadTransport
-#_0AB8F1: JSL FluteMenu_LoadSelectedScreenPalettes
+#_0AB8ED: JSL LoadFluteSpot
+#_0AB8F1: JSL LoadLandingScreenPalettes
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -386,7 +386,7 @@ FluteMenu_LoadSelectedScreen:
 
 #_0AB91E: STZ.b $B2
 
-#_0AB920: JSL Overworld_ReloadSubscreenOverlayAndAdvance_long
+#_0AB920: JSL ReloadSubscreenOverlayAndAdvance_long
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -429,7 +429,7 @@ Overworld_LoadOverlayAndMap:
 
 #_0AB951: SEP #$20
 
-#_0AB953: JSL Overworld_LoadAndBuildScreen_long
+#_0AB953: JSL LoadAndBuildOverworldScreen_long
 
 #_0AB957: REP #$20
 
@@ -471,7 +471,7 @@ FluteMenu_FadeInAndQuack:
 #_0AB982: JSL AncillaAdd_Duck_drop_off
 
 .delay
-#_0AB986: JSL Sprite_Main
+#_0AB986: JSL HandleAllSprites
 
 #_0AB98A: RTL
 
@@ -611,11 +611,10 @@ WorldMap_LoadLightWorldMap:
 
 #_0ABA4D: LDA.b $8A
 #_0ABA4F: AND.w #$0040
-#_0ABA52: BEQ .light_world
+#_0ABA52: BEQ .next_color
 
 #_0ABA54: LDY.w #$01FE
 
-.light_world
 .next_color
 #_0ABA57: LDA.w Palettes_OWMAP,Y
 #_0ABA5A: STA.l $7EC500,X
@@ -631,7 +630,7 @@ WorldMap_LoadLightWorldMap:
 
 #_0ABA66: PLB
 
-#_0ABA67: JSL RefreshLinkEquipmentPalettes_sword_and_mail
+#_0ABA67: JSL RefreshEquipmentPalettes_sword_and_mail
 
 #_0ABA6B: INC.b $15
 
@@ -680,7 +679,7 @@ WorldMap_LoadSpriteGFX:
 #_0ABA9A: LDA.b #$10
 #_0ABA9C: STA.w $0AAA
 
-#_0ABA9F: JSL Graphics_LoadChrHalfSlot
+#_0ABA9F: JSL LoadChrHalfSlot
 
 #_0ABAA3: STZ.w $0AAA
 
@@ -1009,7 +1008,7 @@ Attract_SetUpConclusionHDMA:
 #_0ABC3B: STX.w DMA7ADDRB
 
 #_0ABC3E: LDX.b #$00
-#_0ABC40: STX.w HDMA7INDIRECTB
+#_0ABC40: STX.w HDMA7ITBLB
 
 #_0ABC43: SEP #$30
 
@@ -1252,8 +1251,8 @@ WorldMap_SetUpHDMA:
 ;---------------------------------------------------------------------------------------------------
 
 .continue
-#_0ABD98: STX.w HDMA6INDIRECTB
-#_0ABD9B: STX.w HDMA7INDIRECTB
+#_0ABD98: STX.w HDMA6ITBLB
+#_0ABD9B: STX.w HDMA7ITBLB
 
 #_0ABD9E: SEP #$20
 
@@ -2733,12 +2732,10 @@ pool off
 
 WorldMap_HandleSpriteBlink:
 #_0AC51C: LDA.b $1A
-
 #_0AC51E: LSR A
 #_0AC51F: LSR A
 #_0AC520: LSR A
 #_0AC521: LSR A
-
 #_0AC522: AND.b #$01
 #_0AC524: BNE .dont_show_number
 
@@ -4218,13 +4215,13 @@ Module0E_03_01_00_PrepMapGraphics:
 
 #_0AE130: LDA.b #$02
 #_0AE132: STA.w $0AA9
-#_0AE135: JSL Palettes_Load_DungeonMapBG
-#_0AE139: JSL Palettes_Load_DungeonMapSprite
+#_0AE135: JSL PaletteLoad_DungeonMapBG
+#_0AE139: JSL PaletteLoad_DungeonMapSprite
 
 #_0AE13D: LDA.b #$01
 #_0AE13F: STA.w $0AB2
-#_0AE142: JSL Palettes_Load_HUD
-#_0AE146: JSL RefreshLinkEquipmentPalettes_sword_and_mail
+#_0AE142: JSL PaletteLoad_HUD
+#_0AE146: JSL RefreshEquipmentPalettes_sword_and_mail
 
 #_0AE14A: INC.b $15
 
@@ -5206,7 +5203,7 @@ DungeonMap_DrawSingleRowOfRooms:
 .room_matches
 #_0AE63D: REP #$20
 
-#_0AE63F: LDA.w DungeonMapRoomLayoutPointers,X
+#_0AE63F: LDA.w DungeonMapRoomOrderPointers,X
 #_0AE642: STA.b $0C
 
 #_0AE644: LDA.b $C8
@@ -5254,7 +5251,7 @@ DungeonMap_DrawSingleRowOfRooms:
 #_0AE673: LDX.w $040C
 
 #_0AE676: LDA.l $7EF368
-#_0AE67A: AND.l DungeonMask,X
+#_0AE67A: AND.l BitMasks,X
 #_0AE67E: BEQ .missing_map_nw
 
 #_0AE680: PLX
@@ -5283,7 +5280,7 @@ DungeonMap_DrawSingleRowOfRooms:
 #_0AE696: LDX.w $040C
 
 #_0AE699: LDA.l $7EF368
-#_0AE69D: AND.l DungeonMask,X
+#_0AE69D: AND.l BitMasks,X
 #_0AE6A1: BNE .quadrant_visited_nw
 
 #_0AE6A3: LDA.b $0E
@@ -5331,7 +5328,7 @@ DungeonMap_DrawSingleRowOfRooms:
 #_0AE6D7: LDX.w $040C
 
 #_0AE6DA: LDA.l $7EF368
-#_0AE6DE: AND.l DungeonMask,X
+#_0AE6DE: AND.l BitMasks,X
 #_0AE6E2: BEQ .missing_map_ne
 
 #_0AE6E4: PLX
@@ -5360,7 +5357,7 @@ DungeonMap_DrawSingleRowOfRooms:
 #_0AE6FA: LDX.w $040C
 
 #_0AE6FD: LDA.l $7EF368
-#_0AE701: AND.l DungeonMask,X
+#_0AE701: AND.l BitMasks,X
 #_0AE705: BNE .quadrant_visited_ne
 
 #_0AE707: LDA.b $0E
@@ -5409,7 +5406,7 @@ DungeonMap_DrawSingleRowOfRooms:
 #_0AE73B: LDX.w $040C
 
 #_0AE73E: LDA.l $7EF368
-#_0AE742: AND.l DungeonMask,X
+#_0AE742: AND.l BitMasks,X
 #_0AE746: BEQ .missing_map_sw
 
 #_0AE748: PLX
@@ -5438,7 +5435,7 @@ DungeonMap_DrawSingleRowOfRooms:
 #_0AE75E: LDX.w $040C
 
 #_0AE761: LDA.l $7EF368
-#_0AE765: AND.l DungeonMask,X
+#_0AE765: AND.l BitMasks,X
 #_0AE769: BNE .quadrant_visited_sw
 
 #_0AE76B: LDA.b $0E
@@ -5487,7 +5484,7 @@ DungeonMap_DrawSingleRowOfRooms:
 #_0AE79F: LDX.w $040C
 
 #_0AE7A2: LDA.l $7EF368
-#_0AE7A6: AND.l DungeonMask,X
+#_0AE7A6: AND.l BitMasks,X
 #_0AE7AA: BEQ .missing_map_se
 
 #_0AE7AC: PLX
@@ -5517,7 +5514,7 @@ DungeonMap_DrawSingleRowOfRooms:
 #_0AE7C2: LDX.w $040C
 
 #_0AE7C5: LDA.l $7EF368
-#_0AE7C9: AND.l DungeonMask,X
+#_0AE7C9: AND.l BitMasks,X
 #_0AE7CD: BNE .quadrant_visited_se
 
 #_0AE7CF: LDA.b $0E
@@ -5577,7 +5574,7 @@ pool DungeonMap_DrawRoomMarkers
 #_0AE801: dw $0077 ; ROOM 0077 - Hera lobby
 #_0AE803: dw $00BE ; ROOM 00BE - Ice Palace block switch room
 
-.floor_threshold
+.fairy_room_count
 #_0AE805: dw $0004
 
 pool off
@@ -5632,7 +5629,7 @@ DungeonMap_DrawRoomMarkers:
 
 #_0AE840: PHY
 
-#_0AE841: LDY.w .floor_threshold
+#_0AE841: LDY.w .fairy_room_count
 
 #_0AE844: LDA.b $A0
 
@@ -6907,7 +6904,7 @@ DungeonMap_DrawBossIcon:
 #_0AEDFC: REP #$20
 
 #_0AEDFE: LDA.l $7EF364
-#_0AEE02: AND.l DungeonMask,X
+#_0AEE02: AND.l BitMasks,X
 
 #_0AEE06: SEP #$20
 
@@ -7167,10 +7164,10 @@ UnderworldMap_RecoverGFX:
 #_0AEF59: STZ.w $045C
 
 .next_quadrant
-#_0AEF5C: JSL WaterFlood_BuildOneQuadrantForVRAM
+#_0AEF5C: JSL BuildBG1QuadrantForUpload
 #_0AEF60: JSL NMI_UploadTilemap_long
 
-#_0AEF64: JSL Underworld_PrepareNextRoomQuadrantUpload
+#_0AEF64: JSL BuildBG2QuadrantForUpload
 #_0AEF68: JSL NMI_UploadTilemap_long
 
 #_0AEF6C: LDA.w $045C
@@ -7945,25 +7942,25 @@ DungeonMapRoomData_GanonsTower:
 
 ;===================================================================================================
 
-DungeonMapRoomLayoutPointers:
-#_0AFBE4: dw DungeonMapLayoutData_Sewers
-#_0AFBE6: dw DungeonMapLayoutData_HyruleCastle
-#_0AFBE8: dw DungeonMapLayoutData_EasternPalace
-#_0AFBEA: dw DungeonMapLayoutData_DesertPalace
-#_0AFBEC: dw DungeonMapLayoutData_AgahnimsTower
-#_0AFBEE: dw DungeonMapLayoutData_SwampPalace
-#_0AFBF0: dw DungeonMapLayoutData_PalaceOfDarkness
-#_0AFBF2: dw DungeonMapLayoutData_MiseryMire
-#_0AFBF4: dw DungeonMapLayoutData_SkullWoods
-#_0AFBF6: dw DungeonMapLayoutData_IcePalace
-#_0AFBF8: dw DungeonMapLayoutData_TowerOfHera
-#_0AFBFA: dw DungeonMapLayoutData_ThievesTown
-#_0AFBFC: dw DungeonMapLayoutData_TurtleRock
-#_0AFBFE: dw DungeonMapLayoutData_GanonsTower
+DungeonMapRoomOrderPointers:
+#_0AFBE4: dw DungeonMapRoomOrder_Sewers
+#_0AFBE6: dw DungeonMapRoomOrder_HyruleCastle
+#_0AFBE8: dw DungeonMapRoomOrder_EasternPalace
+#_0AFBEA: dw DungeonMapRoomOrder_DesertPalace
+#_0AFBEC: dw DungeonMapRoomOrder_AgahnimsTower
+#_0AFBEE: dw DungeonMapRoomOrder_SwampPalace
+#_0AFBF0: dw DungeonMapRoomOrder_PalaceOfDarkness
+#_0AFBF2: dw DungeonMapRoomOrder_MiseryMire
+#_0AFBF4: dw DungeonMapRoomOrder_SkullWoods
+#_0AFBF6: dw DungeonMapRoomOrder_IcePalace
+#_0AFBF8: dw DungeonMapRoomOrder_TowerOfHera
+#_0AFBFA: dw DungeonMapRoomOrder_ThievesTown
+#_0AFBFC: dw DungeonMapRoomOrder_TurtleRock
+#_0AFBFE: dw DungeonMapRoomOrder_GanonsTower
 
 ;===================================================================================================
 
-DungeonMapLayoutData_Sewers:
+DungeonMapRoomOrder_Sewers:
 #_0AFC00: db $00 ; Room 0011
 #_0AFC01: db $01 ; Room 0021
 #_0AFC02: db $02 ; Room 0022
@@ -7975,7 +7972,7 @@ DungeonMapLayoutData_Sewers:
 
 ;===================================================================================================
 
-DungeonMapLayoutData_HyruleCastle:
+DungeonMapRoomOrder_HyruleCastle:
 #_0AFC08: db $08 ; Room 0080
 #_0AFC09: db $09 ; Room 0070
 #_0AFC0A: db $0A ; Room 0071
@@ -7992,7 +7989,7 @@ DungeonMapLayoutData_HyruleCastle:
 
 ;===================================================================================================
 
-DungeonMapLayoutData_EasternPalace:
+DungeonMapRoomOrder_EasternPalace:
 #_0AFC15: db $15 ; Room 0099
 #_0AFC16: db $16 ; Room 00A8
 #_0AFC17: db $17 ; Room 00A9
@@ -8008,7 +8005,7 @@ DungeonMapLayoutData_EasternPalace:
 
 ;===================================================================================================
 
-DungeonMapLayoutData_DesertPalace:
+DungeonMapRoomOrder_DesertPalace:
 #_0AFC21: db $22 ; Room 0073
 #_0AFC22: db $23 ; Room 0074
 #_0AFC23: db $24 ; Room 0076
@@ -8022,7 +8019,7 @@ DungeonMapLayoutData_DesertPalace:
 
 ;===================================================================================================
 
-DungeonMapLayoutData_AgahnimsTower:
+DungeonMapRoomOrder_AgahnimsTower:
 #_0AFC2B: db $2B ; Room 00E0
 #_0AFC2C: db $2C ; Room 00D0
 #_0AFC2D: db $2C ; Room 00C0
@@ -8033,7 +8030,7 @@ DungeonMapLayoutData_AgahnimsTower:
 
 ;===================================================================================================
 
-DungeonMapLayoutData_SwampPalace:
+DungeonMapRoomOrder_SwampPalace:
 #_0AFC32: db $31 ; Room 0066
 #_0AFC33: db $32 ; Room 0076
 #_0AFC34: db $33 ; Room 0006
@@ -8050,7 +8047,7 @@ DungeonMapLayoutData_SwampPalace:
 
 ;===================================================================================================
 
-DungeonMapLayoutData_PalaceOfDarkness:
+DungeonMapRoomOrder_PalaceOfDarkness:
 #_0AFC3F: db $3E ; Room 005A
 #_0AFC40: db $3F ; Room 006A
 #_0AFC41: db $40 ; Room 000B
@@ -8068,7 +8065,7 @@ DungeonMapLayoutData_PalaceOfDarkness:
 
 ;===================================================================================================
 
-DungeonMapLayoutData_MiseryMire:
+DungeonMapRoomOrder_MiseryMire:
 #_0AFC4D: db $4E ; Room 0091
 #_0AFC4E: db $4F ; Room 0092
 #_0AFC4F: db $50 ; Room 0093
@@ -8090,7 +8087,7 @@ DungeonMapLayoutData_MiseryMire:
 
 ;===================================================================================================
 
-DungeonMapLayoutData_SkullWoods:
+DungeonMapRoomOrder_SkullWoods:
 #_0AFC5F: db $61 ; Room 0029
 #_0AFC60: db $62 ; Room 0039
 #_0AFC61: db $63 ; Room 0049
@@ -8103,7 +8100,7 @@ DungeonMapLayoutData_SkullWoods:
 
 ;===================================================================================================
 
-DungeonMapLayoutData_IcePalace:
+DungeonMapRoomOrder_IcePalace:
 #_0AFC68: db $6A ; Room 00DE
 #_0AFC69: db $6B ; Room 00BE
 #_0AFC6A: db $6C ; Room 00BF
@@ -8128,7 +8125,7 @@ DungeonMapLayoutData_IcePalace:
 
 ;===================================================================================================
 
-DungeonMapLayoutData_TowerOfHera:
+DungeonMapRoomOrder_TowerOfHera:
 #_0AFC7D: db $7F ; Room 0087
 #_0AFC7E: db $80 ; Room 0077
 #_0AFC7F: db $81 ; Room 0031
@@ -8138,7 +8135,7 @@ DungeonMapLayoutData_TowerOfHera:
 
 ;===================================================================================================
 
-DungeonMapLayoutData_ThievesTown:
+DungeonMapRoomOrder_ThievesTown:
 #_0AFC83: db $85 ; Room 0044
 #_0AFC84: db $86 ; Room 0045
 #_0AFC85: db $87 ; Room 00AB
@@ -8154,7 +8151,7 @@ DungeonMapLayoutData_ThievesTown:
 
 ;===================================================================================================
 
-DungeonMapLayoutData_TurtleRock:
+DungeonMapRoomOrder_TurtleRock:
 #_0AFC8F: db $91 ; Room 00A4
 #_0AFC90: db $92 ; Room 00B4
 #_0AFC91: db $93 ; Room 00B5
@@ -8175,7 +8172,7 @@ DungeonMapLayoutData_TurtleRock:
 
 ;===================================================================================================
 
-DungeonMapLayoutData_GanonsTower:
+DungeonMapRoomOrder_GanonsTower:
 #_0AFCA0: db $A0 ; Room 001C
 #_0AFCA1: db $A1 ; Room 007B
 #_0AFCA2: db $A2 ; Room 007C
@@ -8245,12 +8242,12 @@ HUDBigNumbersBottom:
 
 ;===================================================================================================
 
-HUD_HandleFloorIndicator:
+HandleFloorIndicator:
 #_0AFD0C: REP #$30
 
 #_0AFD0E: LDA.w $04A0
 #_0AFD11: AND.w #$00FF
-#_0AFD14: BEQ HUD_HideBigNumbers
+#_0AFD14: BEQ HideHUDTimer
 
 #_0AFD16: INC A
 #_0AFD17: CMP.w #$00C0
@@ -8347,7 +8344,7 @@ HUD_HandleFloorIndicator:
 
 ;===================================================================================================
 
-HUD_HideBigNumbers:
+HideHUDTimer:
 #_0AFD90: REP #$20
 
 #_0AFD92: LDA.w #$007F
@@ -8362,7 +8359,7 @@ HUD_HideBigNumbers:
 
 ;===================================================================================================
 
-HUD_HandleBigTimer:
+HandleHUDTimer:
 #_0AFDA8: LDA.w $04B5
 #_0AFDAB: BNE .dont_tick
 
@@ -8386,7 +8383,7 @@ HUD_HandleBigTimer:
 
 #_0AFDC7: REP #$30
 
-#_0AFDC9: BRA HUD_HideBigNumbers
+#_0AFDC9: BRA HideHUDTimer
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -8397,7 +8394,7 @@ HUD_HandleBigTimer:
 #_0AFDD1: STZ.w WRDIVH
 
 #_0AFDD4: LDA.b #10
-#_0AFDD6: STA.w $4206
+#_0AFDD6: STA.w WRDIVB
 
 #_0AFDD9: NOP ; 8 NOP
 #_0AFDDA: NOP
@@ -8464,7 +8461,7 @@ NULL_0AFE18:
 
 ;===================================================================================================
 
-GameOver_InitializeLetters:
+InitializeGAMEOVERLetters:
 #_0AFE20: PHB
 #_0AFE21: PHK
 #_0AFE22: PLB
@@ -8515,7 +8512,7 @@ NULL_0AFE65:
 
 ;===================================================================================================
 
-pool Underworld_HandleLayerEffect
+pool HandleRoomLayerEffect
 
 .vectors
 #_0AFE70: dw LayerEffect_Nothing           ; 00
@@ -8531,7 +8528,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Underworld_HandleLayerEffect:
+HandleRoomLayerEffect:
 #_0AFE80: LDA.b $AD
 #_0AFE82: ASL A
 #_0AFE83: TAX

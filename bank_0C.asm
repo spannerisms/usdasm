@@ -260,10 +260,10 @@ Intro_PopSubtitleCard:
 
 #_0CC2A4: JMP.w FadeMusicAndResetSRAMMirror
 
-
 .delay_music
 #_0CC2A7: DEC.b $B0
 #_0CC2A9: BNE .exit
+
 #_0CC2AB: INC.b $11
 
 .exit
@@ -1871,20 +1871,20 @@ AnimateTriforceRoomTriangle_RotateInPlace:
 
 pool AnimateTriforceRoomTriangle_Contract AnimateTriforceRoomTriangle_HandleContracting
 
-.speed_x
+.speed_negative
 #_0CCC5D: db $FF
 #_0CCC5E: db $FF
 #_0CCC5F: db $FF
 
-.speed_y
+.speed_positive
 #_0CCC60: db $01
 #_0CCC61: db $01
 #_0CCC62: db $01
 
-.limit_x
+.limit_a
 #_0CCC63: db $EF
 
-.limit_y
+.limit_b
 #_0CCC64: db $11
 
 .target_x
@@ -1904,18 +1904,18 @@ pool off
 AnimateTriforceRoomTriangle_Contract:
 #_0CCC6B: LDA.w $1E0A
 #_0CCC6E: AND.b #$03
-#_0CCC70: BNE .no_x_speed
+#_0CCC70: BNE .dont_contract
 
 #_0CCC72: JSR AnimateTriforceRoomTriangle_HandleContracting
 
-.no_x_speed
+.dont_contract
 #_0CCC75: LDA.w .target_x,X
 #_0CCC78: CMP.w $1E30,X
-#_0CCC7B: BNE .no_reset
+#_0CCC7B: BNE .check_y
 
 #_0CCC7D: STZ.w $1E58,X
 
-.no_reset
+.check_y
 #_0CCC80: LDA.w .target_y,X
 #_0CCC83: CMP.w $1E48,X
 #_0CCC86: BNE .exit
@@ -1969,30 +1969,30 @@ AnimateTriforceRoomTriangle_HandleContracting:
 #_0CCCB3: CMP.w $1E30,X
 #_0CCCB6: BCC .below_x
 
-#_0CCCB8: LDA.w .speed_y,X
+#_0CCCB8: LDA.w .speed_positive,X
 #_0CCCBB: BRA .continue_x
 
 .below_x
-#_0CCCBD: LDA.w .speed_x,X
+#_0CCCBD: LDA.w .speed_negative,X
 
 .continue_x
 #_0CCCC0: CLC
 #_0CCCC1: ADC.w $1E58,X
 #_0CCCC4: STA.w $1E58,X
 
-#_0CCCC7: CMP.w .limit_x
+#_0CCCC7: CMP.w .limit_a
 #_0CCCCA: BNE .unequal_x
 
-#_0CCCCC: LDA.w .limit_x
+#_0CCCCC: LDA.w .limit_a
 #_0CCCCF: INC A
 
 #_0CCCD0: BRA .set_x
 
 .unequal_x
-#_0CCCD2: CMP.w .limit_y
+#_0CCCD2: CMP.w .limit_b
 #_0CCCD5: BNE .done_x
 
-#_0CCCD7: LDA.w .limit_y
+#_0CCCD7: LDA.w .limit_b
 #_0CCCDA: DEC A
 
 .set_x
@@ -2005,29 +2005,29 @@ AnimateTriforceRoomTriangle_HandleContracting:
 #_0CCCE1: CMP.w $1E48,X
 #_0CCCE4: BCC .below_y
 
-#_0CCCE6: LDA.w .speed_y,X
+#_0CCCE6: LDA.w .speed_positive,X
 #_0CCCE9: BRA .continue_y
 
 .below_y
-#_0CCCEB: LDA.w .speed_x,X
+#_0CCCEB: LDA.w .speed_negative,X
 
 .continue_y
 #_0CCCEE: CLC
 #_0CCCEF: ADC.w $1E60,X
 #_0CCCF2: STA.w $1E60,X
 
-#_0CCCF5: CMP.w .limit_x
+#_0CCCF5: CMP.w .limit_a
 #_0CCCF8: BNE .unequal_y
 
-#_0CCCFA: LDA.w .limit_x
+#_0CCCFA: LDA.w .limit_a
 #_0CCCFD: INC A
 #_0CCCFE: BRA .set_y
 
 .unequal_y
-#_0CCD00: CMP.w .limit_y
+#_0CCD00: CMP.w .limit_b
 #_0CCD03: BNE .exit
 
-#_0CCD05: LDA.w .limit_y
+#_0CCD05: LDA.w .limit_b
 #_0CCD08: DEC A
 
 .set_y
@@ -2156,7 +2156,7 @@ Module01_FileSelect:
 #_0CCD85: LDA.b $11
 #_0CCD87: JSL JumpTableLong
 #_0CCD8B: dl FileSelect_InitializeGFX
-#_0CCD8E: dl FileSelect_ReInitSaveFlagsAndEraseTriforce
+#_0CCD8E: dl FileSelect_ReInitSaveFlagsAndGraphics
 #_0CCD91: dl FileSelect_UploadFancyBackground
 #_0CCD94: dl FileSelect_TriggerStripesAndAdvance
 #_0CCD97: dl FileSelect_TriggerNameStripesAndAdvance
@@ -2182,13 +2182,13 @@ FileSelect_InitializeGFX:
 #_0CCDB5: STA.w $0AB6
 #_0CCDB8: STA.w $0710
 
-#_0CCDBB: JSL Palettes_Load_UnderworldSet
-#_0CCDBF: JSL Palettes_Load_OWBG3
+#_0CCDBB: JSL PaletteLoad_UnderworldSet
+#_0CCDBF: JSL PaletteLoad_OWBG3
 
 #_0CCDC3: LDA.b #$00
 #_0CCDC5: STA.w $0AB2
 
-#_0CCDC8: JSL Palettes_Load_HUD
+#_0CCDC8: JSL PaletteLoad_HUD
 
 #_0CCDCC: STZ.w $0202
 
@@ -2211,7 +2211,7 @@ FileSelect_InitializeGFX:
 
 ;===================================================================================================
 
-FileSelect_ReInitSaveFlagsAndEraseTriforce:
+FileSelect_ReInitSaveFlagsAndGraphics:
 #_0CCDF2: LDX.b #$05
 
 .clear_next
@@ -2222,13 +2222,13 @@ FileSelect_ReInitSaveFlagsAndEraseTriforce:
 
 ;===================================================================================================
 
-FileSelect_EraseTriforce:
+ReinitializeFileSelectGraphics:
 #_0CCDF9: LDA.b #$80
 #_0CCDFB: STA.w $0710
 
 #_0CCDFE: JSL EnableForceBlank
-#_0CCE02: JSL EraseTilemaps_triforce
-#_0CCE06: JSL Palettes_LoadForFileSelect
+#_0CCE02: JSL EraseTilemaps_bg3
+#_0CCE06: JSL PaletteLoadForFileSelect
 
 #_0CCE0A: INC.b $15
 #_0CCE0C: INC.b $11
@@ -2240,10 +2240,10 @@ FileSelect_EraseTriforce:
 pool FileSelect_UploadLinoleum
 
 .set0
-#_0CCE0F: db $81, $35, $82, $35
+#_0CCE0F: dw $3581, $3582
 
 .set1
-#_0CCE13: db $91, $35, $92, $35
+#_0CCE13: dw $3591, $3592
 
 .pointers
 #_0CCE17: dw .set0
@@ -2254,7 +2254,7 @@ pool off
 ;---------------------------------------------------------------------------------------------------
 
 FileSelect_UploadLinoleum:
-#_0CCE1B: LDA.w #$0010
+#_0CCE1B: LDA.w #$0010 ; VRAM $2000
 #_0CCE1E: STA.w $1002
 
 #_0CCE21: LDA.w #$FF07
@@ -2325,7 +2325,7 @@ FileSelect_UploadFancyBackground:
 
 ;---------------------------------------------------------------------------------------------------
 
-#_0CCE6A: LDA.w #$1103
+#_0CCE6A: LDA.w #$1103 ; VRAM $2206
 #_0CCE6D: STA.b $00
 
 #_0CCE6F: LDA.w #$0011
@@ -2355,8 +2355,8 @@ FileSelect_UploadFancyBackground:
 
 #_0CCE91: INX
 #_0CCE92: INX
-#_0CCE93: DEC.b $02
 
+#_0CCE93: DEC.b $02
 #_0CCE95: BPL .next_stripe
 
 ;---------------------------------------------------------------------------------------------------
@@ -2470,10 +2470,10 @@ FileSelect_HandleInput:
 
 #_0CCF02: PLX
 
-#_0CCF03: LDA.w #FileSelect_DrawLink_offset_y+0
+#_0CCF03: LDA.w #FileSelect_DrawLink_offset_x
 #_0CCF06: STA.b $04
 
-#_0CCF08: LDA.w #FileSelect_DrawLink_offset_y+1
+#_0CCF08: LDA.w #FileSelect_DrawLink_offset_y
 #_0CCF0B: STA.b $02
 
 #_0CCF0D: PHX
@@ -2560,7 +2560,6 @@ FileSelect_HandleInput:
 #_0CCF6A: LDA.b $C8
 #_0CCF6C: CMP.b #$03
 #_0CCF6E: BEQ .copy_file
-
 #_0CCF70: BCS .kill_file
 
 #_0CCF72: LDA.b $C8
@@ -2733,7 +2732,7 @@ Module02_CopyFile:
 
 #_0CD056: LDA.b $11
 #_0CD058: JSL JumpTableLong
-#_0CD05C: dl FileSelect_EraseTriforce
+#_0CD05C: dl ReinitializeFileSelectGraphics
 #_0CD05F: dl FileSelect_UploadFancyBackground
 #_0CD062: dl CopyFile_FindFileIndices
 #_0CD065: dl CopyFile_ChooseSelection
@@ -3570,19 +3569,27 @@ KILLFile_FairyY:
 ;---------------------------------------------------------------------------------------------------
 
 KILL_OK_stripes:
-#_0CD41E: db $61,$A7,$40,$24,$A9,$00,$61,$C7
-#_0CD426: db $40,$24,$A9,$00,$62,$07,$40,$24
-#_0CD42E: db $A9,$00,$62,$27,$40,$24,$A9,$00
-#_0CD436: db $62,$C6,$00,$21,$04,$18,$21,$18
-#_0CD43E: db $00,$18,$22,$18,$04,$18,$A9,$18
-#_0CD446: db $23,$18,$07,$18,$AF,$18,$22,$18
-#_0CD44E: db $A9,$18,$0F,$18,$0B,$18,$00,$18
-#_0CD456: db $28,$18,$04,$18,$21,$18,$62,$E6
-#_0CD45E: db $00,$21,$14,$18,$31,$18,$10,$18
-#_0CD466: db $32,$18,$14,$18,$A9,$18,$33,$18
-#_0CD46E: db $17,$18,$BF,$18,$32,$18,$A9,$18
-#_0CD476: db $1F,$18,$1B,$18,$10,$18,$38,$18
-#_0CD47E: db $14,$18,$31,$18
+#_0CD41E: dw $A761, $2440 ; VRAM $C34E | 38 bytes | Fixed horizontal
+#_0CD422: dw $00A9
+
+#_0CD424: dw $C761, $2440 ; VRAM $C38E | 38 bytes | Fixed horizontal
+#_0CD428: dw $00A9
+
+#_0CD42A: dw $0762, $2440 ; VRAM $C40E | 38 bytes | Fixed horizontal
+#_0CD42E: dw $00A9
+
+#_0CD430: dw $2762, $2440 ; VRAM $C44E | 38 bytes | Fixed horizontal
+#_0CD434: dw $00A9
+
+#_0CD436: dw $C662, $2100 ; VRAM $C58C | 34 bytes | Horizontal
+#_0CD43A: dw $1804, $1821, $1800, $1822, $1804, $18A9, $1823, $1807
+#_0CD44A: dw $18AF, $1822, $18A9, $180F, $180B, $1800, $1828, $1804
+#_0CD45A: dw $1821
+
+#_0CD45C: dw $E662, $2100 ; VRAM $C5CC | 34 bytes | Horizontal
+#_0CD460: dw $1814, $1831, $1810, $1832, $1814, $18A9, $1833, $1817
+#_0CD470: dw $18BF, $1832, $18A9, $181F, $181B, $1810, $1838, $1814
+#_0CD480: dw $1831
 
 #_0CD482: db $FF ; end of stripes data
 
@@ -3597,7 +3604,7 @@ KILL_OK_FileNameStripesAdjustment:
 Module03_KILLFile:
 #_0CD485: LDA.b $11
 #_0CD487: JSL JumpTableLong
-#_0CD48B: dl FileSelect_EraseTriforce
+#_0CD48B: dl ReinitializeFileSelectGraphics
 #_0CD48E: dl FileSelect_UploadFancyBackground
 #_0CD491: dl KILLFile_SetUp
 #_0CD494: dl KILLFile_HandleSelection
@@ -4058,8 +4065,10 @@ pool FileSelect_DrawLink
 .unused
 #_0CD695: db $01, $06, $0B
 
+.offset_x
+#_0CD698: db $34
+
 .offset_y
-#_0CD698: db $34 ; IDK
 #_0CD699: db $43 ; file 1
 #_0CD69A: db $63 ; file 2
 #_0CD69B: db $83 ; file 3
@@ -4311,8 +4320,8 @@ FileSelect_DrawFairy:
 #_0CD7AF: PHX
 
 #_0CD7B0: LDX.b #$00
-#_0CD7B2: LDA.b $1A
 
+#_0CD7B2: LDA.b $1A
 #_0CD7B4: AND.b #$08
 #_0CD7B6: BEQ .frame_0
 
@@ -4420,11 +4429,12 @@ FileSelect_DrawDeaths:
 .next_10
 #_0CD81A: CMP.w #$000A
 #_0CD81D: BCC .under_10
+
 #_0CD81F: SEC
 #_0CD820: SBC.w #$000A
 #_0CD823: INY
-#_0CD824: BRA .next_10
 
+#_0CD824: BRA .next_10
 
 .under_10
 #_0CD826: STA.b $04
@@ -4437,18 +4447,23 @@ FileSelect_DrawDeaths:
 
 #_0CD82D: LDA.b $06
 #_0CD82F: BNE .skip_digit
+
 #_0CD831: DEX
 #_0CD832: DEX
+
 #_0CD833: LDA.b $04
 #_0CD835: BNE .skip_digit
+
 #_0CD837: DEX
 #_0CD838: DEX
 
 .skip_digit
 #_0CD839: SEP #$30
+
 #_0CD83B: LDA.b $00
 #_0CD83D: LSR A
 #_0CD83E: TAY
+
 #_0CD83F: LDA.w .buffer_offset,Y
 #_0CD842: TAY
 
@@ -4537,7 +4552,7 @@ Module04_NameFile:
 ;===================================================================================================
 
 NameFile_EraseSave:
-#_0CD89C: JSL FileSelect_EraseTriforce
+#_0CD89C: JSL ReinitializeFileSelectGraphics
 
 #_0CD8A0: LDA.b #$01
 #_0CD8A2: STA.w $0128
@@ -5236,6 +5251,10 @@ NameFile_CheckForScrollInputY:
 #_0CDCF4: STA.w $0B15
 #_0CDCF7: BRA .not_this_guy
 
+;---------------------------------------------------------------------------------------------------
+; Code from the JP versions
+;---------------------------------------------------------------------------------------------------
+#UNREACHABLE_0CFDF9:
 #_0CDCF9: STX.b $01
 
 #_0CDCFB: LDX.w $0B15
@@ -5258,7 +5277,6 @@ NameFile_CheckForScrollInputY:
 .not_this_guy
 #_0CDD15: INC.w $0B14
 #_0CDD18: BRA .set_input
-
 
 .no_input
 #_0CDD1A: STZ.w $00CA
@@ -5290,7 +5308,7 @@ NameFile_DrawSelectedCharacter:
 #_0CDD31: PHK
 #_0CDD32: PLB
 
-#_0CDD33: LDA.w #$6100
+#_0CDD33: LDA.w #$6100 ; VRAM $C200
 #_0CDD36: ORA.w .vram_position_low,Y
 #_0CDD39: XBA
 #_0CDD3A: STA.w $1002
@@ -6106,7 +6124,7 @@ Attract_Initialize:
 #_0CEE11: BPL .next
 
 #_0CEE13: JSL EraseTilemaps_normal
-#_0CEE17: JSL Attract_LoadBG3GFX
+#_0CEE17: JSL TransferAttractPlaques
 
 #_0CEE1B: LDA.b #$04
 #_0CEE1D: STA.w $0AB3
@@ -6115,14 +6133,14 @@ Attract_Initialize:
 #_0CEE22: STA.w $0AB2
 #_0CEE25: STZ.w $0AA9
 
-#_0CEE28: JSL Palettes_Load_HUD
+#_0CEE28: JSL PaletteLoad_HUD
 
 #_0CEE2C: LDA.b #$02
 #_0CEE2E: STA.w $0AA9
 
-#_0CEE31: JSL Palettes_Load_OWBGMain
-#_0CEE35: JSL Palettes_Load_HUD
-#_0CEE39: JSL Palettes_Load_LinkArmorAndGloves
+#_0CEE31: JSL PaletteLoad_OWBGMain
+#_0CEE35: JSL PaletteLoad_HUD
+#_0CEE39: JSL PaletteLoad_LinkArmorAndGloves
 
 #_0CEE3D: LDA.b #$00 ; RGB: #000070
 #_0CEE3F: STA.l $7EC53A
@@ -6383,7 +6401,7 @@ AttractScene_ThroneRoom:
 #_0CEF6C: SEP #$20
 
 #_0CEF6E: LDA.b #$74
-#_0CEF70: JSL Underworld_LoadAndDrawEntranceRoom
+#_0CEF70: JSL LoadRoomForAttract
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -6408,7 +6426,7 @@ AttractScene_ThroneRoom:
 
 #_0CEF8E: LDX.b #$7E
 #_0CEF90: LDA.b #$00
-#_0CEF92: JSL Underworld_SaveAndLoadLoadAllPalettes
+#_0CEF92: JSL SaveAndLoadAttractPalettes
 
 #_0CEF96: LDA.b #$00 ; RGB: #0008C0
 #_0CEF98: STA.l $7EC53A
@@ -6482,7 +6500,7 @@ AttractScene_Prison:
 #_0CEFEF: SEP #$20
 
 #_0CEFF1: LDA.b #$73
-#_0CEFF3: JSL Underworld_LoadAndDrawEntranceRoom
+#_0CEFF3: JSL LoadRoomForAttract
 
 #_0CEFF7: REP #$20
 
@@ -6507,7 +6525,7 @@ AttractScene_Prison:
 #_0CF013: LDX.b #$7F
 #_0CF015: LDA.b #$01
 
-#_0CF017: JSL Underworld_SaveAndLoadLoadAllPalettes
+#_0CF017: JSL SaveAndLoadAttractPalettes
 
 #_0CF01B: LDA.b #$00 ; RGB: #000070
 #_0CF01D: STA.l $7EC53A
@@ -6565,7 +6583,7 @@ AttractScene_AgahnimAltar:
 #_0CF060: SEP #$20
 
 #_0CF062: LDA.b #$75
-#_0CF064: JSL Underworld_LoadAndDrawEntranceRoom
+#_0CF064: JSL LoadRoomForAttract
 
 #_0CF068: REP #$20
 
@@ -6587,11 +6605,11 @@ AttractScene_AgahnimAltar:
 #_0CF07F: STA.w $0AAE
 #_0CF082: STZ.w $0AA9
 
-#_0CF085: JSL Underworld_LoadAllPalettes
+#_0CF085: JSL LoadAttractAltarPalettes
 
 #_0CF089: LDX.b #$7F
 #_0CF08B: LDA.b #$02
-#_0CF08D: JSL Underworld_SaveAndLoadLoadAllPalettes
+#_0CF08D: JSL SaveAndLoadAttractPalettes
 
 #_0CF091: LDA.b #$00 ; RGB: #0008C0
 #_0CF093: STA.l $7EC33A
@@ -6654,7 +6672,7 @@ InitializeTriforceIntro:
 #_0CF0E2: INC.w $0710
 
 #_0CF0E5: JSL Intro_InitializeDefaultGFX
-#_0CF0E9: JSL Overworld_LoadAllPalettes_long
+#_0CF0E9: JSL Intro_LoadAllPalettes_long
 
 #_0CF0ED: STZ.b $EA
 
@@ -7100,7 +7118,7 @@ AttractDramatize_Prison:
 
 #_0CF2E8: SEP #$20
 
-#_0CF2EA: JSL SpritePrep_ResetProperties
+#_0CF2EA: JSL ResetSpriteProperties
 #_0CF2EE: JSL PuppetSoldier
 
 #_0CF2F2: PLX
@@ -7390,11 +7408,11 @@ AttractDramatize_AgahnimAltar:
 .delay_fade
 #_0CF437: LDA.b $50
 #_0CF439: CMP.b #$FF
-#_0CF43B: BEQ .delay_tick
+#_0CF43B: BEQ .maxed
 
 #_0CF43D: INC.b $50
 
-.delay_tick
+.maxed
 #_0CF43F: LDA.w $0FF9
 #_0CF442: BEQ .delay_sfx
 
@@ -7436,7 +7454,7 @@ AttractDramatize_AgahnimAltar:
 
 #_0CF474: PHX
 
-#_0CF475: JSL SpritePrep_ResetProperties
+#_0CF475: JSL ResetSpriteProperties
 #_0CF479: JSL PuppetSoldier
 
 #_0CF47D: PLX
@@ -9263,6 +9281,7 @@ LogoSword_BladeShimmer:
 #_0CFF65: LDA.b $CD
 #_0CFF67: CMP.b #$50
 #_0CFF69: BCC .not_maxed
+
 #_0CFF6B: LDA.b #$4F
 
 .not_maxed
@@ -9271,6 +9290,7 @@ LogoSword_BladeShimmer:
 #_0CFF70: CLC
 #_0CFF71: ADC.b #$31
 #_0CFF73: STA.w $0941
+
 #_0CFF76: CLC
 #_0CFF77: ADC.b #$08
 #_0CFF79: STA.w $0945

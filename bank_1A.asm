@@ -121,8 +121,8 @@ Sprite_37_Waterfall:
 ;===================================================================================================
 
 Waterfall:
-#_1AF5B8: JSR Sprite_CheckIfActive_Bank1A
-#_1AF5BB: JSL Sprite_CheckDamageToLink_same_layer_long
+#_1AF5B8: JSR CheckIfActive_bank1A
+#_1AF5BB: JSL CheckDamageToLink_same_layer_long
 #_1AF5BF: BCC .exit
 
 #_1AF5C1: LDA.b $8A
@@ -165,8 +165,8 @@ pool off
 
 BatCrash:
 #_1AF5D9: JSR SpriteDraw_BatCrash
-#_1AF5DC: JSR Sprite_CheckIfActive_Bank1A
-#_1AF5DF: JSL Sprite_Move_XY_Bank1D_long
+#_1AF5DC: JSR CheckIfActive_bank1A
+#_1AF5DF: JSL MoveSpriteXY_bank1D_long
 #_1AF5E3: JSR BatCrash_DrawHardcodedGarbage
 
 #_1AF5E6: STZ.w $011C
@@ -206,7 +206,7 @@ BatCrash:
 #_1AF61D: BCS .no_flap_sfx
 
 #_1AF61F: LDA.b #$03 ; SFX2.03
-#_1AF621: JSL SpriteSFX_QueueSFX2WithPan
+#_1AF621: JSL QueueSpriteSFX2WithPan
 
 .no_flap_sfx
 #_1AF625: LDY.w $0DE0,X
@@ -290,7 +290,7 @@ BatCrash_Ascend:
 #_1AF689: INC.w $0D80,X
 
 #_1AF68C: LDA.b #$26 ; SFX3.26
-#_1AF68E: JSL SpriteSFX_QueueSFX3WithPan
+#_1AF68E: JSL QueueSpriteSFX3WithPan
 
 #_1AF692: INC.w $0DE0,X
 
@@ -373,9 +373,9 @@ BatCrash_StallTheInevitable:
 
 ;===================================================================================================
 
-Sprite_SpawnBatCrashCutscene:
+SpawnBatCrashCutscene:
 #_1AF6F5: LDA.b #$37 ; SPRITE 37
-#_1AF6F7: JSL Sprite_SpawnDynamically
+#_1AF6F7: JSL SpawnSpriteDynamically
 
 #_1AF6FB: LDA.b #$00
 #_1AF6FD: STA.w $0D40,Y
@@ -601,7 +601,7 @@ SpriteDraw_BatCrash:
 #_1AF852: STA.b $09
 
 #_1AF854: LDA.w .obj_count,Y
-#_1AF857: JSL SpriteDraw_Tabulated
+#_1AF857: JSL TabulatedSpriteDraw
 
 #_1AF85B: RTS
 
@@ -702,8 +702,8 @@ SpriteDraw_RaceGameLady:
 ;---------------------------------------------------------------------------------------------------
 
 #SpriteDraw_Drunkard_continue:
-#_1AF94A: JSL SpriteDraw_Tabulated_player_deferred
-#_1AF94E: JSL SpriteDraw_Shadow_long
+#_1AF94A: JSL TabulatedSpriteDraw_player_deferred
+#_1AF94E: JSL DrawSpriteShadow_long
 
 #_1AF952: PLB
 
@@ -711,7 +711,7 @@ SpriteDraw_RaceGameLady:
 
 ;===================================================================================================
 
-Sprite_CheckIfActive_Bank1A:
+CheckIfActive_bank1A:
 #_1AF954: LDA.w $0DD0,X
 #_1AF957: CMP.b #$09
 #_1AF959: BNE .inactive
@@ -766,10 +766,10 @@ Lanmola_SpawnShrapnel:
 
 .next_spawn
 #_1AF996: LDA.b #$C2 ; SPRITE C2
-#_1AF998: JSL Sprite_SpawnDynamically
+#_1AF998: JSL SpawnSpriteDynamically
 #_1AF99C: BMI .no_space
 
-#_1AF99E: JSL Sprite_SetSpawnedCoordinates
+#_1AF99E: JSL SetSpawnedSpriteCoordinates
 
 #_1AF9A2: LDA.b $00
 #_1AF9A4: ADC.b #$04
@@ -833,18 +833,18 @@ UNREACHABLE_1AF9E6:
 #_1AF9FB: LDA.w $0F50,X
 #_1AF9FE: PHA
 
-#_1AF9FF: JSL Sprite_Cukeman
+#_1AF9FF: JSL Cukeman
 
 #_1AFA03: PLA
 #_1AFA04: STA.w $0F50,X
 
-#_1AFA07: JSL Sprite_Get16BitCoords_long
+#_1AFA07: JSL Get16BitSpriteCoords_long
 
 #_1AFA0B: RTL
 
 ;===================================================================================================
 
-Sprite_Cukeman:
+Cukeman:
 #_1AFA0C: LDA.w $0EB0,X
 #_1AFA0F: BEQ .exit
 
@@ -889,7 +889,7 @@ Sprite_Cukeman:
 
 #_1AFA53: LDA.b #$01
 #_1AFA55: STA.w $1CF1
-#_1AFA58: JSL Sprite_ShowMessageMinimal
+#_1AFA58: JSL ShowMessageMinimal
 
 .dont_speak
 #_1AFA5C: SEP #$20
@@ -914,7 +914,7 @@ Sprite_Cukeman:
 #_1AFA72: STA.w $0F50,X
 
 #_1AFA75: LDA.b #$10
-#_1AFA77: JSL SpriteDraw_AllocateOAMFromRegionA
+#_1AFA77: JSL AllocateOAMInRegionA
 
 #_1AFA7B: PLB
 
@@ -978,7 +978,7 @@ SpriteDraw_Cukeman:
 #_1AFB23: SEP #$20
 
 #_1AFB25: LDA.b #$03
-#_1AFB27: JSL SpriteDraw_Tabulated
+#_1AFB27: JSL TabulatedSpriteDraw
 
 #_1AFB2B: RTS
 
@@ -1038,7 +1038,7 @@ RunningBoy_SpawnDustGarnish:
 
 ;===================================================================================================
 
-pool Overworld_SubstituteAlternateSecret
+pool SubstituteAlternateSecret
 
 .screen_mask
 #_1AFB7B: db $00, $00, $00, $00, $00, $00, $00, $04
@@ -1096,7 +1096,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Overworld_SubstituteAlternateSecret:
+SubstituteAlternateSecret:
 #_1AFBDB: PHB
 #_1AFBDC: PHK
 #_1AFBDD: PLB
@@ -1184,13 +1184,13 @@ Sprite_EE_CastleMantle:
 
 .main
 #_1AFC39: JSR SpriteDraw_CastleMantle
-#_1AFC3C: JSR Sprite_CheckIfActive_Bank1A
+#_1AFC3C: JSR CheckIfActive_bank1A
 
-#_1AFC3F: JSL Sprite_CheckDamageToLink_same_layer_long
+#_1AFC3F: JSL CheckDamageToLink_same_layer_long
 #_1AFC43: BCC .exit
 
-#_1AFC45: JSL Sprite_CancelHookshot
-#_1AFC49: JSL Sprite_RepelDash_long
+#_1AFC45: JSL CancelHookshot
+#_1AFC49: JSL RepelDash_long
 
 #_1AFC4D: LDA.l $7EF3CC
 #_1AFC51: CMP.b #$01 ; FOLLOWER 01
@@ -1236,7 +1236,7 @@ Sprite_EE_CastleMantle:
 #_1AFC91: LDA.b #$02
 #_1AFC93: STA.w $0D50,X
 
-#_1AFC96: JSL Sprite_Move_XY_Bank1D_long
+#_1AFC96: JSL MoveSpriteXY_bank1D_long
 
 .exit
 #_1AFC9A: RTS
@@ -1263,9 +1263,9 @@ pool off
 
 SpriteDraw_CastleMantle:
 #_1AFCB3: LDA.b #$20
-#_1AFCB5: JSL SpriteDraw_AllocateOAMFromRegionB
+#_1AFCB5: JSL AllocateOAMInRegionB
 
-#_1AFCB9: JSL Sprite_PrepOAMCoord_long
+#_1AFCB9: JSL GetScreenCoordinates_long
 #_1AFCBD: BCS .exit
 
 #_1AFCBF: PHX
@@ -1303,7 +1303,7 @@ SpriteDraw_CastleMantle:
 
 #_1AFCE4: LDY.b #$02
 #_1AFCE6: LDA.b #$05
-#_1AFCE8: JSL Sprite_CorrectOAMEntries_long
+#_1AFCE8: JSL CorrectOAMEntries_long
 
 .exit
 #_1AFCEC: RTS
@@ -1383,7 +1383,7 @@ SpriteDraw_Mothula:
 #_1AFDD2: SEP #$20
 
 #_1AFDD4: LDA.b #$08
-#_1AFDD6: JSL SpriteDraw_Tabulated
+#_1AFDD6: JSL TabulatedSpriteDraw
 
 #_1AFDDA: LDA.w $0F00,X
 #_1AFDDD: BNE .exit
@@ -1492,7 +1492,7 @@ SpriteDraw_Mothula:
 
 ;===================================================================================================
 
-pool BottleMerchant_BuyBee
+pool PurchaseGoldenBee
 
 .speed_x
 #_1AFE7E: db  -6,  -3,   0,   4,   7
@@ -1504,23 +1504,23 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-BottleMerchant_BuyBee:
+PurchaseGoldenBee:
 #_1AFE88: PHB
 #_1AFE89: PHK
 #_1AFE8A: PLB
 
 #_1AFE8B: LDA.b #$13 ; SFX3.13
-#_1AFE8D: JSL SpriteSFX_QueueSFX3WithPan
+#_1AFE8D: JSL QueueSpriteSFX3WithPan
 
 #_1AFE91: LDA.b #$04
 #_1AFE93: STA.w $0FB5
 
 .next_spawn
 #_1AFE96: LDA.b #$DB ; SPRITE DB
-#_1AFE98: JSL Sprite_SpawnDynamically
+#_1AFE98: JSL SpawnSpriteDynamically
 #_1AFE9C: BMI .no_space
 
-#_1AFE9E: JSL Sprite_SetSpawnedCoordinates
+#_1AFE9E: JSL SetSpawnedSpriteCoordinates
 
 #_1AFEA2: LDA.b $00
 #_1AFEA4: CLC
@@ -1568,7 +1568,7 @@ ChickenLady:
 #_1AFED5: STA.w $0DE0,X
 
 #_1AFED8: JSL SpriteDraw_RaceGameLady
-#_1AFEDC: JSR Sprite_CheckIfActive_Bank1A
+#_1AFEDC: JSR CheckIfActive_bank1A
 
 #_1AFEDF: LDA.w $0DF0,X
 #_1AFEE2: CMP.b #$01
@@ -1580,7 +1580,7 @@ ChickenLady:
 #_1AFEEB: LDA.b #$01
 #_1AFEED: STA.w $1CF1
 
-#_1AFEF0: JSL Sprite_ShowMessageMinimal
+#_1AFEF0: JSL ShowMessageMinimal
 
 .no_message
 #_1AFEF4: LDA.b $1A
@@ -1628,7 +1628,7 @@ SpritePrep_DiggingGameGuy:
 
 ;===================================================================================================
 
-pool SpawnHammerWaterSplash
+pool SpawnHammeredSplash
 
 .offset_x
 #_1AFF2B: dw   0,  12,  -8,  24
@@ -1645,7 +1645,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-SpawnHammerWaterSplash:
+SpawnHammeredSplash:
 #_1AFF3C: LDA.b $11
 #_1AFF3E: ORA.w $02E4
 #_1AFF41: ORA.w $0FC1
@@ -1733,7 +1733,7 @@ SpawnHammerWaterSplash:
 
 #_1AFFA3: SEP #$30
 
-#_1AFFA5: JSL Overworld_ReadTileType
+#_1AFFA5: JSL ReadOverworldTileType
 
 #_1AFFA9: REP #$10
 

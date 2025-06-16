@@ -11,6 +11,7 @@ LinkGraphics:
 #_10F000: GFX_73: incbin "bin/gfx/GFX73.3bpp" ; size: 0x0600
 #_10F600: GFX_74: incbin "bin/gfx/GFX74.3bpp" ; size: 0x0600
 #_10FC00: GFX_75: incbin "bin/gfx/GFX75.3bpp" ; size: 0x0600
+
 #_118200: GFX_76: incbin "bin/gfx/GFX76.3bpp" ; size: 0x0600
 #_118800: GFX_77: incbin "bin/gfx/GFX77.3bpp" ; size: 0x0600
 #_118E00: GFX_78: incbin "bin/gfx/GFX78.3bpp" ; size: 0x0600
@@ -41,6 +42,7 @@ LinkGraphics:
 #_11F746: GFX_0E: incbin "bin/gfx/GFX0E.3bppc" ; size: 0x04DB
 #_11FC21: GFX_0F: incbin "bin/gfx/GFX0F.3bppc" ; size: 0x03D1
 #_11FFF2: GFX_10: incbin "bin/gfx/GFX10.3bppc" ; size: 0x04A6
+
 #_128498: GFX_11: incbin "bin/gfx/GFX11.3bppc" ; size: 0x0576
 #_128A0E: GFX_12: incbin "bin/gfx/GFX12.3bppc" ; size: 0x0522
 #_128F30: GFX_13: incbin "bin/gfx/GFX13.3bppc" ; size: 0x03F6
@@ -67,6 +69,7 @@ LinkGraphics:
 #_12F135: GFX_28: incbin "bin/gfx/GFX28.3bppc" ; size: 0x0590
 #_12F6C5: GFX_29: incbin "bin/gfx/GFX29.3bppc" ; size: 0x05AC
 #_12FC71: GFX_2A: incbin "bin/gfx/GFX2A.3bppc" ; size: 0x04B8
+
 #_138129: GFX_2B: incbin "bin/gfx/GFX2B.3bppc" ; size: 0x056A
 #_138693: GFX_2C: incbin "bin/gfx/GFX2C.3bppc" ; size: 0x051A
 #_138BAD: GFX_2D: incbin "bin/gfx/GFX2D.3bppc" ; size: 0x056A
@@ -93,6 +96,7 @@ LinkGraphics:
 #_13F245: GFX_42: incbin "bin/gfx/GFX42.3bppc" ; size: 0x04AB
 #_13F6F0: GFX_43: incbin "bin/gfx/GFX43.3bppc" ; size: 0x0540
 #_13FC30: GFX_44: incbin "bin/gfx/GFX44.3bppc" ; size: 0x04B9
+
 #_1480E9: GFX_45: incbin "bin/gfx/GFX45.3bppc" ; size: 0x0552
 #_14863B: GFX_46: incbin "bin/gfx/GFX46.3bppc" ; size: 0x0441
 #_148A7C: GFX_47: incbin "bin/gfx/GFX47.3bppc" ; size: 0x04AE
@@ -146,6 +150,7 @@ LinkGraphics:
 ; Sprites
 ;===================================================================================================
 #_14FFFC: GFX_7F: incbin "bin/gfx/GFX7F.3bppc" ; size: 0x05D8
+
 #_1585D4: GFX_80: incbin "bin/gfx/GFX80.3bppc" ; size: 0x04E2
 #_158AB6: GFX_81: incbin "bin/gfx/GFX81.3bppc" ; size: 0x0508
 #_158FBE: GFX_82: incbin "bin/gfx/GFX82.3bppc" ; size: 0x043A
@@ -170,6 +175,7 @@ LinkGraphics:
 #_15F3A6: GFX_95: incbin "bin/gfx/GFX95.3bppc" ; size: 0x0587
 #_15F92D: GFX_96: incbin "bin/gfx/GFX96.3bppc" ; size: 0x058D
 #_15FEBA: GFX_97: incbin "bin/gfx/GFX97.3bppc" ; size: 0x0445
+
 #_1682FF: GFX_98: incbin "bin/gfx/GFX98.3bppc" ; size: 0x05E1
 #_1688E0: GFX_99: incbin "bin/gfx/GFX99.3bppc" ; size: 0x0561
 #_168E41: GFX_9A: incbin "bin/gfx/GFX9A.3bppc" ; size: 0x049E
@@ -198,6 +204,7 @@ LinkGraphics:
 #_16F6B7: GFX_B1: incbin "bin/gfx/GFXB1.3bppc" ; size: 0x03A8
 #_16FA5F: GFX_B2: incbin "bin/gfx/GFXB2.3bppc" ; size: 0x02CA
 #_16FD29: GFX_B3: incbin "bin/gfx/GFXB3.3bppc" ; size: 0x04A4
+
 #_1781CD: GFX_B4: incbin "bin/gfx/GFXB4.3bppc" ; size: 0x04C0
 #_17868D: GFX_B5: incbin "bin/gfx/GFXB5.3bppc" ; size: 0x04D5
 #_178B62: GFX_B6: incbin "bin/gfx/GFXB6.3bppc" ; size: 0x0473
@@ -226,6 +233,7 @@ LinkGraphics:
 #_17F4FD: GFX_CD: incbin "bin/gfx/GFXCD.3bppc" ; size: 0x053C
 #_17FA39: GFX_CE: incbin "bin/gfx/GFXCE.3bppc" ; size: 0x054D
 #_17FF86: GFX_CF: incbin "bin/gfx/GFXCF.3bppc" ; size: 0x04D6
+
 #_18845C: GFX_D0: incbin "bin/gfx/GFXD0.3bppc" ; size: 0x0545
 #_1889A1: GFX_D1: incbin "bin/gfx/GFXD1.3bppc" ; size: 0x03C3
 #_188D64: GFX_D2: incbin "bin/gfx/GFXD2.3bppc" ; size: 0x0439

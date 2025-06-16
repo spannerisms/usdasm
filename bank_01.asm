@@ -4,7 +4,7 @@ org $018000
 
 DrawObjects:
 
-.type1_subtype_1_data_offset
+.type1_data_offset
 
 #_018000: dw obj03D8-RoomDrawObjectData ; $03D8 ; 000 - 
 #_018002: dw obj02E8-RoomDrawObjectData ; $02E8 ; 001 - 
@@ -265,7 +265,7 @@ DrawObjects:
 
 ;---------------------------------------------------------------------------------------------------
 
-.type1_subtype_1_routine
+.type1_routine
 #_018200: dw RoomDraw_Rightwards2x2_1to15or32                            ; 000
 #_018202: dw RoomDraw_Rightwards2x4_1to15or26                            ; 001
 #_018204: dw RoomDraw_Rightwards2x4_1to15or26                            ; 002
@@ -517,7 +517,7 @@ DrawObjects:
 
 ;===================================================================================================
 
-.type1_subtype_2_data_offset
+.type2_data_offset
 
 #_0183F0: dw obj0B66-RoomDrawObjectData ; $0B66 ; 100 - 
 #_0183F2: dw obj0B86-RoomDrawObjectData ; $0B86 ; 101 - 
@@ -586,7 +586,7 @@ DrawObjects:
 
 ;---------------------------------------------------------------------------------------------------
 
-.type1_subtype_2_routine
+.type2_routine
 #_018470: dw RoomDraw_4x4                                                ; 100
 #_018472: dw RoomDraw_4x4                                                ; 101
 #_018474: dw RoomDraw_4x4                                                ; 102
@@ -633,15 +633,15 @@ DrawObjects:
 #_0184C6: dw RoomDraw_Rightwards2x2                                      ; 12B
 #_0184C8: dw RoomDraw_DrawRightwards3x6                                  ; 12C
 #_0184CA: dw RoomDraw_InterRoomFatStairsUp                               ; 12D
-#_0184CC: dw RoomDraw_InterRoomFatStairsDown_A                           ; 12E
-#_0184CE: dw RoomDraw_InterRoomFatStairsDown_B                           ; 12F
-#_0184D0: dw RoomDraw_AutoStairs_North_MultiLayer_A                      ; 130
-#_0184D2: dw RoomDraw_AutoStairs_North_MultiLayer_B                      ; 131
-#_0184D4: dw RoomDraw_AutoStairs_North_MergedLayer_A                     ; 132
-#_0184D6: dw RoomDraw_AutoStairs_North_MergedLayer_B                     ; 133
+#_0184CC: dw RoomDraw_InterRoomFatStairsDownA                            ; 12E
+#_0184CE: dw RoomDraw_InterRoomFatStairsDownB                            ; 12F
+#_0184D0: dw RoomDraw_AutoStairsNorthMultiLayerA                         ; 130
+#_0184D2: dw RoomDraw_AutoStairsNorthMultiLayerB                         ; 131
+#_0184D4: dw RoomDraw_AutoStairsNorthMergedLayerA                        ; 132
+#_0184D6: dw RoomDraw_AutoStairsNorthMergedLayerB                        ; 133
 #_0184D8: dw RoomDraw_Rightwards2x2                                      ; 134
-#_0184DA: dw RoomDraw_WaterHopStairs_A                                   ; 135
-#_0184DC: dw RoomDraw_WaterHopStairs_B                                   ; 136
+#_0184DA: dw RoomDraw_WaterHopStairsA                                    ; 135
+#_0184DC: dw RoomDraw_WaterHopStairsB                                    ; 136
 #_0184DE: dw RoomDraw_DamFloodGate                                       ; 137
 #_0184E0: dw RoomDraw_SpiralStairsGoingUpUpper                           ; 138
 #_0184E2: dw RoomDraw_SpiralStairsGoingDownUpper                         ; 139
@@ -654,7 +654,7 @@ DrawObjects:
 
 ;===================================================================================================
 
-.type1_subtype_3_data_offset
+.type3_data_offset
 
 #_0184F0: dw obj1614-RoomDrawObjectData ; $1614 ; 200 - 
 #_0184F2: dw obj162C-RoomDrawObjectData ; $162C ; 201 - 
@@ -787,7 +787,7 @@ DrawObjects:
 
 ;---------------------------------------------------------------------------------------------------
 
-.type1_subtype_3_routine
+.type3_routine
 #_0185F0: dw RoomDraw_EmptyWaterFace                                     ; 200
 #_0185F2: dw RoomDraw_SpittingWaterFace                                  ; 201
 #_0185F4: dw RoomDraw_DrenchingWaterFace                                 ; 202
@@ -815,9 +815,9 @@ DrawObjects:
 #_018620: dw RoomDraw_BigKeyLock                                         ; 218
 #_018622: dw RoomDraw_Chest                                              ; 219
 #_018624: dw RoomDraw_OpenChest                                          ; 21A
-#_018626: dw RoomDraw_AutoStairs_South_MultiLayer_A                      ; 21B
-#_018628: dw RoomDraw_AutoStairs_South_MultiLayer_B                      ; 21C
-#_01862A: dw RoomDraw_AutoStairs_South_MultiLayer_C                      ; 21D
+#_018626: dw RoomDraw_AutoStairsSouthMultiLayerA                         ; 21B
+#_018628: dw RoomDraw_AutoStairsSouthMultiLayerB                         ; 21C
+#_01862A: dw RoomDraw_AutoStairsSouthMultiLayerC                         ; 21D
 #_01862C: dw RoomDraw_StraightInterroomStairsGoingUpNorthUpper           ; 21E
 #_01862E: dw RoomDraw_StraightInterroomStairsGoingDownNorthUpper         ; 21F
 #_018630: dw RoomDraw_StraightInterroomStairsGoingUpSouthUpper           ; 220
@@ -839,7 +839,7 @@ DrawObjects:
 #_018650: dw RoomDraw_WeirdUglyPot                                       ; 230
 #_018652: dw RoomDraw_BigChest                                           ; 231
 #_018654: dw RoomDraw_OpenBigChest                                       ; 232
-#_018656: dw RoomDraw_AutoStairs_South_MergedLayer                       ; 233
+#_018656: dw RoomDraw_AutoStairsSouthMergedLayer                         ; 233
 #_018658: dw RoomDraw_ChestPlatformVerticalWall                          ; 234
 #_01865A: dw RoomDraw_ChestPlatformVerticalWall                          ; 235
 #_01865C: dw RoomDraw_DrawRightwards3x6                                  ; 236
@@ -962,8 +962,8 @@ RoomData_TilemapPointers:
 
 ;===================================================================================================
 
-Underworld_LoadRoom:
-#_01873A: JSR Underworld_LoadHeader
+LoadAndBuildRoom:
+#_01873A: JSR LoadRoomHeader
 
 #_01873D: STZ.w $03F4
 
@@ -1093,10 +1093,10 @@ Underworld_LoadRoom:
 #_018823: ADC.b $00
 #_018825: TAX
 
-#_018826: LDA.l RoomDraw_LayoutPointers+1,X
+#_018826: LDA.l RoomLayoutPointers+1,X
 #_01882A: STA.b $B8
 
-#_01882C: LDA.l RoomDraw_LayoutPointers+0,X
+#_01882C: LDA.l RoomLayoutPointers+0,X
 #_018830: STA.b $B7
 
 #_018832: STZ.b $BA
@@ -1179,7 +1179,7 @@ Underworld_LoadRoom:
 #_018890: ADC.w #$0004
 #_018893: STA.b $BA
 
-#_018895: CMP.w #$018C
+#_018895: CMP.w #$018C ; !HARDCODED size
 #_018898: BNE .next_block
 
 ;---------------------------------------------------------------------------------------------------
@@ -1212,7 +1212,7 @@ Underworld_LoadRoom:
 #_0188BB: CMP.w #$FFFF
 #_0188BE: BNE .find_next_torch
 
-#_0188C0: CPX.w #$0120
+#_0188C0: CPX.w #$0120 ; !HARDCODED size
 #_0188C3: BNE .next_torch_check
 
 #_0188C5: BRA .exit
@@ -1370,10 +1370,10 @@ RoomDraw_RoomObject:
 
 #_018972: TAX
 
-#_018973: LDA.l DrawObjects_type1_subtype_1_routine,X
+#_018973: LDA.l DrawObjects_type1_routine,X
 #_018977: STA.b $0E
 
-#_018979: LDA.l DrawObjects_type1_subtype_1_data_offset,X
+#_018979: LDA.l DrawObjects_type1_data_offset,X
 #_01897D: TAX
 
 #_01897E: LDY.b $08
@@ -1414,10 +1414,10 @@ RoomDraw_RoomObject:
 #_0189A6: ASL A
 #_0189A7: TAX
 
-#_0189A8: LDA.l DrawObjects_type1_subtype_2_routine,X
+#_0189A8: LDA.l DrawObjects_type2_routine,X
 #_0189AC: STA.b $0E
 
-#_0189AE: LDA.l DrawObjects_type1_subtype_2_data_offset,X
+#_0189AE: LDA.l DrawObjects_type2_data_offset,X
 #_0189B2: TAX
 
 #_0189B3: LDY.b $08
@@ -1443,10 +1443,10 @@ RoomDraw_RoomObject:
 #_0189CA: ASL A
 #_0189CB: TAX
 
-#_0189CC: LDA.l DrawObjects_type1_subtype_3_routine,X
+#_0189CC: LDA.l DrawObjects_type3_routine,X
 #_0189D0: STA.b $0E
 
-#_0189D2: LDA.l DrawObjects_type1_subtype_3_data_offset,X
+#_0189D2: LDA.l DrawObjects_type3_data_offset,X
 #_0189D6: TAX
 
 #_0189D7: LDY.b $08
@@ -1522,7 +1522,7 @@ RoomDraw_FloorChunks:
 .next_super
 #_018A1F: LDY.b $0C
 
-#_018A21: LDA.w RoomDraw_QuadrantDataOffset,Y
+#_018A21: LDA.w RoomQuadrantDataOffset,Y
 #_018A24: TAY
 
 #_018A25: LDA.w #$0008
@@ -3040,7 +3040,7 @@ RoomDraw_DoorSwitcherer:
 
 #_019142: LDA.b $BF
 #_019144: CMP.w #$4000
-#_019147: BNE .lower_layer_a
+#_019147: BNE .upper_layer_a
 
 #_019149: TYA
 #_01914A: ORA.w #$2000
@@ -3048,7 +3048,7 @@ RoomDraw_DoorSwitcherer:
 
 #_019150: TAY
 
-.lower_layer_a
+.upper_layer_a
 #_019151: LDA.w $0402
 #_019154: AND.w #$1000
 #_019157: BEQ .dont_draw
@@ -3071,12 +3071,12 @@ RoomDraw_DoorSwitcherer:
 
 #_019171: LDY.b $BF
 #_019173: CPY.w #$4000
-#_019176: BNE .lower_layer_b
+#_019176: BNE .upper_layer_b
 
 #_019178: CLC
 #_019179: ADC.w #$0004
 
-.lower_layer_b
+.upper_layer_b
 #_01917C: LDA.w #$0003
 #_01917F: STA.b $0E
 
@@ -3115,7 +3115,7 @@ RoomDraw_MovingWallWest:
 #_01919B: ASL A
 #_01919C: TAY
 
-#_01919D: LDA.w RoomDraw_MovingWallDirection,Y
+#_01919D: LDA.w MovingWallDirection,Y
 #_0191A0: PHA
 
 #_0191A1: ASL A
@@ -3189,7 +3189,7 @@ RoomDraw_MovingWallWest:
 
 #_0191ED: TAY
 
-#_0191EE: JSR MovingWall_FillReplacementBuffer
+#_0191EE: JSR FillMovingWallReplacementBuffer
 
 #_0191F1: LDY.b $08
 #_0191F3: LDX.w #obj072A-RoomDrawObjectData
@@ -3255,7 +3255,7 @@ RoomDraw_MovingWallEast:
 #_01922F: ASL A
 #_019230: TAY
 
-#_019231: LDA.w RoomDraw_MovingWallDirection,Y
+#_019231: LDA.w MovingWallDirection,Y
 #_019234: STA.b $0E
 
 #_019236: PHA
@@ -3335,7 +3335,7 @@ RoomDraw_MovingWallEast:
 
 #_019293: LDY.b $06
 
-#_019295: JMP.w MovingWall_FillReplacementBuffer
+#_019295: JMP.w FillMovingWallReplacementBuffer
 
 ;===================================================================================================
 
@@ -3389,7 +3389,7 @@ RoomDraw_CheckIfWallIsMoved:
 
 ;===================================================================================================
 
-MovingWall_FillReplacementBuffer:
+FillMovingWallReplacementBuffer:
 #_0192D1: LDX.w #$007E
 #_0192D4: LDA.w #$01EC
 
@@ -3786,7 +3786,7 @@ RoomDraw_Waterfall47:
 
 #_019469: ASL.b $B2
 
-#_01946B: JSR RoomDraw_2x2and1
+#_01946B: JSR RoomDraw_1x5
 
 #_01946E: TXA
 #_01946F: CLC
@@ -3797,7 +3797,7 @@ RoomDraw_Waterfall47:
 #_019475: INY
 
 .next
-#_019476: JSR RoomDraw_2x2and1
+#_019476: JSR RoomDraw_1x5
 
 #_019479: INY
 #_01947A: INY
@@ -3810,7 +3810,7 @@ RoomDraw_Waterfall47:
 #_019481: ADC.w #$000A
 #_019484: TAX
 
-#_019485: JMP.w RoomDraw_2x2and1
+#_019485: JMP.w RoomDraw_1x5
 
 ;===================================================================================================
 
@@ -3865,7 +3865,7 @@ RoomDraw_RightwardsBar4x3_1to16:
 
 #_0194C0: ASL.b $B2
 
-#_0194C2: JSR RoomDraw_RightwardBarSegment
+#_0194C2: JSR RoomDraw_1x3
 
 #_0194C5: INY
 #_0194C6: INY
@@ -3878,7 +3878,7 @@ RoomDraw_RightwardsBar4x3_1to16:
 ;---------------------------------------------------------------------------------------------------
 
 .next
-#_0194CD: JSR RoomDraw_RightwardBarSegment
+#_0194CD: JSR RoomDraw_1x3
 
 #_0194D0: INY
 #_0194D1: INY
@@ -3893,7 +3893,7 @@ RoomDraw_RightwardsBar4x3_1to16:
 #_0194D8: ADC.w #$0006
 #_0194DB: TAX
 
-#_0194DC: JMP.w RoomDraw_RightwardBarSegment
+#_0194DC: JMP.w RoomDraw_1x3
 
 ;===================================================================================================
 
@@ -3920,7 +3920,7 @@ RoomDraw_RightwardsShelf4x4_1to16:
 #_0194FA: ADC.w #$0010
 #_0194FD: TAX
 
-#_0194FE: JMP.w RoomDraw_RightwardShelfEnd
+#_0194FE: JMP.w RoomDraw_1x4
 
 ;===================================================================================================
 
@@ -3997,7 +3997,7 @@ RoomDraw_WaterOverlayA8x8_1to16:
 
 #_01955E: LDA.w $0403
 #_019561: AND.w DoorFlagMasks+1
-#_019564: BEQ RoomDraw_NoWater
+#_019564: BEQ .no_water
 
 #_019566: STZ.b $AF
 
@@ -4074,9 +4074,9 @@ RoomDraw_WaterOverlayA8x8_1to16:
 
 #_0195D4: RTS
 
-;===================================================================================================
+;---------------------------------------------------------------------------------------------------
 
-RoomDraw_NoWater:
+.no_water
 #_0195D5: REP #$30
 
 #_0195D7: LDX.w #obj0110-RoomDrawObjectData
@@ -4371,13 +4371,13 @@ RoomDraw_DownwardsDecor3x4spaced2_1to16:
 RoomDraw_OpenChestPlatform:
 #_019733: LDA.b $BF
 #_019735: CMP.w #$4000
-#_019738: BNE .lower_layer
+#_019738: BNE .upper_layer
 
 #_01973A: TYA
 #_01973B: ORA.w #$2000
 #_01973E: TAY
 
-.lower_layer
+.upper_layer
 #_01973F: TYX
 
 #_019740: LDY.w #obj0AB4-RoomDrawObjectData
@@ -4717,13 +4717,13 @@ RoomDraw_Chest:
 
 #_0198E1: LDA.b $BF
 #_0198E3: CMP.w #$4000
-#_0198E6: BNE .lower_layer
+#_0198E6: BNE .upper_layer
 
 #_0198E8: TYA
 #_0198E9: ORA.w #$2000
 #_0198EC: STA.w $06E0,X
 
-.lower_layer
+.upper_layer
 #_0198EF: LDA.w $0402
 #_0198F2: AND.w RoomFlagMask,X
 #_0198F5: BNE RoomDraw_Chest_opened
@@ -4879,13 +4879,13 @@ RoomDraw_BigChest:
 
 #_0199C5: LDA.b $BF
 #_0199C7: CMP.w #$4000
-#_0199CA: BNE .lower_layer
+#_0199CA: BNE .upper_layer
 
 #_0199CC: TYA
 #_0199CD: ORA.w #$A000
 #_0199D0: STA.w $06E0,X
 
-.lower_layer
+.upper_layer
 #_0199D3: LDA.w $0402
 #_0199D6: AND.w RoomFlagMask,X
 #_0199D9: BNE RoomDraw_BigChest_opened
@@ -4946,13 +4946,13 @@ RoomDraw_MagicBatAltar:
 
 #_019A13: LDA.b $BF
 #_019A15: CMP.w #$4000
-#_019A18: BNE .lower_layer
+#_019A18: BNE .upper_layer
 
 #_019A1A: LDA.b $08
 #_019A1C: ORA.w #$2000
 #_019A1F: STA.b $08
 
-.lower_layer
+.upper_layer
 #_019A21: LDX.b $08
 
 #_019A23: LDA.w #$0008
@@ -5015,14 +5015,14 @@ RoomDraw_EnabledStarSwitch:
 
 #_019A78: LDA.b $BF
 #_019A7A: CMP.w #$4000
-#_019A7D: BNE .lower_layer
+#_019A7D: BNE .upper_layer
 
 #_019A7F: TYA
 #_019A80: ORA.w #$2000
 #_019A83: LSR A
 #_019A84: STA.w $06A0,X
 
-.lower_layer
+.upper_layer
 #_019A87: INX
 #_019A88: INX
 #_019A89: STX.w $0432
@@ -5141,7 +5141,7 @@ UNREACHABLE_019B18:
 
 ;===================================================================================================
 
-RoomDraw_WaterHopStairs_A:
+RoomDraw_WaterHopStairsA:
 #_019B1E: LDA.b $AF
 #_019B20: AND.w #$00FF
 #_019B23: CMP.w #$001B
@@ -5155,7 +5155,7 @@ RoomDraw_WaterHopStairs_A:
 #_019B30: AND.w #$0100
 #_019B33: BNE .continue
 
-#_019B35: JMP.w RoomDraw_WaterHopStairs_B
+#_019B35: JMP.w RoomDraw_WaterHopStairsB
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -5347,13 +5347,13 @@ RoomDraw_PrisonCell:
 
 #_019C45: LDA.b $BF
 #_019C47: CMP.w #$4000
-#_019C4A: BNE .lower_layer
+#_019C4A: BNE .upper_layer
 
 #_019C4C: TXA
 #_019C4D: ORA.w #$2000
 #_019C50: TAX
 
-.lower_layer
+.upper_layer
 #_019C51: PHX
 
 #_019C52: LDY.w #obj1488-RoomDrawObjectData
@@ -5618,13 +5618,13 @@ RoomDraw_SomeBigDecors:
 
 #_019DA4: LDA.b $BF
 #_019DA6: CMP.w #$4000
-#_019DA9: BNE .lower_layer
+#_019DA9: BNE .upper_layer
 
 #_019DAB: LDA.b $08
 #_019DAD: ORA.w #$2000
 #_019DB0: STA.b $08
 
-.lower_layer
+.upper_layer
 #_019DB2: LDA.w #$0008
 #_019DB5: STA.b $0C
 
@@ -6330,7 +6330,7 @@ RoomDraw_BG2MaskFull:
 
 ;===================================================================================================
 
-RoomDraw_AutoStairs_North_MultiLayer_A:
+RoomDraw_AutoStairsNorthMultiLayerA:
 #_01A25D: PHX
 
 #_01A25E: LDX.w $043C
@@ -6347,7 +6347,7 @@ RoomDraw_AutoStairs_North_MultiLayer_A:
 
 ;===================================================================================================
 
-RoomDraw_AutoStairs_North_MultiLayer_B:
+RoomDraw_AutoStairsNorthMultiLayerB:
 #_01A26D: PHX
 
 #_01A26E: LDX.w $043E
@@ -6414,7 +6414,7 @@ AutoStairsNorthMergedStart:
 
 ;===================================================================================================
 
-RoomDraw_AutoStairs_North_MergedLayer_A:
+RoomDraw_AutoStairsNorthMergedLayerA:
 #_01A2C7: PHX
 
 #_01A2C8: LDX.w $0440
@@ -6436,7 +6436,7 @@ RoomDraw_AutoStairs_North_MergedLayer_A:
 
 ;===================================================================================================
 
-RoomDraw_AutoStairs_North_MergedLayer_B:
+RoomDraw_AutoStairsNorthMergedLayerB:
 #_01A2DF: LDA.b $AF
 #_01A2E1: AND.w #$00FF
 #_01A2E4: CMP.w #$001B ; check for dam gate
@@ -6469,7 +6469,7 @@ RoomDraw_AutoStairs_North_MergedLayer_B:
 
 ;===================================================================================================
 
-RoomDraw_AutoStairs_South_MultiLayer_A:
+RoomDraw_AutoStairsSouthMultiLayerA:
 #_01A30C: PHX
 
 #_01A30D: LDX.w $049A
@@ -6486,7 +6486,7 @@ RoomDraw_AutoStairs_South_MultiLayer_A:
 
 ;===================================================================================================
 
-RoomDraw_AutoStairs_South_MultiLayer_B:
+RoomDraw_AutoStairsSouthMultiLayerB:
 #_01A31C: PHX
 
 #_01A31D: LDX.w $049C
@@ -6541,14 +6541,14 @@ RoomDraw_AutoStairs_South_MultiLayer:
 
 ;===================================================================================================
 
-South_MergedStairs_BecomeMultiC:
+BecomeMultiCSouthMergedStairs:
 #_01A36A: STZ.w $0414
 
 #_01A36D: PLX
 
 ;===================================================================================================
 
-RoomDraw_AutoStairs_South_MultiLayer_C:
+RoomDraw_AutoStairsSouthMultiLayerC:
 #_01A36E: PHX
 
 #_01A36F: LDX.w $049E
@@ -6567,7 +6567,7 @@ RoomDraw_AutoStairs_South_MultiLayer_C:
 
 ;===================================================================================================
 
-RoomDraw_AutoStairs_South_MergedLayer:
+RoomDraw_AutoStairsSouthMergedLayer:
 #_01A380: PHX
 
 #_01A381: LDA.b $AF
@@ -6581,7 +6581,7 @@ RoomDraw_AutoStairs_South_MergedLayer:
 
 #_01A38F: LDA.l $7EF000,X
 #_01A393: AND.w #$0100
-#_01A396: BEQ South_MergedStairs_BecomeMultiC
+#_01A396: BEQ BecomeMultiCSouthMergedStairs
 
 #_01A398: LDA.w #$6202
 #_01A39B: STA.b $99
@@ -6603,7 +6603,7 @@ RoomDraw_AutoStairs_South_MergedLayer:
 
 ;===================================================================================================
 
-RoomDraw_WaterHopStairs_B:
+RoomDraw_WaterHopStairsB:
 #_01A3AE: LDX.w $0446
 
 #_01A3B1: TYA
@@ -6665,14 +6665,14 @@ RoomDraw_InterRoomFatStairsUp:
 
 #_01A423: LDA.b $BF
 #_01A425: CMP.w #$4000
-#_01A428: BNE .lower_layer
+#_01A428: BNE .upper_layer
 
 #_01A42A: TYA
 #_01A42B: ORA.w #$2000
 #_01A42E: LSR A
 #_01A42F: STA.w $06B0,X
 
-.lower_layer
+.upper_layer
 #_01A432: INX
 #_01A433: INX
 
@@ -6697,7 +6697,7 @@ RoomDraw_InterRoomFatStairsUp:
 
 ;===================================================================================================
 
-RoomDraw_InterRoomFatStairsDown_A:
+RoomDraw_InterRoomFatStairsDownA:
 #_01A458: LDX.w $043A
 #_01A45B: TYA
 #_01A45C: LSR A
@@ -6705,14 +6705,14 @@ RoomDraw_InterRoomFatStairsDown_A:
 
 #_01A460: LDA.b $BF
 #_01A462: CMP.w #$4000
-#_01A465: BNE .lower_layer
+#_01A465: BNE .upper_layer
 
 #_01A467: TYA
 #_01A468: ORA.w #$2000
 #_01A46B: LSR A
 #_01A46C: STA.w $06B0,X
 
-.lower_layer
+.upper_layer
 #_01A46F: INX
 #_01A470: INX
 
@@ -6729,7 +6729,7 @@ RoomDraw_InterRoomFatStairsDown_A:
 
 ;===================================================================================================
 
-RoomDraw_InterRoomFatStairsDown_B:
+RoomDraw_InterRoomFatStairsDownB:
 #_01A486: LDX.w $043A
 
 #_01A489: TYA
@@ -6738,14 +6738,14 @@ RoomDraw_InterRoomFatStairsDown_B:
 
 #_01A48E: LDA.b $BF
 #_01A490: CMP.w #$4000
-#_01A493: BNE .lower_layer
+#_01A493: BNE .upper_layer
 
 #_01A495: TYA
 #_01A496: ORA.w #$2000
 #_01A499: LSR A
 #_01A49A: STA.w $06B0,X
 
-.lower_layer
+.upper_layer
 #_01A49D: INX
 #_01A49E: INX
 
@@ -6773,7 +6773,7 @@ RoomDraw_SpiralStairsGoingUpUpper:
 
 #_01A4C0: LDA.b $BF
 #_01A4C2: CMP.w #$4000
-#_01A4C5: BNE .lower_layer
+#_01A4C5: BNE .upper_layer
 
 #_01A4C7: TYA
 #_01A4C8: SEC
@@ -6782,7 +6782,7 @@ RoomDraw_SpiralStairsGoingUpUpper:
 #_01A4CF: LSR A
 #_01A4D0: STA.w $06B0,X
 
-.lower_layer
+.upper_layer
 #_01A4D3: INX
 #_01A4D4: INX
 
@@ -6816,7 +6816,7 @@ RoomDraw_SpiralStairsGoingUpLower:
 
 #_01A501: LDA.b $BF
 #_01A503: CMP.w #$4000
-#_01A506: BNE .lower_layer
+#_01A506: BNE .upper_layer
 
 #_01A508: TYA
 #_01A509: SEC
@@ -6825,7 +6825,7 @@ RoomDraw_SpiralStairsGoingUpLower:
 #_01A510: LSR A
 #_01A511: STA.w $06B0,X
 
-.lower_layer
+.upper_layer
 #_01A514: INX
 #_01A515: INX
 
@@ -6858,7 +6858,7 @@ RoomDraw_SpiralStairsGoingDownUpper:
 
 #_01A53F: LDA.b $BF
 #_01A541: CMP.w #$4000
-#_01A544: BNE .lower_layer
+#_01A544: BNE .upper_layer
 
 #_01A546: TYA
 #_01A547: SEC
@@ -6867,7 +6867,7 @@ RoomDraw_SpiralStairsGoingDownUpper:
 #_01A54E: LSR A
 #_01A54F: STA.w $06B0,X
 
-.lower_layer
+.upper_layer
 #_01A552: INX
 #_01A553: INX
 
@@ -6912,7 +6912,7 @@ RoomDraw_SpiralStairsGoingDownLower:
 
 #_01A590: LDA.b $BF
 #_01A592: CMP.w #$4000
-#_01A595: BNE .lower_layer
+#_01A595: BNE .upper_layer
 
 #_01A597: TYA
 #_01A598: SEC
@@ -6921,7 +6921,7 @@ RoomDraw_SpiralStairsGoingDownLower:
 #_01A59F: LSR A
 #_01A5A0: STA.w $06B0,X
 
-.lower_layer
+.upper_layer
 #_01A5A3: INX
 #_01A5A4: INX
 
@@ -7085,14 +7085,14 @@ RoomDraw_StraightInterroomStairsGoingUpNorthLower:
 
 #_01A66D: LDA.b $BF
 #_01A66F: CMP.w #$4000
-#_01A672: BNE .lower_layer
+#_01A672: BNE .upper_layer
 
 #_01A674: TYA
 #_01A675: ORA.w #$2000
 #_01A678: LSR A
 #_01A679: STA.w $06B0,X
 
-.lower_layer
+.upper_layer
 #_01A67C: INX
 #_01A67D: INX
 
@@ -7122,14 +7122,14 @@ RoomDraw_StraightInterroomStairsGoingDownNorthLower:
 
 #_01A69E: LDA.b $BF
 #_01A6A0: CMP.w #$4000
-#_01A6A3: BNE .lower_layer
+#_01A6A3: BNE .upper_layer
 
 #_01A6A5: TYA
 #_01A6A6: ORA.w #$2000
 #_01A6A9: LSR A
 #_01A6AA: STA.w $06B0,X
 
-.lower_layer
+.upper_layer
 #_01A6AD: INX
 #_01A6AE: INX
 #_01A6AF: STX.w $04A6
@@ -7212,14 +7212,14 @@ RoomDraw_StraightInterroomStairsGoingUpSouthLower:
 
 #_01A725: LDA.b $BF
 #_01A727: CMP.w #$4000
-#_01A72A: BNE .lower_layer
+#_01A72A: BNE .upper_layer
 
 #_01A72C: TYA
 #_01A72D: ORA.w #$2000
 #_01A730: LSR A
 #_01A731: STA.w $06B0,X
 
-.lower_layer
+.upper_layer
 #_01A734: INX
 #_01A735: INX
 
@@ -7248,14 +7248,14 @@ RoomDraw_StraightInterroomStairsGoingDownSouthLower:
 
 #_01A753: LDA.b $BF
 #_01A755: CMP.w #$4000
-#_01A758: BNE .lower_layer
+#_01A758: BNE .upper_layer
 
 #_01A75A: TYA
 #_01A75B: ORA.w #$2000
 #_01A75E: LSR A
 #_01A75F: STA.w $06B0,X
 
-.lower_layer
+.upper_layer
 #_01A762: INX
 #_01A763: INX
 #_01A764: STX.w $04A8
@@ -7460,7 +7460,7 @@ RoomDraw_Door_North:
 
 #_01A858: TYA
 #_01A859: AND.w #$F07F
-#_01A85C: JSR RoomDraw_MakeDoorPartsHighPriority_Vertical
+#_01A85C: JSR MakeDoorPartsHighPriority_Vertical
 
 #_01A85F: JMP.w RoomDraw_NormalRangedDoors_North
 
@@ -7524,7 +7524,7 @@ RoomDraw_Door_North:
 #_01A8A8: AND.w #$000F
 #_01A8AB: TAY
 
-#_01A8AC: LDA.w DungeonMask,Y
+#_01A8AC: LDA.w BitMasks,Y
 
 #_01A8AF: LDY.b $08
 #_01A8B1: AND.w $068C
@@ -7548,7 +7548,7 @@ RoomDraw_Door_North:
 #_01A8C5: LDX.w $0460
 
 #_01A8C8: LDA.w #$0000
-#_01A8CB: JSR RoomDraw_FlagDoorsAndGetFinalType
+#_01A8CB: JSR FlagDoorsAndGetFinalType
 
 #_01A8CE: LDA.w DoorGFXDataOffset_North,Y
 #_01A8D1: TAY
@@ -7633,7 +7633,7 @@ RoomDraw_OneSidedShutters_North:
 
 #_01A934: LDX.w $0460
 #_01A937: LDA.w #$0000
-#_01A93A: JSR RoomDraw_FlagDoorsAndGetFinalType
+#_01A93A: JSR FlagDoorsAndGetFinalType
 #_01A93D: BCC .exit
 
 #_01A93F: LDA.w #$0018
@@ -7757,7 +7757,7 @@ RoomDraw_NormalRangedDoors_South:
 
 #_01A9CA: LDX.w $0460
 #_01A9CD: LDA.w #$0001
-#_01A9D0: JSR RoomDraw_FlagDoorsAndGetFinalType
+#_01A9D0: JSR FlagDoorsAndGetFinalType
 
 #_01A9D3: LDA.b $08
 #_01A9D5: SEC
@@ -7782,7 +7782,7 @@ RoomDraw_NormalRangedDoors_South:
 
 #_01A9F0: LDX.w $0460
 #_01A9F3: LDA.w #$0001
-#_01A9F6: JSR RoomDraw_FlagDoorsAndGetFinalType
+#_01A9F6: JSR FlagDoorsAndGetFinalType
 
 #_01A9F9: LDA.b $08
 #_01A9FB: SEC
@@ -7830,14 +7830,14 @@ RoomDraw_HighPriorityExitLight:
 #_01AA2F: TYA
 #_01AA30: CLC
 #_01AA31: ADC.w #$0200
-#_01AA34: JSR RoomDraw_MakeDoorPartsHighPriority_Vertical
+#_01AA34: JSR MakeDoorPartsHighPriority_Vertical
 
 ;===================================================================================================
 
 RoomDraw_CaveExitLight:
 #_01AA37: LDX.w $0460
 #_01AA3A: LDA.w #$0001
-#_01AA3D: JSR RoomDraw_FlagDoorsAndGetFinalType
+#_01AA3D: JSR FlagDoorsAndGetFinalType
 
 #_01AA40: LDY.b $08
 
@@ -7879,7 +7879,7 @@ RoomDraw_CheckIfLowerLayerDoors_Vertical:
 #_01AA6B: TYA
 #_01AA6C: CLC
 #_01AA6D: ADC.w #$0200
-#_01AA70: JSR RoomDraw_MakeDoorPartsHighPriority_Vertical
+#_01AA70: JSR MakeDoorPartsHighPriority_Vertical
 
 #_01AA73: BRA RoomDraw_OneSidedShutters_South
 
@@ -7900,7 +7900,7 @@ RoomDraw_OneSidedShutters_South:
 #_01AA82: LDX.w $0460
 
 #_01AA85: LDA.w #$0001
-#_01AA88: JSR RoomDraw_FlagDoorsAndGetFinalType
+#_01AA88: JSR FlagDoorsAndGetFinalType
 #_01AA8B: BCC .exit
 
 #_01AA8D: LDA.w #$0000
@@ -7998,7 +7998,7 @@ RoomDraw_Door_West:
 
 #_01AB03: TYA
 #_01AB04: AND.w #$FFC0
-#_01AB07: JSR RoomDraw_MakeDoorPartsHighPriority_Horizontal
+#_01AB07: JSR MakeDoorPartsHighPriority_Horizontal
 #_01AB0A: BRA RoomDraw_NormalRangedDoors_West
 
 ;---------------------------------------------------------------------------------------------------
@@ -8054,7 +8054,7 @@ RoomDraw_NormalRangedDoors_West:
 
 #_01AB44: LDX.w $0460
 #_01AB47: LDA.w #$0002
-#_01AB4A: JSR RoomDraw_FlagDoorsAndGetFinalType
+#_01AB4A: JSR FlagDoorsAndGetFinalType
 #_01AB4D: BCC .exit
 
 #_01AB4F: LDA.w #$0018
@@ -8166,7 +8166,7 @@ RoomDraw_NormalRangedDoors_East:
 #_01ABCD: TYA
 #_01ABCE: CLC
 #_01ABCF: ADC.w #$0008
-#_01ABD2: JSR RoomDraw_MakeDoorPartsHighPriority_Horizontal
+#_01ABD2: JSR MakeDoorPartsHighPriority_Horizontal
 
 #_01ABD5: BRA .not_lower_layer_door_2
 
@@ -8187,7 +8187,7 @@ RoomDraw_OneSidedShutters_East:
 
 #_01ABE4: LDX.w $0460
 #_01ABE7: LDA.w #$0003
-#_01ABEA: JSR RoomDraw_FlagDoorsAndGetFinalType
+#_01ABEA: JSR FlagDoorsAndGetFinalType
 #_01ABED: BCC EXIT_01AC3A
 
 #_01ABEF: LDA.w #$0000
@@ -8258,7 +8258,7 @@ RoomDraw_NorthCurtainDoor:
 #_01AC3D: LDX.w $0460
 
 #_01AC40: LDA.w #$0000
-#_01AC43: JSR RoomDraw_FlagDoorsAndGetFinalType
+#_01AC43: JSR FlagDoorsAndGetFinalType
 #_01AC46: BCC .not_open
 
 #_01AC48: LDX.w DoorGFXDataOffset_North,Y
@@ -8319,7 +8319,7 @@ RoomDraw_Door_ExplodingWall:
 #_01AC8E: TAY
 
 #_01AC8F: LDA.w $068C
-#_01AC92: AND.w DungeonMask,Y
+#_01AC92: AND.w BitMasks,Y
 #_01AC95: BEQ ExplodingWallNotOpen
 
 #_01AC97: SEP #$30
@@ -8487,7 +8487,7 @@ RoomDraw_OneSidedLowerShutters_North:
 #_01AD67: LDX.w $0460
 
 #_01AD6A: LDA.w #$0000
-#_01AD6D: JSR RoomDraw_FlagDoorsAndGetFinalType
+#_01AD6D: JSR FlagDoorsAndGetFinalType
 
 #_01AD70: LDA.w #$0044
 #_01AD73: CPY.w #$0048
@@ -8564,7 +8564,7 @@ RoomDraw_OneSidedLowerShutters_South:
 
 #_01ADD6: LDX.w $0460
 #_01ADD9: LDA.w #$0001
-#_01ADDC: JSR RoomDraw_FlagDoorsAndGetFinalType
+#_01ADDC: JSR FlagDoorsAndGetFinalType
 
 #_01ADDF: LDA.w #$0040
 #_01ADE2: CPY.w #$0048
@@ -8662,7 +8662,7 @@ RoomDraw_OneSidedLowerShutters_West:
 #_01AE5F: LDX.w $0460
 
 #_01AE62: LDA.w #$0002
-#_01AE65: JSR RoomDraw_FlagDoorsAndGetFinalType
+#_01AE65: JSR FlagDoorsAndGetFinalType
 
 #_01AE68: LDA.w #$0044
 #_01AE6B: CPY.w #$0048
@@ -8760,7 +8760,7 @@ RoomDraw_OneSidedLowerShutters_East:
 #_01AEF2: LDX.w $0460
 
 #_01AEF5: LDA.w #$0003
-#_01AEF8: JSR RoomDraw_FlagDoorsAndGetFinalType
+#_01AEF8: JSR FlagDoorsAndGetFinalType
 
 #_01AEFB: LDA.w #$0040
 
@@ -8845,7 +8845,7 @@ RoomDraw_OneSidedLowerShutters_East:
 
 RoomDraw_MakeDoorHighPriorityLowerLayer_North:
 #_01AF7F: LDA.w #$0000
-#_01AF82: JSR RoomDraw_FlagDoorsAndGetFinalType
+#_01AF82: JSR FlagDoorsAndGetFinalType
 
 #_01AF85: LDA.b $08
 #_01AF87: CLC
@@ -8890,7 +8890,7 @@ RoomDraw_MakeDoorHighPriority_North:
 
 RoomDraw_MakeDoorHighPriorityLowerLayer_South:
 #_01AFC8: LDA.w #$0001
-#_01AFCB: JSR RoomDraw_FlagDoorsAndGetFinalType
+#_01AFCB: JSR FlagDoorsAndGetFinalType
 
 #_01AFCE: LDA.b $08
 #_01AFD0: CLC
@@ -8932,7 +8932,7 @@ RoomDraw_MakeDoorHighPriority_South:
 
 RoomDraw_MakeDoorHighPriorityLowerLayer_West:
 #_01B00D: LDA.w #$0002
-#_01B010: JSR RoomDraw_FlagDoorsAndGetFinalType
+#_01B010: JSR FlagDoorsAndGetFinalType
 
 #_01B013: LDA.b $08
 #_01B015: INC A
@@ -8974,7 +8974,7 @@ RoomDraw_MakeDoorHighPriority_West:
 
 RoomDraw_MakeDoorHighPriorityLowerLayer_East:
 #_01B050: LDA.w #$0003
-#_01B053: JSR RoomDraw_FlagDoorsAndGetFinalType
+#_01B053: JSR FlagDoorsAndGetFinalType
 
 #_01B056: LDA.b $08
 #_01B058: CLC
@@ -9094,7 +9094,7 @@ RoomDraw_GetSize_1to15or32:
 
 ;===================================================================================================
 
-RoomDraw_FlagDoorsAndGetFinalType:
+FlagDoorsAndGetFinalType:
 #_01B0DA: STA.w $19C0,X
 
 #_01B0DD: TYA
@@ -9115,7 +9115,7 @@ RoomDraw_FlagDoorsAndGetFinalType:
 #_01B0F1: BCS .dont_flag_door_open
 
 #_01B0F3: LDA.w $068C
-#_01B0F6: AND.w DungeonMask,Y
+#_01B0F6: AND.w BitMasks,Y
 #_01B0F9: BEQ .dont_flag_door_open
 
 #_01B0FB: LDA.w $1980,X
@@ -9158,7 +9158,7 @@ RoomDraw_FlagDoorsAndGetFinalType:
 #_01B136: BEQ .dont_flag_door_open
 
 #_01B138: LDA.w $0400
-#_01B13B: ORA.w DungeonMask,X
+#_01B13B: ORA.w BitMasks,X
 #_01B13E: STA.w $0400
 
 .dont_flag_door_open
@@ -9169,10 +9169,10 @@ RoomDraw_FlagDoorsAndGetFinalType:
 #_01B145: STX.w $0460
 
 #_01B148: CPY.w #$0032
-#_01B14B: BEQ CLC_and_EXIT
+#_01B14B: BEQ FAIL_01B18F
 
 #_01B14D: CPY.w #$0008
-#_01B150: BEQ CLC_and_EXIT
+#_01B150: BEQ FAIL_01B18F
 
 #_01B152: LDA.b $04
 #_01B154: CMP.w #$001A
@@ -9201,11 +9201,11 @@ RoomDraw_FlagDoorsAndGetFinalType:
 
 #_01B17A: EOR.w #$0002
 #_01B17D: CMP.b $0A
-#_01B17F: BEQ CLC_and_EXIT
+#_01B17F: BEQ FAIL_01B18F
 
 .flag_shutter_door
 #_01B181: LDA.w $068C
-#_01B184: ORA.w DungeonMask,X
+#_01B184: ORA.w BitMasks,X
 #_01B187: STA.w $068C
 
 #_01B18A: LDY.w #$0000
@@ -9217,9 +9217,9 @@ RoomDraw_FlagDoorsAndGetFinalType:
 
 #_01B18E: RTS
 
-;---------------------------------------------------------------------------------------------------
+;===================================================================================================
 
-CLC_and_EXIT:
+#FAIL_01B18F:
 #_01B18F: CLC
 
 #_01B190: RTS
@@ -9232,7 +9232,7 @@ RoomDraw_SmallRailCorner:
 #_01B193: LDA.b [$BF],Y
 #_01B195: AND.w #$03FF
 #_01B198: CMP.b $0E
-#_01B19A: BEQ CLC_and_EXIT
+#_01B19A: BEQ FAIL_01B18F
 
 #_01B19C: SEC
 
@@ -9244,11 +9244,11 @@ UNREACHABLE_01B19E:
 #_01B19E: TAX
 
 #_01B19F: LDA.w #$0007
-#_01B1A2: BRA RoomDraw_MakeDoorPartsHighPriority_Vertical_set_size
+#_01B1A2: BRA MakeDoorPartsHighPriority_Vertical_set_size
 
 ;===================================================================================================
 
-RoomDraw_MakeDoorPartsHighPriority_Vertical:
+MakeDoorPartsHighPriority_Vertical:
 #_01B1A4: TAX
 
 #_01B1A5: LDA.w #$0007
@@ -9289,11 +9289,11 @@ UNREACHABLE_01B1E1:
 #_01B1E1: TAX
 
 #_01B1E2: LDA.w #$0007
-#_01B1E5: BRA RoomDraw_MakeDoorPartsHighPriority_Horizontal_continue
+#_01B1E5: BRA MakeDoorPartsHighPriority_Horizontal_continue
 
 ;===================================================================================================
 
-RoomDraw_MakeDoorPartsHighPriority_Horizontal:
+MakeDoorPartsHighPriority_Horizontal:
 #_01B1E7: TAX
 
 #_01B1E8: LDA.w #$0005
@@ -9407,7 +9407,7 @@ UNREACHABLE_01B264:
 
 ;===================================================================================================
 
-RoomDraw_2x2and1:
+RoomDraw_1x5:
 #_01B279: LDA.w RoomDrawObjectData+0,X
 #_01B27C: STA.b [$BF],Y
 
@@ -9429,7 +9429,7 @@ RoomDraw_2x2and1:
 
 RoomDraw_DrawDiagonalGrave:
 .next
-#_01B293: JSR RoomDraw_2x2and1
+#_01B293: JSR RoomDraw_1x5
 
 #_01B296: TYA
 #_01B297: CLC
@@ -9448,7 +9448,7 @@ RoomDraw_DrawDiagonalGrave:
 
 RoomDraw_DrawDiagonalAcute:
 .next
-#_01B2A1: JSR RoomDraw_2x2and1
+#_01B2A1: JSR RoomDraw_1x5
 
 #_01B2A4: TYA
 #_01B2A5: SEC
@@ -9522,7 +9522,7 @@ RoomDraw_Repeated1x1:
 
 ;===================================================================================================
 
-RoomDraw_RightwardShelfEnd:
+RoomDraw_1x4:
 #_01B2E1: LDA.w RoomDrawObjectData+0,X
 #_01B2E4: STA.b [$BF],Y
 
@@ -9539,7 +9539,7 @@ RoomDraw_RightwardShelfEnd:
 
 ;===================================================================================================
 
-RoomDraw_RightwardBarSegment:
+RoomDraw_1x3:
 #_01B2F6: LDA.w RoomDrawObjectData+0,X
 #_01B2F9: STA.b [$BF],Y
 
@@ -9608,13 +9608,13 @@ DrawBigGraySegment:
 
 #_01B350: LDA.b $BF
 #_01B352: CMP.w #$4000
-#_01B355: BNE .lower_layer
+#_01B355: BNE .upper_layer
 
 #_01B357: TYA
 #_01B358: ORA.w #$2000
 #_01B35B: STA.w $0540,X
 
-.lower_layer
+.upper_layer
 #_01B35E: LDA.b [$BF],Y
 #_01B360: STA.w $0560,X
 
@@ -9685,13 +9685,13 @@ RoomDraw_SinglePot:
 
 #_01B3AE: LDA.b $BF
 #_01B3B0: CMP.w #$4000
-#_01B3B3: BNE .lower_layer
+#_01B3B3: BNE .upper_layer
 
 #_01B3B5: TYA
 #_01B3B6: ORA.w #$2000
 #_01B3B9: STA.w $0540,X
 
-.lower_layer
+.upper_layer
 #_01B3BC: LDA.w #$0D0E
 #_01B3BF: STA.w $0560,X
 
@@ -9779,13 +9779,13 @@ RoomDraw_BombableFloor:
 
 #_01B43F: LDA.b $BF
 #_01B441: CMP.w #$4000
-#_01B444: BNE .lower_layer
+#_01B444: BNE .upper_layer
 
 #_01B446: TYA
 #_01B447: ORA.w #$2000
 #_01B44A: STA.w $0540,X
 
-.lower_layer
+.upper_layer
 #_01B44D: PHY
 
 #_01B44E: LDY.b $0E
@@ -9866,13 +9866,13 @@ RoomDraw_HammerPegSingle:
 
 #_01B4AC: LDA.b $BF
 #_01B4AE: CMP.w #$4000
-#_01B4B1: BNE .lower_layer
+#_01B4B1: BNE .upper_layer
 
 #_01B4B3: TYA
 #_01B4B4: ORA.w #$2000
 #_01B4B7: STA.w $0540,X
 
-.lower_layer
+.upper_layer
 #_01B4BA: LDA.w #$19D8
 #_01B4BD: STA.w $0560,X
 
@@ -9974,7 +9974,7 @@ NULL_01B53C:
 
 ;===================================================================================================
 
-pool Underworld_LoadHeader
+pool LoadRoomHeader
 
 .camera_offset
 #_01B560: dw  256
@@ -9984,7 +9984,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Underworld_LoadHeader:
+LoadRoomHeader:
 #_01B564: STZ.w $0642
 #_01B567: STZ.w $0646
 #_01B56A: STZ.w $0641
@@ -10065,19 +10065,19 @@ Underworld_LoadHeader:
 #_01B5D2: AND.w #$FE00
 #_01B5D5: STA.w $062E
 
+;---------------------------------------------------------------------------------------------------
+
 #_01B5D8: LDA.b $A0
 #_01B5DA: ASL A
 #_01B5DB: TAX
 
-#_01B5DC: LDA.l RoomHeader_RoomToPointer,X
+#_01B5DC: LDA.l RoomHeaderPointers,X
 #_01B5E0: STA.b $0D
-
-;---------------------------------------------------------------------------------------------------
 
 #_01B5E2: SEP #$20
 #_01B5E4: REP #$10
 
-#_01B5E6: LDA.b #RoomHeader_RoomToPointer>>16
+#_01B5E6: LDA.b #RoomHeaderPointers>>16
 #_01B5E8: STA.b $0F
 
 #_01B5EA: LDA.w $0414
@@ -10295,7 +10295,7 @@ Underworld_LoadHeader:
 #_01B71E: BEQ .room_id_X0
 
 #_01B720: LDA.w #$0024
-#_01B723: JSR Underworld_CheckAdjacentRoomsForOpenDoors
+#_01B723: JSR CheckAdjacentRoomsForOpenDoors
 
 .room_id_X0
 #_01B726: LDA.b $A0
@@ -10306,7 +10306,7 @@ Underworld_LoadHeader:
 #_01B72D: BEQ .room_id_XF
 
 #_01B72F: LDA.w #$0018
-#_01B732: JSR Underworld_CheckAdjacentRoomsForOpenDoors
+#_01B732: JSR CheckAdjacentRoomsForOpenDoors
 
 .room_id_XF
 #_01B735: LDA.b $A0
@@ -10316,7 +10316,7 @@ Underworld_LoadHeader:
 #_01B73C: BMI .room_id_0X
 
 #_01B73E: LDA.w #$000C
-#_01B741: JSR Underworld_CheckAdjacentRoomsForOpenDoors
+#_01B741: JSR CheckAdjacentRoomsForOpenDoors
 
 .room_id_0X
 #_01B744: LDA.b $A0
@@ -10328,7 +10328,7 @@ Underworld_LoadHeader:
 #_01B74E: BCS .room_id_FX
 
 #_01B750: LDA.w #$0000
-#_01B753: JSR Underworld_CheckAdjacentRoomsForOpenDoors
+#_01B753: JSR CheckAdjacentRoomsForOpenDoors
 
 .room_id_FX
 #_01B756: SEP #$30
@@ -10340,10 +10340,10 @@ Underworld_LoadHeader:
 
 ;===================================================================================================
 
-Underworld_CheckAdjacentRoomsForOpenDoors:
+CheckAdjacentRoomsForOpenDoors:
 #_01B759: STA.b $04
 
-#_01B75B: JSR Underworld_LoadAdjacentRoomDoors
+#_01B75B: JSR LoadAdjacentRoomDoors
 
 #_01B75E: LDY.w #$0000
 
@@ -10357,38 +10357,38 @@ Underworld_CheckAdjacentRoomsForOpenDoors:
 #_01B76B: LDX.b $04
 
 #_01B76D: AND.w #$00FF
-#_01B770: CMP.w RoomDraw_DoorPartnerSelfLocation,X
+#_01B770: CMP.w PartnerDoorSelfLocation,X
 #_01B773: BEQ .match
 
 #_01B775: INX
 #_01B776: INX
-#_01B777: CMP.w RoomDraw_DoorPartnerSelfLocation,X
+#_01B777: CMP.w PartnerDoorSelfLocation,X
 #_01B77A: BEQ .match
 
 #_01B77C: INX
 #_01B77D: INX
-#_01B77E: CMP.w RoomDraw_DoorPartnerSelfLocation,X
+#_01B77E: CMP.w PartnerDoorSelfLocation,X
 #_01B781: BEQ .match
 
 #_01B783: INX
 #_01B784: INX
-#_01B785: CMP.w RoomDraw_DoorPartnerSelfLocation,X
+#_01B785: CMP.w PartnerDoorSelfLocation,X
 #_01B788: BEQ .match
 
 #_01B78A: INX
 #_01B78B: INX
-#_01B78C: CMP.w RoomDraw_DoorPartnerSelfLocation,X
+#_01B78C: CMP.w PartnerDoorSelfLocation,X
 #_01B78F: BEQ .match
 
 #_01B791: INX
 #_01B792: INX
-#_01B793: CMP.w RoomDraw_DoorPartnerSelfLocation,X
+#_01B793: CMP.w PartnerDoorSelfLocation,X
 #_01B796: BNE .no_match
 
 ;---------------------------------------------------------------------------------------------------
 
 .match
-#_01B798: LDA.w RoomDraw_DoorPartnerLocation,X
+#_01B798: LDA.w PartnerDoorLocation,X
 #_01B79B: STA.b $00
 
 #_01B79D: LDX.w #$0000
@@ -10431,12 +10431,12 @@ Underworld_CheckAdjacentRoomsForOpenDoors:
 
 .not_shutter
 #_01B7D3: LDA.w $1100
-#_01B7D6: AND.w DungeonMask,Y
+#_01B7D6: AND.w BitMasks,Y
 #_01B7D9: BEQ .no_match
 
 .open_door
 #_01B7DB: LDA.w $068C
-#_01B7DE: ORA.w DungeonMask,X
+#_01B7DE: ORA.w BitMasks,X
 #_01B7E1: STA.w $068C
 
 .no_match
@@ -10454,7 +10454,7 @@ Underworld_CheckAdjacentRoomsForOpenDoors:
 
 ;===================================================================================================
 
-Underworld_LoadAdjacentRoomDoors:
+LoadAdjacentRoomDoors:
 #_01B7EF: STX.b $0E
 
 #_01B7F1: TXA
@@ -10499,7 +10499,7 @@ Underworld_LoadAdjacentRoomDoors:
 
 .default
 #_01B82F: LDA.w $1100
-#_01B832: ORA.w DungeonMask,X
+#_01B832: ORA.w BitMasks,X
 #_01B835: STA.w $1100
 
 .not_default
@@ -10513,7 +10513,7 @@ Underworld_LoadAdjacentRoomDoors:
 
 ;===================================================================================================
 
-Underworld_ApplyRoomOverlay:
+ApplyRoomHolesOverlay:
 #_01B83E: REP #$30
 
 #_01B840: LDA.b $BA
@@ -10533,7 +10533,7 @@ Underworld_ApplyRoomOverlay:
 #_01B856: LDA.l OverlayDataPointers+0,X
 #_01B85A: STA.b $B7
 
-#_01B85C: JSR Underworld_DrawRoomOverlay
+#_01B85C: JSR DrawRoomOverlay
 
 #_01B85F: REP #$30
 
@@ -10581,7 +10581,7 @@ Underworld_ApplyRoomOverlay:
 #_01B88E: JSR Underworld_PrepNextTilemapUpdateDMA
 
 #_01B891: PLA
-#_01B892: JSR Underworld_DrawRoomOverlay_Apply
+#_01B892: JSR ApplyOverlayStamp
 
 #_01B895: BRA .next
 
@@ -10604,21 +10604,21 @@ Underworld_ApplyRoomOverlay:
 
 ;===================================================================================================
 
-pool Underworld_LoadAttribute_Selectable
+pool LoadNextObjectAttributeSet
 
 .vectors
-#_01B8A8: dw Underworld_LoadBasicAttribute
-#_01B8AA: dw Underworld_LoadBasicAttribute_partial
-#_01B8AC: dw Underworld_LoadObjectAttribute
-#_01B8AE: dw Underworld_LoadDoorAttribute
-#_01B8B0: dw Underworld_InitializePegAttribute
+#_01B8A8: dw LoadBasicObjectAttributess
+#_01B8AA: dw LoadBasicObjectAttributess_partial
+#_01B8AC: dw LoadComplexObjectAttributes
+#_01B8AE: dw LoadDoorObjectAttributes
+#_01B8B0: dw InitializePegAttributes
 #_01B8B2: dw EXIT_01B966
 
 pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Underworld_LoadAttribute_Selectable:
+LoadNextObjectAttributeSet:
 #_01B8B4: LDA.w $0200
 #_01B8B7: ASL A
 #_01B8B8: TAX
@@ -10631,7 +10631,7 @@ Underworld_LoadAttribute_Selectable:
 
 ;===================================================================================================
 
-Underworld_LoadAttributeTable:
+LoadEveryObjectAttributeSet:
 #_01B8BF: REP #$20
 
 #_01B8C1: STZ.b $B2
@@ -10640,17 +10640,17 @@ Underworld_LoadAttributeTable:
 #_01B8C5: LDA.w #$1000
 #_01B8C8: STA.b $00
 
-#_01B8CA: JSR Underworld_LoadBasicAttribute_full
+#_01B8CA: JSR LoadBasicObjectAttributess_full
 
 #_01B8CD: SEP #$30
 
-#_01B8CF: JSR Underworld_LoadObjectAttribute
-#_01B8D2: JSR Underworld_LoadDoorAttribute
+#_01B8CF: JSR LoadComplexObjectAttributes
+#_01B8D2: JSR LoadDoorObjectAttributes
 
 #_01B8D5: LDA.l $7EC172
 #_01B8D9: BEQ .dont_flip
 
-#_01B8DB: JSL Underworld_FlipCrystalPegAttribute
+#_01B8DB: JSL FlipCrystalPegAttributes
 
 .dont_flip
 #_01B8DF: STZ.w $0200
@@ -10659,7 +10659,7 @@ Underworld_LoadAttributeTable:
 
 ;===================================================================================================
 
-Underworld_LoadBasicAttribute:
+LoadBasicObjectAttributess:
 #_01B8E3: REP #$20
 
 #_01B8E5: INC.w $0200
@@ -10669,7 +10669,7 @@ Underworld_LoadBasicAttribute:
 
 ;===================================================================================================
 
-Underworld_LoadBasicAttribute_partial:
+LoadBasicObjectAttributess_partial:
 #_01B8EC: REP #$20
 
 #_01B8EE: LDA.w #$0040
@@ -10677,7 +10677,7 @@ Underworld_LoadBasicAttribute_partial:
 
 ;===================================================================================================
 
-Underworld_LoadBasicAttribute_full:
+LoadBasicObjectAttributess_full:
 #_01B8F3: PHB
 
 #_01B8F4: LDX.b #$7E
@@ -10777,7 +10777,7 @@ Underworld_LoadBasicAttribute_full:
 
 ;===================================================================================================
 
-Underworld_LoadObjectAttribute:
+LoadComplexObjectAttributes:
 #_01B967: REP #$30
 
 #_01B969: LDX.w $0432
@@ -11118,7 +11118,7 @@ Underworld_LoadObjectAttribute:
 #_01BB78: STA.l $7F2002,X
 #_01BB7C: STA.l $7F30C2,X
 
-#_01BB80: LDA.w #$0001 ; TILETYPE 01, TILETYPE 01
+#_01BB80: LDA.w #$0001 ; TILETYPE 01, TILETYPE 00
 #_01BB83: STA.l $7F2040,X
 #_01BB87: STA.l $7F3080,X
 
@@ -11181,7 +11181,7 @@ Underworld_LoadObjectAttribute:
 .next_water_overlay_a2
 #_01BBEF: LDX.w $06B8,Y
 
-#_01BBF2: LDA.w #$0003 ; TILETYPE 00, TILETYPE 03
+#_01BBF2: LDA.w #$0003 ; TILETYPE 03, TILETYPE 00
 #_01BBF5: STA.l $7F2000,X
 
 #_01BBF9: XBA
@@ -11353,7 +11353,7 @@ Underworld_LoadObjectAttribute:
 #_01BCFC: BCC .hidden_chests
 
 .no_hidden_chests
-#_01BCFE: JSR Underworld_SetChestAttributes
+#_01BCFE: JSR SetChestAttributes
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -11488,7 +11488,7 @@ Underworld_LoadObjectAttribute:
 
 ;===================================================================================================
 
-Underworld_SetChestAttributes:
+SetChestAttributes:
 .next
 #_01BDDB: LDA.w $06E0,Y
 #_01BDDE: BEQ .to_next
@@ -11528,7 +11528,7 @@ Underworld_SetChestAttributes:
 
 ;===================================================================================================
 
-Underworld_LoadDoorAttribute:
+LoadDoorObjectAttributes:
 #_01BE17: REP #$30
 
 #_01BE19: LDY.w #$0000
@@ -11537,7 +11537,7 @@ Underworld_LoadDoorAttribute:
 #_01BE1C: LDA.w $19A0,Y
 #_01BE1F: BEQ .skip
 
-#_01BE21: JSR Underworld_LoadSingleDoorAttribute
+#_01BE21: JSR LoadSingleDoorAttribute
 
 .skip
 #_01BE24: INY
@@ -11547,7 +11547,7 @@ Underworld_LoadDoorAttribute:
 
 ;---------------------------------------------------------------------------------------------------
 
-#_01BE2B: JSR Underworld_LoadSingleDoorTileType
+#_01BE2B: JSR LoadSingleDoorTileType
 #_01BE2E: JSR ChangeDoorToSwitch
 
 #_01BE31: INC.w $0200
@@ -11556,7 +11556,7 @@ Underworld_LoadDoorAttribute:
 
 ;===================================================================================================
 
-Underworld_LoadSingleDoorAttribute:
+LoadSingleDoorAttribute:
 #_01BE35: LDA.w $1980,Y
 #_01BE38: AND.w #$00FE
 #_01BE3B: STA.b $02
@@ -11591,7 +11591,7 @@ Underworld_LoadSingleDoorAttribute:
 #_01BE6A: BNE .not_exit_or_lower_layer
 
 .exit_or_lower_layer
-#_01BE6C: JMP.w AddFullLongDoorDoorwayProps
+#_01BE6C: JMP.w AddFullLongDoorwayProps
 
 .not_exit_or_lower_layer
 #_01BE6F: CMP.w #$0030
@@ -11625,7 +11625,7 @@ Underworld_LoadSingleDoorAttribute:
 #_01BE93: TAX
 
 #_01BE94: LDA.w $068C
-#_01BE97: AND.w DungeonMask,X
+#_01BE97: AND.w BitMasks,X
 #_01BE9A: BNE .apply_doorway
 
 #_01BE9C: SEP #$20
@@ -11806,14 +11806,14 @@ UNREACHABLE_01BFB3:
 #_01BFB7: TAX
 
 #_01BFB8: LDA.w $068C
-#_01BFBB: AND.w DungeonMask,X
-#_01BFBE: BNE Underworld_DoorLoadBlastWallAttribute
+#_01BFBB: AND.w BitMasks,X
+#_01BFBE: BNE LoadBlastWallAttribute
 
 #_01BFC0: RTS
 
 ;===================================================================================================
 
-Underworld_DoorLoadBlastWallAttribute:
+LoadBlastWallAttribute:
 #_01BFC1: LDA.w $19C0,Y
 #_01BFC4: AND.w #$0002
 #_01BFC7: BNE .horizontal
@@ -11913,18 +11913,18 @@ Underworld_DoorLoadBlastWallAttribute:
 
 AddDoorwayPropsForWeirdos:
 #_01C085: CMP.w #$0040
-#_01C088: BEQ AddFullLongDoorDoorwayProps
+#_01C088: BEQ AddFullLongDoorwayProps
 
 #_01C08A: CMP.w #$0046
-#_01C08D: BEQ AddFullLongDoorDoorwayProps
+#_01C08D: BEQ AddFullLongDoorwayProps
 
 #_01C08F: TYA
 #_01C090: AND.w #$00FF
 #_01C093: TAX
 
 #_01C094: LDA.w $068C
-#_01C097: AND.w DungeonMask,X
-#_01C09A: BNE AddFullLongDoorDoorwayProps
+#_01C097: AND.w BitMasks,X
+#_01C09A: BNE AddFullLongDoorwayProps
 
 #_01C09C: SEP #$20
 
@@ -11948,7 +11948,7 @@ AddDoorwayPropsForWeirdos:
 
 ;===================================================================================================
 
-AddFullLongDoorDoorwayProps:
+AddFullLongDoorwayProps:
 #_01C0B8: LDX.b $02
 
 #_01C0BA: LDA.w DoorwayTileProperties,X
@@ -12152,20 +12152,20 @@ ChangeDoorToSwitch:
 
 ;===================================================================================================
 
-Underworld_InitializePegAttribute:
+InitializePegAttributes:
 #_01C21C: INC.w $0200
 
 #_01C21F: LDA.l $7EC172
 #_01C223: BEQ .exit
 
-#_01C225: JSL Underworld_FlipCrystalPegAttribute
+#_01C225: JSL FlipCrystalPegAttributes
 
 .exit
 #_01C229: RTS
 
 ;===================================================================================================
 
-Underworld_FlipCrystalPegAttribute:
+FlipCrystalPegAttributes:
 #_01C22A: REP #$10
 
 #_01C22C: LDX.w #$07FF
@@ -12236,7 +12236,7 @@ Underworld_FlipCrystalPegAttribute:
 
 ;===================================================================================================
 
-pool Underworld_HandleRoomTags
+pool HandleRoomTags
 
 .vectors
 #_01C27D: dw RoomTag_Nothing                    ; 0x00
@@ -12260,7 +12260,7 @@ pool Underworld_HandleRoomTags
 #_01C2A1: dw RoomTag_SouthTrigger               ; 0x12
 #_01C2A3: dw RoomTag_QuadrantTrigger            ; 0x13
 #_01C2A5: dw RoomTag_PullSwitchDoor             ; 0x14
-#_01C2A7: dw RoomTag_PrizeTriggerDoorDoor       ; 0x15
+#_01C2A7: dw RoomTag_PrizeTriggerDoor           ; 0x15
 #_01C2A9: dw RoomTag_SwitchTrigger_HoldDoor     ; 0x16
 #_01C2AB: dw RoomTag_SwitchTrigger_ToggleDoor   ; 0x17
 #_01C2AD: dw RoomTag_WaterOff                   ; 0x18
@@ -12308,13 +12308,13 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Underworld_HandleRoomTags:
+HandleRoomTags:
 #_01C2FD: LDA.w $04C7
 #_01C300: BNE .ignore_tags
 
 #_01C302: SEP #$30
 
-#_01C304: JSR Underworld_DetectStaircase
+#_01C304: JSR DetectStaircase
 
 #_01C307: STZ.b $0E
 
@@ -12364,7 +12364,7 @@ RoomTag_Nothing:
 
 ;===================================================================================================
 
-Underworld_DetectStaircase:
+DetectStaircase:
 #_01C329: REP #$20
 
 #_01C32B: LDA.b $67
@@ -12377,7 +12377,7 @@ Underworld_DetectStaircase:
 
 #_01C335: LDA.b $20
 #_01C337: CLC
-#_01C338: ADC.w DetectStaircase_offset_y,Y
+#_01C338: ADC.w StaircaseFinder_offset_y,Y
 #_01C33B: AND.w #$01F8
 
 #_01C33E: ASL A
@@ -12474,7 +12474,7 @@ Underworld_DetectStaircase:
 
 #_01C3A5: SEP #$30
 
-#_01C3A7: JSL Underworld_FlagRoomData_Quadrants
+#_01C3A7: JSL FullyUpdateRoomFlags
 
 #_01C3AB: SEP #$30
 
@@ -12557,7 +12557,7 @@ Underworld_DetectStaircase:
 
 ;---------------------------------------------------------------------------------------------------
 
-#_01C411: JSL Link_AnimateIntraStairClimbAndSFX
+#_01C411: JSL AnimateStairClimbAndSFX
 
 #_01C415: LDX.b #$0E
 #_01C417: STX.b $11
@@ -12569,7 +12569,7 @@ Underworld_DetectStaircase:
 .set_submodule_only
 #_01C41A: STX.b $11
 
-#_01C41C: JSL LinkResetPushTimer
+#_01C41C: JSL ResetPushTimer
 
 #_01C420: RTS
 
@@ -12815,7 +12815,7 @@ RoomTag_PullSwitchDoor:
 
 ;===================================================================================================
 
-RoomTag_PrizeTriggerDoorDoor:
+RoomTag_PrizeTriggerDoor:
 #_01C508: LDA.w $040C
 #_01C50B: LSR A
 #_01C50C: TAX
@@ -12885,7 +12885,7 @@ RoomTag_SwitchTrigger_HoldDoor:
 #_01C56B: AND.w #$00FF
 #_01C56E: BNE .fail
 
-#_01C570: JSR RoomTag_CheckForPressedSwitch
+#_01C570: JSR CheckForPressedSwitch
 
 #_01C573: LDX.w #$0000
 #_01C576: BCS .fail
@@ -13023,7 +13023,7 @@ PushPressurePlate:
 #_01C61E: SEP #$30
 
 #_01C620: LDY.b #$10
-#_01C622: JSL Underworld_UpdateTilemapWithCommonTile
+#_01C622: JSL UpdateTilemapWithCommonObject
 
 .exit
 #_01C626: SEP #$30
@@ -13261,7 +13261,7 @@ RoomTag_GetHeartForPrize:
 #_01C73D: TAX
 
 #_01C73E: LDA.l .prizes,X
-#_01C742: JSL Ancilla_SpawnFallingPrize
+#_01C742: JSL SpawnFallingDungeonPrize
 
 #_01C746: PLA
 #_01C747: STA.b $0E
@@ -13284,7 +13284,7 @@ RoomTag_Agahnim:
 #_01C759: ASL A
 #_01C75A: BCC .exit
 
-#_01C75C: JSL Palette_RevertTranslucencySwap
+#_01C75C: JSL RevertTranslucencySwap
 
 #_01C760: STZ.b $AE
 
@@ -13470,19 +13470,19 @@ RoomTag_OperateChestReveal:
 #_01C837: LDX.w $1000
 
 #_01C83A: LDA.w #$0000
-#_01C83D: JSR RoomTag_BuildChestStripes
+#_01C83D: JSR BuildChestStripes
 #_01C840: STA.w $1002,X
 
 #_01C843: LDA.w #$0080
-#_01C846: JSR RoomTag_BuildChestStripes
+#_01C846: JSR BuildChestStripes
 #_01C849: STA.w $1008,X
 
 #_01C84C: LDA.w #$0002
-#_01C84F: JSR RoomTag_BuildChestStripes
+#_01C84F: JSR BuildChestStripes
 #_01C852: STA.w $100E,X
 
 #_01C855: LDA.w #$0082
-#_01C858: JSR RoomTag_BuildChestStripes
+#_01C858: JSR BuildChestStripes
 #_01C85B: STA.w $1014,X
 
 ;---------------------------------------------------------------------------------------------------
@@ -13592,7 +13592,7 @@ RoomTag_MovingWall_East:
 #_01C8E5: JSR RoomTag_MovingWallShakeItUp
 
 #_01C8E8: LDA.w #$FFFF
-#_01C8EB: JSR MovingWall_MoveALittle
+#_01C8EB: JSR MoveTheWallALittle
 
 .continue
 #_01C8EE: STA.w $0312
@@ -13617,7 +13617,7 @@ RoomTag_MovingWall_East:
 #_01C90B: CMP.w MovingWallEastBoundaries,X
 #_01C90E: BCS .dont_advance
 
-#_01C910: JSR RoomTag_AdvanceGiganticWall
+#_01C910: JSR AdvanceGiganticWallMode
 
 #_01C913: LDA.w $0422
 #_01C916: CMP.w MovingWallEastBoundaries,X
@@ -13674,19 +13674,13 @@ RoomTag_MovingWall_East:
 
 ;===================================================================================================
 
-OverworldShake_Offsets_Y:
-#_01C961: db   1
-#_01C962: db   0
-#_01C963: db  -1
-#_01C964: db  -1
+CutsceneShake_Y:
+#_01C961: dw   1,  -1
 
 ;---------------------------------------------------------------------------------------------------
 
-OverworldShake_Offsets_X:
-#_01C965: db  -1
-#_01C966: db  -1
-#_01C967: db   1
-#_01C968: db   0
+CutsceneShake_X:
+#_01C965: dw  -1,   1
 
 ;===================================================================================================
 
@@ -13696,10 +13690,10 @@ RoomTag_MovingWallShakeItUp:
 #_01C96E: ASL A
 #_01C96F: TAX
 
-#_01C970: LDA.l OverworldShake_Offsets_Y,X
+#_01C970: LDA.l CutsceneShake_Y,X
 #_01C974: STA.w $011A
 
-#_01C977: LDA.l OverworldShake_Offsets_X,X
+#_01C977: LDA.l CutsceneShake_X,X
 #_01C97B: STA.w $011C
 
 #_01C97E: LDX.b $0E
@@ -13731,7 +13725,7 @@ RoomTag_MovingWall_West:
 #_01C99C: JSR RoomTag_MovingWallShakeItUp
 
 #_01C99F: LDA.w #$0001
-#_01C9A2: JSR MovingWall_MoveALittle
+#_01C9A2: JSR MoveTheWallALittle
 
 .continue
 #_01C9A5: STA.w $0312
@@ -13754,7 +13748,7 @@ RoomTag_MovingWall_West:
 #_01C9BF: CMP.w MovingWallWestBoundaries,X
 #_01C9C2: BCC .dont_advance
 
-#_01C9C4: JSR RoomTag_AdvanceGiganticWall
+#_01C9C4: JSR AdvanceGiganticWallMode
 
 #_01C9C7: LDA.w $0422
 #_01C9CA: CMP.w MovingWallWestBoundaries,X
@@ -13875,7 +13869,7 @@ RoomTag_MovingWallTorchesCheck:
 
 ;===================================================================================================
 
-MovingWall_MoveALittle:
+MoveTheWallALittle:
 #_01CA66: LDA.w #$2200
 #_01CA69: CLC
 #_01CA6A: ADC.w $041C
@@ -13888,7 +13882,7 @@ MovingWall_MoveALittle:
 
 ;===================================================================================================
 
-RoomTag_AdvanceGiganticWall:
+AdvanceGiganticWallMode:
 #_01CA75: LDX.b $0E
 
 #_01CA77: LDY.b $AE,X
@@ -14234,7 +14228,7 @@ RoomTag_TriggerHoles:
 .dont_copy
 #_01CC28: REP #$30
 
-#_01CC2A: JSR RoomTag_CheckForPressedSwitch
+#_01CC2A: JSR CheckForPressedSwitch
 #_01CC2D: BCC .exit
 
 #_01CC2F: SEP #$30
@@ -14322,7 +14316,7 @@ RoomTag_TriggerChestHoles:
 RoomTag_Holes2:
 #_01CC89: REP #$30
 
-#_01CC8B: JSR RoomTag_CheckForPressedSwitch
+#_01CC8B: JSR CheckForPressedSwitch
 #_01CC8E: BCC EXIT_01CC86
 
 #_01CC90: LDY.w #$0005
@@ -14463,7 +14457,7 @@ RoomTag_MaybeCheckShutters:
 #_01CD43: AND.w #$00FF
 #_01CD46: BNE RoomTagFail
 
-#_01CD48: JSR RoomTag_GetTilemapCoords
+#_01CD48: JSR GetLinksTilemapOffset
 
 #_01CD4B: LDA.l $7F2000,X
 #_01CD4F: CMP.w #$2323 ; TILETYPE 23
@@ -14531,7 +14525,7 @@ RoomTagFail:
 
 ;===================================================================================================
 
-RoomTag_GetTilemapCoords:
+GetLinksTilemapOffset:
 #_01CDA5: LDA.b $22
 #_01CDA7: CLC
 #_01CDA8: ADC.w #$FFFF
@@ -14568,7 +14562,7 @@ RoomTag_GetTilemapCoords:
 
 ;===================================================================================================
 
-RoomTag_CheckForPressedSwitch:
+CheckForPressedSwitch:
 #_01CDCC: LDA.w $02E4
 #_01CDCF: AND.w #$00FF
 #_01CDD2: BNE RoomTagFail
@@ -14577,7 +14571,7 @@ RoomTag_CheckForPressedSwitch:
 #_01CDD6: AND.w #$00FF
 #_01CDD9: BNE RoomTagFail
 
-#_01CDDB: JSR RoomTag_GetTilemapCoords
+#_01CDDB: JSR GetLinksTilemapOffset
 
 #_01CDDE: LDY.w #$0000
 
@@ -14703,7 +14697,7 @@ DoorOpenSFXPan:
 
 ;===================================================================================================
 
-Underworld_ProcessTorchesAndDoors:
+ProcessTorchesAndDoors:
 #_01CE70: LDA.b $1A
 #_01CE72: AND.b #$03
 #_01CE74: BNE .ignore_checks
@@ -14726,7 +14720,7 @@ Underworld_ProcessTorchesAndDoors:
 #_01CE89: ORA.b #$C0
 #_01CE8B: STA.w $0333
 
-#_01CE8E: JSL Underworld_ExtinguishTorch
+#_01CE8E: JSL ExtinguishTorch
 
 #_01CE92: PLX
 
@@ -14755,7 +14749,7 @@ Underworld_ProcessTorchesAndDoors:
 #_01CEA9: TAY
 
 #_01CEAA: LDA.b $20
-#_01CEAC: ADC.w DetectStaircase_offset_y,Y
+#_01CEAC: ADC.w StaircaseFinder_offset_y,Y
 #_01CEAF: AND.w #$01F8
 #_01CEB2: ASL A
 #_01CEB3: ASL A
@@ -14764,7 +14758,7 @@ Underworld_ProcessTorchesAndDoors:
 
 #_01CEB7: LDA.b $22
 #_01CEB9: CLC
-#_01CEBA: ADC.w DetectStaircase_offset_x,Y
+#_01CEBA: ADC.w StaircaseFinder_offset_x,Y
 #_01CEBD: AND.w #$01F8
 #_01CEC0: LSR A
 #_01CEC1: LSR A
@@ -14790,7 +14784,7 @@ Underworld_ProcessTorchesAndDoors:
 
 #_01CEDB: TXA
 #_01CEDC: CLC
-#_01CEDD: ADC.w DetectStaircase_index_offset,Y
+#_01CEDD: ADC.w StaircaseFinder_index_offset,Y
 #_01CEE0: TAX
 
 #_01CEE1: LDA.l $7F2000,X
@@ -14833,7 +14827,7 @@ Underworld_ProcessTorchesAndDoors:
 #_01CF1F: LDY.w $040C
 
 #_01CF22: LDA.l $7EF366
-#_01CF26: AND.w DungeonMask,Y
+#_01CF26: AND.w BitMasks,Y
 #_01CF29: BNE .have_big_key
 
 #_01CF2B: LDA.w $04B8
@@ -14846,7 +14840,7 @@ Underworld_ProcessTorchesAndDoors:
 
 #_01CF39: SEP #$30
 
-#_01CF3B: JSL Interface_PrepAndDisplayMessage
+#_01CF3B: JSL PrepAndDisplayMessage
 
 #_01CF3F: REP #$30
 
@@ -14977,7 +14971,7 @@ OperateDashBashWall:
 #_01CFE1: LDA.b #$09
 #_01CFE3: STA.b $11
 
-#_01CFE5: JSL Sprite_RepelDash_long
+#_01CFE5: JSL RepelDash_long
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -15012,14 +15006,14 @@ DontOpenDoor:
 #_01D00D: REP #$20
 
 #_01D00F: LDA.w $068C
-#_01D012: ORA.w DungeonMask,Y
+#_01D012: ORA.w BitMasks,Y
 #_01D015: BRA .continue
 
 .direction_mismatch
 #_01D017: REP #$20
 
 #_01D019: LDA.w $068C
-#_01D01C: AND.w DungeonMaskInverted,Y
+#_01D01C: AND.w BitMasksInverted,Y
 
 .continue
 #_01D01F: CMP.w $068C
@@ -15039,7 +15033,7 @@ DontOpenDoor:
 #_01D035: JSR Underworld_PrepNextTilemapUpdateDMA
 
 #_01D038: LDY.w $0460
-#_01D03B: JSR Underworld_LoadSingleDoorTileType_from_parameter
+#_01D03B: JSR LoadSingleDoorTileType_from_parameter
 
 #_01D03E: LDY.b $0C
 
@@ -15303,11 +15297,11 @@ SlashSwordAgainstVinesAndDoors:
 #_01D1AF: TYX
 
 #_01D1B0: LDA.w $068C
-#_01D1B3: ORA.w DungeonMask,X
+#_01D1B3: ORA.w BitMasks,X
 #_01D1B6: STA.w $068C
 
 #_01D1B9: LDA.w $0400
-#_01D1BC: ORA.w DungeonMask,X
+#_01D1BC: ORA.w BitMasks,X
 #_01D1BF: STA.w $0400
 
 #_01D1C2: STZ.w $0692
@@ -15315,7 +15309,7 @@ SlashSwordAgainstVinesAndDoors:
 #_01D1C5: JSR IndexAndClearCurtainDoor
 
 #_01D1C8: LDY.w $0460
-#_01D1CB: JSR Underworld_LoadSingleDoorTileType_from_parameter
+#_01D1CB: JSR LoadSingleDoorTileType_from_parameter
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -15327,7 +15321,7 @@ SlashSwordAgainstVinesAndDoors:
 #_01D1D3: LDA.b $08
 #_01D1D5: AND.b #$7F
 #_01D1D7: ASL A
-#_01D1D8: JSL CalculateSFXPan_Arbitrary
+#_01D1D8: JSL CalculateArbitrarySFXPan
 
 #_01D1DC: ORA.b #$1E ; SFX2.1E
 #_01D1DE: STA.w $012E
@@ -15354,16 +15348,16 @@ SlashSwordAgainstVinesAndDoors:
 
 ;===================================================================================================
 
-Bomb_CheckForDestructibles:
+FindBombableThings:
 #_01D1F4: LDA.b $10
 #_01D1F6: CMP.b #$07
-#_01D1F8: BEQ Bomb_CheckForUWDestructibles
+#_01D1F8: BEQ FindBombableUnderworldThings
 
-#_01D1FA: JML Overworld_BombTiles32x32
+#_01D1FA: JML FindBombableOverworldThings
 
 ;---------------------------------------------------------------------------------------------------
 
-Bomb_CheckForUWDestructibles:
+FindBombableUnderworldThings:
 #_01D1FE: STZ.b $0F
 
 #_01D200: REP #$30
@@ -15514,7 +15508,7 @@ BlowOpenBombableFloor:
 
 .not_tt_attic
 #_01D2D9: LDA.w #$0000
-#_01D2DC: JSL ThievesAttic_DrawLightenedHole
+#_01D2DC: JSL DrawLightenedThievesAtticHole
 
 #_01D2E0: SEP #$30
 
@@ -15536,22 +15530,22 @@ DrawDoorOpening_Step1:
 #_01D2F6: AND.w #$0003
 #_01D2F9: BNE .not_north_door
 
-#_01D2FB: JMP.w DoorDoorStep1_North
+#_01D2FB: JMP.w DoorStep1_North
 
 .not_north_door
 #_01D2FE: CMP.w #$0001
 #_01D301: BNE .not_south_door
 
-#_01D303: JMP.w DoorDoorStep1_South
+#_01D303: JMP.w DoorStep1_South
 
 .not_south_door
 #_01D306: CMP.w #$0002
 #_01D309: BNE .not_west_door
 
-#_01D30B: JMP.w DoorDoorStep1_West
+#_01D30B: JMP.w DoorStep1_West
 
 .not_west_door
-#_01D30E: JMP.w DoorDoorStep1_East
+#_01D30E: JMP.w DoorStep1_East
 
 ;===================================================================================================
 
@@ -15709,7 +15703,7 @@ OperateShutterDoors:
 #_01D3DA: BNE .closing
 
 #_01D3DC: LDA.w $068C
-#_01D3DF: AND.w DungeonMask,Y
+#_01D3DF: AND.w BitMasks,Y
 #_01D3E2: BNE .skip_this_door
 
 #_01D3E4: LDA.w $0690
@@ -15728,14 +15722,14 @@ OperateShutterDoors:
 #_01D3F6: PLY
 
 #_01D3F7: LDA.w $068C
-#_01D3FA: ORA.w DungeonMask,Y
+#_01D3FA: ORA.w BitMasks,Y
 #_01D3FD: BRA .flag_door
 
 ;---------------------------------------------------------------------------------------------------
 
 .closing
 #_01D3FF: LDA.w $068C
-#_01D402: AND.w DungeonMask,Y
+#_01D402: AND.w BitMasks,Y
 #_01D405: BEQ .skip_this_door
 
 #_01D407: LDA.w $0690
@@ -15754,7 +15748,7 @@ OperateShutterDoors:
 #_01D419: PLY
 
 #_01D41A: LDA.w $068C
-#_01D41D: AND.w DungeonMaskInverted,Y
+#_01D41D: AND.w BitMasksInverted,Y
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -15770,7 +15764,7 @@ OperateShutterDoors:
 #_01D42F: BNE .skip_this_door
 
 #_01D431: LDY.w $068E
-#_01D434: JSR Underworld_LoadSingleDoorTileType_from_parameter
+#_01D434: JSR LoadSingleDoorTileType_from_parameter
 
 .skip_this_door
 #_01D437: LDY.w $068E
@@ -15827,7 +15821,7 @@ OpenCrackedDoor:
 
 ;===================================================================================================
 
-#UnlockKeyDoor_Main:
+#UnlockKeyDoor:
 #_01D476: REP #$30
 
 #_01D478: LDY.w #$0002
@@ -15855,11 +15849,11 @@ OpenCrackedDoor:
 #_01D498: TAX
 
 #_01D499: LDA.w $068C
-#_01D49C: ORA.w DungeonMask,X
+#_01D49C: ORA.w BitMasks,X
 #_01D49F: STA.w $068C
 
 #_01D4A2: LDA.w $0400
-#_01D4A5: ORA.w DungeonMask,X
+#_01D4A5: ORA.w BitMasks,X
 #_01D4A8: STA.w $0400
 
 ;---------------------------------------------------------------------------------------------------
@@ -15901,7 +15895,7 @@ OpenCrackedDoor:
 #_01D4DA: CMP.w #$0010
 #_01D4DD: BNE .exit
 
-#_01D4DF: JSR Underworld_LoadSingleDoorTileType_from_wram_index
+#_01D4DF: JSR LoadSingleDoorTileType_from_wram_index
 
 #_01D4E2: LDX.w $068E
 
@@ -15936,7 +15930,7 @@ OpenCrackedDoor:
 
 ;===================================================================================================
 
-Underworld_LoadSingleDoorTileType_from_wram_index:
+LoadSingleDoorTileType_from_wram_index:
 #_01D510: LDX.w $068E
 
 #_01D513: LDA.l $7F2000,X
@@ -15946,12 +15940,12 @@ Underworld_LoadSingleDoorTileType_from_wram_index:
 
 ;===================================================================================================
 
-Underworld_LoadSingleDoorTileType_from_parameter:
-#_01D51C: JSR Underworld_LoadSingleDoorAttribute
+LoadSingleDoorTileType_from_parameter:
+#_01D51C: JSR LoadSingleDoorAttribute
 
 ;===================================================================================================
 
-Underworld_LoadSingleDoorTileType:
+LoadSingleDoorTileType:
 #_01D51F: LDX.w $044E
 #_01D522: BEQ .next_loop
 
@@ -16227,7 +16221,7 @@ DrawCompletelyOpenDoor:
 
 ;===================================================================================================
 
-Underworld_ClearAwayExplodingWall:
+ClearAwayExplodingWall:
 #_01D6C1: LDA.b #$06
 #_01D6C3: STA.w $02E4
 #_01D6C6: STA.w $0FC1
@@ -16254,11 +16248,11 @@ Underworld_ClearAwayExplodingWall:
 #_01D6EE: LDY.w $0456
 
 #_01D6F1: LDA.w $068C
-#_01D6F4: ORA.w DungeonMask,Y
+#_01D6F4: ORA.w BitMasks,Y
 #_01D6F7: STA.w $068C
 
 #_01D6FA: LDA.w $0400
-#_01D6FD: ORA.w DungeonMask,Y
+#_01D6FD: ORA.w BitMasks,Y
 #_01D700: STA.w $0400
 
 ;---------------------------------------------------------------------------------------------------
@@ -16287,14 +16281,14 @@ Underworld_ClearAwayExplodingWall:
 #_01D725: STA.l $7EC19C
 
 #_01D729: LDY.w $0456
-#_01D72C: JSR Underworld_DoorLoadBlastWallAttribute
+#_01D72C: JSR LoadBlastWallAttribute
 
 #_01D72F: STZ.w $0454
 #_01D732: STZ.w $0456
 
 #_01D735: SEP #$30
 
-#_01D737: JSL Underworld_FlagRoomData_Quadrants
+#_01D737: JSL FullyUpdateRoomFlags
 
 #_01D73B: STZ.w $02E4
 #_01D73E: STZ.w $0FC1
@@ -16312,7 +16306,7 @@ Underworld_ClearAwayExplodingWall:
 
 ;===================================================================================================
 
-Underworld_CheckForAndIDLiftableTile:
+TestAndIDLiftableObject:
 #_01D748: REP #$30
 
 #_01D74A: LDA.b $2F
@@ -16546,19 +16540,19 @@ RoomDraw_16x16Single_stripe_inited:
 #_01D887: LDX.w $1000
 
 #_01D88A: LDA.w #$0000
-#_01D88D: JSR RoomDraw_16x16SingleSingleTileStripe
+#_01D88D: JSR RoomDraw_16x16SingleTileStripe
 #_01D890: STA.w $1002,X
 
 #_01D893: LDA.w #$0080
-#_01D896: JSR RoomDraw_16x16SingleSingleTileStripe
+#_01D896: JSR RoomDraw_16x16SingleTileStripe
 #_01D899: STA.w $1008,X
 
 #_01D89C: LDA.w #$0002
-#_01D89F: JSR RoomDraw_16x16SingleSingleTileStripe
+#_01D89F: JSR RoomDraw_16x16SingleTileStripe
 #_01D8A2: STA.w $100E,X
 
 #_01D8A5: LDA.w #$0082
-#_01D8A8: JSR RoomDraw_16x16SingleSingleTileStripe
+#_01D8A8: JSR RoomDraw_16x16SingleTileStripe
 #_01D8AB: STA.w $1014,X
 
 ;---------------------------------------------------------------------------------------------------
@@ -16591,13 +16585,13 @@ RoomDraw_16x16Single_stripe_inited:
 PushBlock_CheckForPit:
 #_01D8D4: LDA.w $0540,Y
 #_01D8D7: AND.w #$4000
-#_01D8DA: BNE .lower_layer
+#_01D8DA: BNE .upper_layer
 
 #_01D8DC: LDA.w $0641
 #_01D8DF: EOR.w #$0001
 #_01D8E2: STA.w $0641
 
-.lower_layer
+.upper_layer
 #_01D8E5: LDA.w $0540,Y
 #_01D8E8: AND.w #$3FFF
 #_01D8EB: LSR A
@@ -16716,7 +16710,7 @@ PushBlock_CheckForPit:
 
 ;===================================================================================================
 
-RoomDraw_16x16SingleSingleTileStripe:
+RoomDraw_16x16SingleTileStripe:
 #_01D98E: STA.b $0E
 
 #_01D990: LDA.w $0540,Y
@@ -16750,7 +16744,7 @@ RoomDraw_16x16SingleSingleTileStripe:
 
 ;===================================================================================================
 
-pool Underworld_LiftAndReplaceLiftable Underworld_CheckForAndIDLiftableTile
+pool HandleUnderworldLiftables TestAndIDLiftableObject
 
 .offset_y
 #_01D9BA: dw   3 ; up
@@ -16784,7 +16778,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Underworld_LiftAndReplaceLiftable:
+HandleUnderworldLiftables:
 #_01D9EC: REP #$30
 
 #_01D9EE: LDA.b $2F
@@ -16876,7 +16870,7 @@ Underworld_LiftAndReplaceLiftable:
 
 ;===================================================================================================
 
-#ThievesAttic_DrawLightenedHole:
+#DrawLightenedThievesAtticHole:
 #_01DA71: STA.w $042C
 
 #_01DA74: PHA
@@ -16917,7 +16911,7 @@ Underworld_LiftAndReplaceLiftable:
 ;---------------------------------------------------------------------------------------------------
 
 .finish_up
-#_01DAAE: JSR ManipBlock_Something
+#_01DAAE: JSR GetFullCoordinatesForObject
 
 #_01DAB1: LDA.b $06
 
@@ -17009,7 +17003,7 @@ HandleItemTileAction_Underworld:
 #_01DB24: LDY.w $042C
 
 #_01DB27: JSR RoomDraw_16x16Single
-#_01DB2A: JSR ManipBlock_Something
+#_01DB2A: JSR GetFullCoordinatesForObject
 
 #_01DB2D: SEP #$30
 
@@ -17018,13 +17012,13 @@ HandleItemTileAction_Underworld:
 #_01DB34: STA.w $0B9C
 
 #_01DB37: LDA.b #$01
-#_01DB39: JSL Sprite_SpawnImmediatelySmashedTerrain
+#_01DB39: JSL SpawnImmediatelySmashedTerrain
 
 #_01DB3D: JML AncillaAdd_BushPoof
 
 ;===================================================================================================
 
-ManipBlock_Something:
+GetFullCoordinatesForObject:
 #_01DB41: LDY.w $042C
 
 #_01DB44: LDA.w $0540,Y
@@ -19354,7 +19348,7 @@ RevealPotItem:
 
 ;===================================================================================================
 
-pool Underworld_UpdateTilemapWithCommonTile
+pool UpdateTilemapWithCommonObject
 
 .replacement_tiles
 #_01E795: dw obj00E0-RoomDrawObjectData ; 0x00 - Floor
@@ -19372,7 +19366,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Underworld_UpdateTilemapWithCommonTile:
+UpdateTilemapWithCommonObject:
 #_01E7A9: PHX
 
 #_01E7AA: STY.b $0E
@@ -19569,7 +19563,7 @@ Underworld_UpdateTilemapWithCommonTile:
 
 ;===================================================================================================
 
-Underworld_DeleteRupeeTile:
+DeleteRupeeTile:
 #_01E8BD: PHB
 
 #_01E8BE: LDA.b #RoomDrawObjectData>>16
@@ -19905,7 +19899,7 @@ OpenItemChest:
 #_01EB89: LDX.w $040C
 
 #_01EB8C: LDA.l $7EF366
-#_01EB90: AND.l DungeonMask,X
+#_01EB90: AND.l BitMasks,X
 #_01EB94: BNE .open_big_key_lock
 
 #_01EB96: LDA.w #$007A ; MESSAGE 007A
@@ -19913,7 +19907,7 @@ OpenItemChest:
 
 #_01EB9C: SEP #$30
 
-#_01EB9E: JSL Interface_PrepAndDisplayMessage
+#_01EB9E: JSL PrepAndDisplayMessage
 
 #_01EBA2: REP #$30
 
@@ -20008,7 +20002,7 @@ OpenItemChest:
 #_01EC16: LDX.w $040C
 
 #_01EC19: LDA.l $7EF366
-#_01EC1D: AND.l DungeonMask,X
+#_01EC1D: AND.l BitMasks,X
 #_01EC21: BEQ .no_big_key_for_big_chest
 
 #_01EC23: PLX
@@ -20028,7 +20022,7 @@ OpenItemChest:
 
 #_01EC31: SEP #$30
 
-#_01EC33: JSL Interface_PrepAndDisplayMessage
+#_01EC33: JSL PrepAndDisplayMessage
 
 #_01EC37: PLB
 
@@ -20092,19 +20086,19 @@ OpenItemChest:
 #_01EC8A: LDX.w $1000
 
 #_01EC8D: LDA.w #$0000
-#_01EC90: JSR RoomTag_BuildChestStripes
+#_01EC90: JSR BuildChestStripes
 #_01EC93: STA.w $1002,X
 
 #_01EC96: LDA.w #$0080
-#_01EC99: JSR RoomTag_BuildChestStripes
+#_01EC99: JSR BuildChestStripes
 #_01EC9C: STA.w $1008,X
 
 #_01EC9F: LDA.w #$0002
-#_01ECA2: JSR RoomTag_BuildChestStripes
+#_01ECA2: JSR BuildChestStripes
 #_01ECA5: STA.w $100E,X
 
 #_01ECA8: LDA.w #$0082
-#_01ECAB: JSR RoomTag_BuildChestStripes
+#_01ECAB: JSR BuildChestStripes
 #_01ECAE: STA.w $1014,X
 
 ;---------------------------------------------------------------------------------------------------
@@ -20142,7 +20136,7 @@ OpenItemChest:
 #_01ECE4: LDA.b #$01
 #_01ECE6: STA.b $14
 
-#_01ECE8: JSL Underworld_FlagRoomData_Quadrants
+#_01ECE8: JSL FullyUpdateRoomFlags
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -20251,7 +20245,7 @@ OpenBigChest:
 
 #_01ED76: PLB
 
-#_01ED77: JSL Underworld_FlagRoomData_Quadrants
+#_01ED77: JSL FullyUpdateRoomFlags
 
 #_01ED7B: LDA.b #$0E ; SFX3.0E
 #_01ED7D: STA.w $012F
@@ -20288,7 +20282,7 @@ OpenMiniGameChestFail:
 
 #_01ED9A: SEP #$20
 
-#_01ED9C: JSL Interface_PrepAndDisplayMessage
+#_01ED9C: JSL PrepAndDisplayMessage
 
 #_01EDA0: PLB
 
@@ -20405,25 +20399,25 @@ OpenMiniGameChest:
 #_01EE2C: LDX.w $1000
 
 #_01EE2F: LDA.b $0C
-#_01EE31: JSR RoomTag_BuildChestStripes
+#_01EE31: JSR BuildChestStripes
 #_01EE34: STA.w $1002,X
 
 #_01EE37: LDA.b $0C
 #_01EE39: CLC
 #_01EE3A: ADC.w #$0080
-#_01EE3D: JSR RoomTag_BuildChestStripes
+#_01EE3D: JSR BuildChestStripes
 #_01EE40: STA.w $1008,X
 
 #_01EE43: LDA.b $0C
 #_01EE45: CLC
 #_01EE46: ADC.w #$0002
-#_01EE49: JSR RoomTag_BuildChestStripes
+#_01EE49: JSR BuildChestStripes
 #_01EE4C: STA.w $100E,X
 
 #_01EE4F: LDA.b $0C
 #_01EE51: CLC
 #_01EE52: ADC.w #$0082
-#_01EE55: JSR RoomTag_BuildChestStripes
+#_01EE55: JSR BuildChestStripes
 #_01EE58: STA.w $1014,X
 
 ;---------------------------------------------------------------------------------------------------
@@ -20590,7 +20584,7 @@ OpenMiniGameChest_HighStake:
 
 ;===================================================================================================
 
-RoomTag_BuildChestStripes:
+BuildChestStripes:
 #_01EF0F: CLC
 #_01EF10: ADC.w $06E0,Y
 #_01EF13: STA.b $0E
@@ -20795,8 +20789,8 @@ DeleteSwampPoolWaterOverlay:
 
 ;===================================================================================================
 
-Underworld_FloodSwampWater_PrepTilemap:
-#_01F046: JSL WaterFlood_BuildOneQuadrantForVRAM
+FloodSwampWater_PrepTilemap:
+#_01F046: JSL BuildBG1QuadrantForUpload
 
 #_01F04A: LDA.w $045C
 #_01F04D: CLC
@@ -20841,27 +20835,27 @@ WaterDrainSpeed:
 
 ;===================================================================================================
 
-pool Underworld_FloodSwampWater
+pool FloodSwampWater
 
 .vectors
-#_01F07B: dw Underworld_FloodSwampWater_PrepTilemap  ; 0x00
-#_01F07D: dw Underworld_FloodSwampWater_PrepTilemap  ; 0x01
-#_01F07F: dw Underworld_FloodSwampWater_PrepTilemap  ; 0x02
-#_01F081: dw Underworld_FloodSwampWater_PrepTilemap  ; 0x03
-#_01F083: dw Underworld_FloodSwampWater_VomitWater   ; 0x04
-#_01F085: dw Underworld_FloodSwampWater_VomitWater   ; 0x05
-#_01F087: dw Underworld_FloodSwampWater_VomitWater   ; 0x06
-#_01F089: dw Underworld_FloodSwampWater_VomitWater   ; 0x07
-#_01F08B: dw Underworld_FloodSwampWater_VomitWater   ; 0x08
-#_01F08D: dw Underworld_FloodSwampWater_SpillToFloor ; 0x09
-#_01F08F: dw Underworld_FloodSwampWater_CoverFloor   ; 0x0A
-#_01F091: dw Underworld_FloodSwampWater_RiseInLevel  ; 0x0B
+#_01F07B: dw FloodSwampWater_PrepTilemap  ; 0x00
+#_01F07D: dw FloodSwampWater_PrepTilemap  ; 0x01
+#_01F07F: dw FloodSwampWater_PrepTilemap  ; 0x02
+#_01F081: dw FloodSwampWater_PrepTilemap  ; 0x03
+#_01F083: dw FloodSwampWater_VomitWater   ; 0x04
+#_01F085: dw FloodSwampWater_VomitWater   ; 0x05
+#_01F087: dw FloodSwampWater_VomitWater   ; 0x06
+#_01F089: dw FloodSwampWater_VomitWater   ; 0x07
+#_01F08B: dw FloodSwampWater_VomitWater   ; 0x08
+#_01F08D: dw FloodSwampWater_SpillToFloor ; 0x09
+#_01F08F: dw FloodSwampWater_CoverFloor   ; 0x0A
+#_01F091: dw FloodSwampWater_RiseInLevel  ; 0x0B
 
 pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Underworld_FloodSwampWater:
+FloodSwampWater:
 #_01F093: LDA.b $B0
 #_01F095: ASL A
 #_01F096: TAX
@@ -20875,7 +20869,7 @@ Underworld_FloodSwampWater:
 
 ;---------------------------------------------------------------------------------------------------
 
-Underworld_FloodSwampWater_VomitWater:
+FloodSwampWater_VomitWater:
 #_01F09B: DEC.w $0424
 #_01F09E: BNE EXIT_01F09A
 
@@ -20907,7 +20901,7 @@ Underworld_FloodSwampWater_VomitWater:
 
 ;===================================================================================================
 
-Underworld_AdjustWaterVomit:
+AdjustWaterVomit:
 #_01F0C9: LDA.w $047C
 #_01F0CC: CLC
 #_01F0CD: ADC.w #$0100
@@ -21017,7 +21011,7 @@ Underworld_AdjustWaterVomit:
 
 ;===================================================================================================
 
-Underworld_FloodSwampWater_SpillToFloor:
+FloodSwampWater_SpillToFloor:
 #_01F16D: LDA.b #$03
 #_01F16F: STA.b $96
 
@@ -21043,7 +21037,7 @@ Underworld_FloodSwampWater_SpillToFloor:
 
 ;===================================================================================================
 
-Underworld_FloodSwampWater_CoverFloor:
+FloodSwampWater_CoverFloor:
 #_01F18C: LDA.w $0424
 #_01F18F: AND.b #$03
 #_01F191: ASL A
@@ -21102,7 +21096,7 @@ Underworld_FloodSwampWater_CoverFloor:
 
 ;===================================================================================================
 
-Underworld_FloodSwampWater_RiseInLevel:
+FloodSwampWater_RiseInLevel:
 #_01F1E1: LDA.w $0424
 #_01F1E4: AND.b #$07
 #_01F1E6: BNE .dont_step
@@ -21149,7 +21143,7 @@ Underworld_FloodSwampWater_RiseInLevel:
 #_01F222: LDA.w #$0005
 #_01F225: STA.b $0E
 
-#_01F227: JSL Underworld_AdjustWaterVomit
+#_01F227: JSL AdjustWaterVomit
 
 ;---------------------------------------------------------------------------------------------------
 
@@ -21272,7 +21266,7 @@ FloodGateTileOffsets:
 
 ;===================================================================================================
 
-pool Underworld_FloodDam
+pool FloodDam
 
 .vectors
 #_01F2F2: dw FloodDam_PrepTiles_init ; 0x00
@@ -21286,8 +21280,8 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-Underworld_FloodDam:
-#_01F2FE: JSL FloodDam_PrepFloodHDMA
+FloodDam:
+#_01F2FE: JSL PrepDamFloodHDMA
 
 #_01F302: LDA.b $B0
 #_01F304: ASL A
@@ -21402,7 +21396,7 @@ FloodDam_Expand:
 #_01F391: LDA.w #$0881
 #_01F394: STA.b $06
 
-#_01F396: JSR TranslucentOverlay_FinalizeStripes
+#_01F396: JSR FinalizeTranslucentOverlayStripes
 
 #_01F399: PLA
 #_01F39A: CLC
@@ -21424,7 +21418,7 @@ FloodDam_PrepTiles_init:
 FloodDam_PrepTiles:
 #_01F3AA: STZ.w $0418
 
-#_01F3AD: JSL WaterFlood_BuildOneQuadrantForVRAM
+#_01F3AD: JSL BuildBG1QuadrantForUpload
 
 #_01F3B1: LDA.w $045C
 #_01F3B4: CLC
@@ -21475,11 +21469,11 @@ UNREACHABLE_01F3DF:
 #_01F3E6: BNE FAIL_01F3DB
 
 #_01F3E8: LDA.b #$00
-#_01F3EA: BRA Underworld_LightTorch_continue
+#_01F3EA: BRA LightTorch_continue
 
 ;===================================================================================================
 
-Underworld_LightTorch:
+LightTorch:
 #_01F3EC: LDA.w $0333
 #_01F3EF: AND.b #$F0
 #_01F3F1: CMP.b #$C0
@@ -21545,7 +21539,7 @@ Underworld_LightTorch:
 #_01F43D: PHX
 
 #_01F43E: LDY.w #obj0ECA-RoomDrawObjectData
-#_01F441: JSR RoomDraw_AdjustTorchLightingChange
+#_01F441: JSR AdjustTorchLightingChange
 
 #_01F444: LDY.b $0C
 
@@ -21558,7 +21552,7 @@ Underworld_LightTorch:
 
 #_01F44F: AND.b #$7F
 #_01F451: ASL A
-#_01F452: JSL CalculateSFXPan_Arbitrary
+#_01F452: JSL CalculateArbitrarySFXPan
 
 #_01F456: ORA.b #$2A ; SFX2.2A
 #_01F458: STA.w $012E
@@ -21618,23 +21612,23 @@ Underworld_LightTorch:
 
 ;===================================================================================================
 
-Ganon_ExtinguishTorch_adjust_translucency:
-#_01F496: JSL Palette_AssertTranslucencySwap
+ExtinguishGanonTorch_adjust_translucency:
+#_01F496: JSL AssertTranslucencySwap
 
 #_01F49A: LDA.b #$C0
 #_01F49C: STA.w $0333
 
-#_01F49F: BRA Underworld_ExtinguishTorch
+#_01F49F: BRA ExtinguishTorch
 
 ;===================================================================================================
 
-Ganon_ExtinguishTorch:
+ExtinguishGanonTorch:
 #_01F4A1: LDA.b #$C1
 #_01F4A3: STA.w $0333
 
 ;===================================================================================================
 
-Underworld_ExtinguishTorch:
+ExtinguishTorch:
 #_01F4A6: LDA.b #$C0
 #_01F4A8: STA.b $08
 #_01F4AA: STZ.b $09
@@ -21672,7 +21666,7 @@ Underworld_ExtinguishTorch:
 #_01F4D7: STX.b $08
 
 #_01F4D9: LDY.w #obj0EC2-RoomDrawObjectData
-#_01F4DC: JSR RoomDraw_AdjustTorchLightingChange
+#_01F4DC: JSR AdjustTorchLightingChange
 
 #_01F4DF: LDY.b $0C
 
@@ -21735,7 +21729,7 @@ Underworld_ExtinguishTorch:
 
 ;===================================================================================================
 
-SpiralStairs_MakeNearbyWallsHighPriority_Entering:
+MakeNearbyWallsHighPriority_Entering:
 #_01F528: REP #$30
 
 #_01F52A: LDA.w $0462
@@ -21796,7 +21790,7 @@ SpiralStairs_MakeNearbyWallsHighPriority_Entering:
 
 ;===================================================================================================
 
-SpiralStairs_MakeNearbyWallsLowPriority:
+MakeNearbyWallsLowPriority:
 #_01F585: REP #$30
 
 #_01F587: LDX.w $048C
@@ -21846,7 +21840,7 @@ SpiralStairs_MakeNearbyWallsLowPriority:
 
 ;===================================================================================================
 
-pool RoomDraw_OpenTriforceDoor
+pool OpenTriforceDoor
 
 .tile_offset
 #_01F5D1: dw obj2556-RoomDrawObjectData
@@ -21863,7 +21857,7 @@ pool off
 
 ;---------------------------------------------------------------------------------------------------
 
-RoomDraw_OpenTriforceDoor:
+OpenTriforceDoor:
 #_01F5DA: LDA.b #$01
 #_01F5DC: STA.w $02E4
 
@@ -21947,7 +21941,7 @@ RoomDraw_OpenTriforceDoor:
 #_01F64C: STZ.b $0C
 
 #_01F64E: LDY.b $0C
-#_01F650: JSR TranslucentOverlay_FinalizeStripes
+#_01F650: JSR FinalizeTranslucentOverlayStripes
 
 #_01F653: LDY.b $0C
 
@@ -22119,7 +22113,7 @@ UNREACHABLE_01F6B4:
 
 ;===================================================================================================
 
-RoomDraw_AdjustTorchLightingChange:
+AdjustTorchLightingChange:
 #_01F746: LDA.w RoomDrawObjectData+0,Y
 #_01F749: STA.l $7E2000,X
 
@@ -22151,13 +22145,13 @@ Underworld_PrepNextTilemapUpdateDMA:
 #_01F770: LDA.b $08
 #_01F772: AND.w #$003F
 #_01F775: CMP.w #$003A
-#_01F778: BCC TranslucentOverlay_FinalizeStripes
+#_01F778: BCC FinalizeTranslucentOverlayStripes
 
 #_01F77A: INC.b $06
 
 ;===================================================================================================
 
-TranslucentOverlay_FinalizeStripes:
+FinalizeTranslucentOverlayStripes:
 .next
 #_01F77C: LDX.b $08
 
@@ -22500,7 +22494,7 @@ UNREACHABLE_01F908:
 
 ;===================================================================================================
 
-Underworld_DrawRoomOverlay:
+DrawRoomOverlay:
 .next
 #_01F967: REP #$30
 
@@ -22632,7 +22626,7 @@ GetDoorDrawDataIndex_North_clean_door_index:
 
 ;===================================================================================================
 
-DoorDoorStep1_North:
+DoorStep1_North:
 #_01FA54: LDA.w $0460
 #_01FA57: PHA
 
@@ -22672,7 +22666,7 @@ DoorDoorStep1_North:
 #_01FA90: JSR Underworld_PrepNextTilemapUpdateDMA
 
 #_01FA93: LDY.w $0460
-#_01FA96: JSR Underworld_LoadSingleDoorAttribute
+#_01FA96: JSR LoadSingleDoorAttribute
 
 #_01FA99: PLX
 #_01FA9A: STX.b $08
@@ -22778,7 +22772,7 @@ GetDoorDrawDataIndex_South_clean_door_index:
 
 ;===================================================================================================
 
-DoorDoorStep1_South:
+DoorStep1_South:
 #_01FB15: LDA.w $0460
 #_01FB18: PHA
 
@@ -22818,7 +22812,7 @@ DoorDoorStep1_South:
 #_01FB51: JSR Underworld_PrepNextTilemapUpdateDMA
 
 #_01FB54: LDY.w $0460
-#_01FB57: JSR Underworld_LoadSingleDoorAttribute
+#_01FB57: JSR LoadSingleDoorAttribute
 
 #_01FB5A: PLX
 #_01FB5B: STX.b $08
@@ -22915,7 +22909,7 @@ GetDoorDrawDataIndex_West_clean_door_index:
 
 ;===================================================================================================
 
-DoorDoorStep1_West:
+DoorStep1_West:
 #_01FBCC: LDA.w $0460
 #_01FBCF: PHA
 
@@ -22955,7 +22949,7 @@ DoorDoorStep1_West:
 #_01FC08: JSR Underworld_PrepNextTilemapUpdateDMA
 
 #_01FC0B: LDY.w $0460
-#_01FC0E: JSR Underworld_LoadSingleDoorAttribute
+#_01FC0E: JSR LoadSingleDoorAttribute
 
 #_01FC11: PLX
 #_01FC12: STX.b $08
@@ -23055,7 +23049,7 @@ GetDoorDrawDataIndex_East_clean_door_index:
 
 ;===================================================================================================
 
-DoorDoorStep1_East:
+DoorStep1_East:
 #_01FC8A: LDA.w $0460
 #_01FC8D: PHA
 
@@ -23096,7 +23090,7 @@ DoorDoorStep1_East:
 #_01FCC6: JSR Underworld_PrepNextTilemapUpdateDMA
 
 #_01FCC9: LDY.w $0460
-#_01FCCC: JSR Underworld_LoadSingleDoorAttribute
+#_01FCCC: JSR LoadSingleDoorAttribute
 
 #_01FCCF: PLX
 #_01FCD0: STX.b $08
@@ -23240,7 +23234,7 @@ GetDoorGraphicsIndex:
 #_01FD83: LDY.b $04
 
 #_01FD85: LDA.w $068C
-#_01FD88: AND.w DungeonMask,Y
+#_01FD88: AND.w BitMasks,Y
 #_01FD8B: BEQ .exit
 
 #_01FD8D: LDA.w DoorwayReplacementDoorGFX,X
@@ -23350,7 +23344,7 @@ ClearExplodingWallFromTilemap_ClearOnePair:
 
 ;===================================================================================================
 
-Underworld_DrawRoomOverlay_Apply:
+ApplyOverlayStamp:
 #_01FE41: STA.b $08
 
 #_01FE43: LDA.w #$0004
@@ -23467,7 +23461,7 @@ ApplyGrayscaleFixed_Parameterized:
 
 ;===================================================================================================
 
-LinkZap_HandleMosaic:
+HandleZapMosaic:
 #_01FED2: LDA.w $0647
 #_01FED5: BNE .negative
 
@@ -23488,7 +23482,7 @@ LinkZap_HandleMosaic:
 
 ;===================================================================================================
 
-#LinkZap_ResetMosaic:
+#ResetZapMosaic:
 #_01FEF0: STZ.w $0647
 
 .set
@@ -23506,7 +23500,7 @@ LinkZap_HandleMosaic:
 
 ;===================================================================================================
 
-Underworld_HandleLayerChange:
+HandleLayerChange:
 #_01FF05: LDA.b #$01
 #_01FF07: STA.w $0476
 
