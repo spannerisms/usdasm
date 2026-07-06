@@ -4,3 +4,4 @@
 *.zip
 test/*
 bin/*
+*-diff.txt

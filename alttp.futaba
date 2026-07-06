@@ -1,0 +1,28 @@
+[FUTABA:assemble]
+
+assembly:
+	entry              = main.asm
+	type               = disassembly
+	output             = alttpus_reasm.sfc
+	addsymbols         = standard
+
+header:
+	autofill           = false
+	checksum           = false
+	mapmode            = lorom
+	fastrom            = false
+	title              = THE LEGEND OF ZELDA
+	romsize            = 1MB
+	ramsize            = 8KB
+	version            = 0
+	region             = North America
+	extended           = false
+
+debug:
+	overflow           = error
+	tokens             = aggressive
+
+disassembly:
+	crc                = 777AAC2F
+	md5                = 608C22B8FF930C62DC2DE54BCD6EBA72
+	diff               = alttpus.sfc
